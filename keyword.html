@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Related Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand-block">
+        <img class="brand-logo" src="ukdri-logo.png" alt="UK Dementia Research Institute logo" />
+        <div>
+          <div class="brand-kicker">UK Dementia Research Institute</div>
+          <h1>Lay Accessible Summary Support tool (LASSOO)</h1>
+        </div>
+      </div>
+      <nav class="top-links"></nav>
+    </header>
+
+    <main class="page-content">
+      <div class="back-link-row keyword-nav-row">
+        <a class="m3-button m3-button--tonal back-button" href="javascript:history.back()">Back</a>
+        <a class="m3-button m3-button--tonal back-button" href="index.html">Home</a>
+      </div>
+
+      <section class="hero-card">
+        <p class="eyebrow">Related research</p>
+        <h2 id="keyword-page-title">Keyword</h2>
+        <p class="hero-text">Showing related Accessible AI Assisted Summaries for this keyword.</p>
+      </section>
+
+      <section class="table-card">
+        <div class="table-card__header">
+          <div>
+            <h3>Related summaries</h3>
+            <p id="keyword-results-count" class="muted-text">Loading…</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="m3-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Corresponding Team Member</th>
+                <th>Lab or Team</th>
+                <th>Source Type</th>
+                <th>Project / Publication Date</th>
+              </tr>
+            </thead>
+            <tbody id="keyword-submissions-body">
+              <tr>
+                <td colspan="5" class="loading-cell">Loading submissions…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="keyword.js"></script>
+</body>
+</html>

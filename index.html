@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CR&amp;T Accessible Summaries</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="ukdri-logo.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand-block">
+<img class="brand-logo" src="ukdri-logo.png" alt="UK Dementia Research Institute logo" />
+        <div>
+          <h1 class="brand-title">LASSOO</h1>
+          <p class="brand-subtitle">Lay Accessible Summary Support Tool</p>
+          <p class="brand-sub-subtitle">Centre for Care Research &amp; Technology, UK Dementia Research Institute</p>
+        </div>
+      </div>
+
+      <nav class="top-links"></nav>
+    </header>
+
+    <main class="page-content">
+<section class="hero-card">
+  <div>
+    <p class="eyebrow">Research summaries</p>
+<h2>View and Submit Accessible AI Assisted Summaries</h2>
+<p class="hero-text">
+  View all Accessible AI Assisted Summaries submitted across UK DRI Centre for Care Research &amp; Technology.
+</p>
+
+<div class="instructions-block">
+  <h3>How to add an Accessible AI Assisted Summary</h3>
+  <ol class="instructions-list">
+    <li>
+      Use the <a id="gpt-link" class="instruction-link" href="#" target="_blank" rel="noopener">Accessible Summary AI Assistant</a> to prepare all the content you need, including a short description and a full summary written in clear, accessible language. The assistant is hosted in <strong>DAIsy</strong>, so you will need to sign in with your <strong>Imperial SSO</strong> to use it.
+    </li>
+    <li>
+      Use the <a id="submission-link" class="instruction-link" href="#" target="_blank" rel="noopener">Submission Form</a> to complete the form with your prepared content, and upload a suitable image together with the requested project details.
+    </li>
+    <li>
+      Submit the form. Once your submission has been processed, it will appear on this website for others to view.
+    </li>
+  </ol>
+<p class="instructions-footer">Existing Accessible AI Assisted Summaries are listed below.</p>
+<p class="instructions-note">
+  <strong>Note:</strong> Summaries on this page are produced with AI support for internal and communications use. Any lay summary intended for a publication should also be reviewed with a member of the public before submission.
+</p>
+</p>
+</div>
+  </div>
+</section>
+      <section class="table-card">
+        <div class="table-card__header">
+          <div>
+            <h3>All submissions</h3>
+            <p id="results-count" class="muted-text">Loading…</p>
+          </div>
+
+          <div class="table-actions">
+            <input id="search-input" class="m3-input" type="text" placeholder="Search title, team, or type" />
+          </div>
+        </div>
+
+        <div id="filter-bar" class="filter-bar" style="display:none">
+          <span class="filter-bar__label">Keyword</span>
+          <span class="filter-chip">
+            <span id="active-keyword-label"></span>
+            <button class="filter-chip__remove" id="clear-filter-btn" aria-label="Clear keyword filter">&#x2715;</button>
+          </span>
+        </div>
+
+        <div class="table-wrap">
+          <table class="m3-table">
+            <thead>
+<tr>
+  <th>Title</th>
+  <th>Corresponding Team Member</th>
+  <th>Lab or Team</th>
+  <th>Source Type</th>
+  <th>Project / Publication Date</th>
+</tr>
+              </tr>
+            </thead>
+            <tbody id="submissions-body">
+              <tr>
+<td colspan="5" class="loading-cell">Loading submissions…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

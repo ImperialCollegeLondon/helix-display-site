@@ -1,0 +1,48 @@
+name: Update submissions
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-submissions
+  cancel-in-progress: true
+
+jobs:
+  update-submissions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site data from Qualtrics
+        env:
+          QUALTRICS_API_TOKEN: ${{ secrets.QUALTRICS_API_TOKEN }}
+          QUALTRICS_DATA_CENTER: ${{ secrets.QUALTRICS_DATA_CENTER }}
+          QUALTRICS_SURVEY_ID: ${{ secrets.QUALTRICS_SURVEY_ID }}
+        run: python scripts/build_site_data.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/submissions.json images/
+          git diff --cached --quiet && exit 0
+          git commit -m "Update submissions"
+          git pull --rebase --strategy-option=theirs origin main
+          git push origin HEAD:main
