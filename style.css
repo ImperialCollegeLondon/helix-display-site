@@ -53,6 +53,10 @@ input {
   border-top: 4px solid var(--helix-teal);
 }
 
+.table-embed .app-shell {
+  border-top: 0;
+}
+
 .top-bar {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -126,6 +130,11 @@ input {
   padding: 18px 20px 34px;
 }
 
+.table-embed .page-content {
+  max-width: none;
+  padding: 0;
+}
+
 .hero-card {
   margin-bottom: 20px;
   padding-bottom: 18px;
@@ -164,6 +173,7 @@ input {
 }
 
 .instructions-block h2,
+.table-card__header h1,
 .table-card__header h2,
 .detail-card h2 {
   margin: 0;
@@ -212,6 +222,10 @@ input {
 
 .table-card {
   overflow: hidden;
+}
+
+.table-embed .table-card {
+  border-radius: 0;
 }
 
 .table-card__header {

@@ -5,20 +5,6 @@ function scheduleEmbedResize() {
   window.HelixEmbed?.scheduleResize();
 }
 
-function applySiteConfig() {
-  const config = window.SITE_CONFIG || {};
-  const gptLink = document.getElementById("gpt-link");
-  const submissionLink = document.getElementById("submission-link");
-
-  if (gptLink && config.gptHelperUrl) {
-    gptLink.href = config.gptHelperUrl;
-  }
-
-  if (submissionLink && config.submissionFormUrl) {
-    submissionLink.href = config.submissionFormUrl;
-  }
-}
-
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -177,5 +163,4 @@ async function loadSubmissions() {
   }
 }
 
-applySiteConfig();
 loadSubmissions();

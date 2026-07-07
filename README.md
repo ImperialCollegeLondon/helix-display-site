@@ -1,16 +1,15 @@
 # LASSOO Accessible Summaries Embed
 
-This repository hosts the embeddable display website for Accessible AI Assisted Summaries submitted to the UK Dementia Research Institute Centre for Care Research & Technology. It is designed to be published with GitHub Pages and embedded inside the Helix Centre website.
+This repository hosts the embeddable publication table for Accessible AI Assisted Summaries submitted to the UK Dementia Research Institute Centre for Care Research & Technology. It is designed to be published with GitHub Pages and embedded inside the Helix Centre website.
 
 The site provides:
 
-- a Helix-compatible embeddable interface
+- a Helix-compatible embeddable publication table
 - a browsable table of submitted summaries
 - keyword filtering on the main table
 - a detail page for each entry with keyword chips
 - uploaded image display
 - project and publication metadata
-- links to the submission form and DAISy-based summary helper
 
 The site is published through GitHub Pages and updated automatically from Qualtrics using GitHub Actions.
 
@@ -61,11 +60,11 @@ Add this where the LASSOO display should appear on `helixcentre.com`:
 ```html
 <iframe
   id="helix-lassoo-embed"
-  title="LASSOO accessible summaries"
+  title="LASSOO publication table"
   src="https://imperialcollegelondon.github.io/helix-display-site/"
   loading="lazy"
   referrerpolicy="strict-origin-when-cross-origin"
-  style="width: 100%; min-height: 720px; border: 0; display: block;"
+  style="width: 100%; min-height: 420px; border: 0; display: block;"
 ></iframe>
 
 <script>
@@ -124,7 +123,7 @@ OPERATING_GUIDE.md                          Day-to-day maintenance guide
 
 ## Public links
 
-Public links shown on the site are stored in:
+Optional public links for the submission form and DAISy-based summary helper are stored in:
 
 `config.js`
 
