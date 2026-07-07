@@ -1,3 +1,7 @@
+function scheduleEmbedResize() {
+  window.HelixEmbed?.scheduleResize();
+}
+
 function getQueryParam(name) {
   const params = new URLSearchParams(window.location.search);
   return params.get(name);
@@ -12,6 +16,10 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function navigateToEntry(id) {
+  window.location.href = `entry.html?id=${encodeURIComponent(id)}`;
+}
+
 async function loadKeywordPage() {
   const keyword = getQueryParam("keyword");
 
@@ -24,8 +32,12 @@ async function loadKeywordPage() {
 
   try {
     const response = await fetch("data/submissions.json");
-    const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(`Submissions request failed with ${response.status}`);
+    }
+
+    const data = await response.json();
     const items = (Array.isArray(data) ? data : []).filter(item =>
       Array.isArray(item.keywords) && item.keywords.includes(keyword)
     );
@@ -49,34 +61,44 @@ function renderKeywordTable(items) {
         <td colspan="5" class="loading-cell">No related submissions found.</td>
       </tr>
     `;
+    scheduleEmbedResize();
     return;
   }
 
   tbody.innerHTML = items.map(item => `
-    <tr class="table-row-link" data-id="${item.response_id}">
-      <td>${escapeHtml(item.title || "Untitled")}</td>
-      <td>${escapeHtml(item.corresponding_team_member || "—")}</td>
-      <td>${escapeHtml(item.lab_or_team || "—")}</td>
-      <td>${escapeHtml(item.source_type || "—")}</td>
-      <td>${escapeHtml(item.project_date || "—")}</td>
+    <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
+      <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
+      <td data-label="Corresponding team member">${escapeHtml(item.corresponding_team_member || "-")}</td>
+      <td data-label="Lab or team">${escapeHtml(item.lab_or_team || "-")}</td>
+      <td data-label="Source type">${escapeHtml(item.source_type || "-")}</td>
+      <td data-label="Project / publication date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
   `).join("");
 
   document.querySelectorAll(".table-row-link").forEach(row => {
     row.addEventListener("click", () => {
-      const id = row.getAttribute("data-id");
-      window.location.href = `entry.html?id=${encodeURIComponent(id)}`;
+      navigateToEntry(row.getAttribute("data-id"));
+    });
+
+    row.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        navigateToEntry(row.getAttribute("data-id"));
+      }
     });
   });
+
+  scheduleEmbedResize();
 }
 
 function renderEmpty(message) {
   document.getElementById("keyword-results-count").textContent = "0 related submissions";
   document.getElementById("keyword-submissions-body").innerHTML = `
     <tr>
-      <td colspan="5" class="loading-cell">${message}</td>
+      <td colspan="5" class="loading-cell">${escapeHtml(message)}</td>
     </tr>
   `;
+  scheduleEmbedResize();
 }
 
 loadKeywordPage();

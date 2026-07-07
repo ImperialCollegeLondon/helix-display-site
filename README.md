@@ -1,9 +1,10 @@
-# UK DRI Centre for Care Research & Technology Accessible AI Assisted Summaries
+# LASSOO Accessible Summaries Embed
 
-This repository hosts the display website for Accessible AI Assisted Summaries submitted to the UK Dementia Research Institute Centre for Care Research & Technology.
+This repository hosts the embeddable display website for Accessible AI Assisted Summaries submitted to the UK Dementia Research Institute Centre for Care Research & Technology. It is designed to be published with GitHub Pages and embedded inside the Helix Centre website.
 
 The site provides:
 
+- a Helix-compatible embeddable interface
 - a browsable table of submitted summaries
 - keyword filtering on the main table
 - a detail page for each entry with keyword chips
@@ -17,11 +18,12 @@ The site is published through GitHub Pages and updated automatically from Qualtr
 
 ## What this repository contains
 
-This repository contains the files needed to serve the public-facing display website, including:
+This repository contains the files needed to serve the embeddable public-facing display website, including:
 
 - HTML pages
 - CSS styling
 - JavaScript
+- iframe resize helper
 - display data in JSON format
 - public image files
 - branding assets
@@ -46,9 +48,47 @@ Qualtrics credentials are stored securely as **GitHub repository secrets**.
 
 ---
 
-## How the site works
+## How the embed works
 
-The website is a static site hosted with GitHub Pages.
+The website is a static site hosted with GitHub Pages. The iframe content sends a small `postMessage` event to its parent page whenever its height changes, allowing the Helix Centre page to resize the iframe and avoid nested scrolling.
+
+Default GitHub Pages URL:
+
+`https://imperialcollegelondon.github.io/helix-display-site/`
+
+Add this where the LASSOO display should appear on `helixcentre.com`:
+
+```html
+<iframe
+  id="helix-lassoo-embed"
+  title="LASSOO accessible summaries"
+  src="https://imperialcollegelondon.github.io/helix-display-site/"
+  loading="lazy"
+  referrerpolicy="strict-origin-when-cross-origin"
+  style="width: 100%; min-height: 720px; border: 0; display: block;"
+></iframe>
+
+<script>
+  (function () {
+    const iframe = document.getElementById("helix-lassoo-embed");
+    const allowedOrigin = "https://imperialcollegelondon.github.io";
+
+    window.addEventListener("message", function (event) {
+      const data = event.data || {};
+
+      if (event.origin !== allowedOrigin) return;
+      if (data.type !== "helix-display-site:resize") return;
+      if (typeof data.height !== "number") return;
+
+      iframe.style.height = Math.max(520, Math.ceil(data.height)) + "px";
+    });
+  })();
+</script>
+```
+
+If the repository later moves to a custom domain, update both the iframe `src` and `allowedOrigin`.
+
+## How the site works
 
 The displayed content is stored in:
 
@@ -68,6 +108,7 @@ keyword.html                                Legacy keyword page (no longer linke
 style.css                                   Site styling
 script.js                                   Logic for loading/rendering the table and keyword filter
 entry.js                                    Logic for loading/rendering single entries
+embed.js                                    Iframe resize helper used by the Helix Centre embed
 config.js                                   Public-facing links (submission form / DAISy helper)
 ukdri-logo.png                              Branding asset
 data/submissions.json                       Display data for the site

@@ -1,17 +1,41 @@
+function scheduleEmbedResize() {
+  window.HelixEmbed?.scheduleResize();
+}
+
 function getQueryParam(name) {
   const params = new URLSearchParams(window.location.search);
   return params.get(name);
 }
 
-function formatDate(dateString) {
-  if (!dateString) return "—";
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return dateString;
-  return date.toLocaleString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
+function isPublicUrl(value) {
+  try {
+    const url = new URL(value, window.location.href);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function setText(id, value) {
+  const element = document.getElementById(id);
+
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function renderAnchor(container, href, label, options = {}) {
+  const anchor = document.createElement("a");
+  anchor.className = options.className || "property-link";
+  anchor.href = href;
+  anchor.textContent = label;
+
+  if (options.external) {
+    anchor.target = "_blank";
+    anchor.rel = "noopener";
+  }
+
+  container.replaceChildren(anchor);
 }
 
 async function loadEntry() {
@@ -24,8 +48,12 @@ async function loadEntry() {
 
   try {
     const response = await fetch("data/submissions.json");
-    const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(`Submissions request failed with ${response.status}`);
+    }
+
+    const data = await response.json();
     const entry = (Array.isArray(data) ? data : []).find(item => item.response_id === id);
 
     if (!entry) {
@@ -41,74 +69,89 @@ async function loadEntry() {
 }
 
 function renderNotFound(message) {
-  document.getElementById("entry-title").textContent = "Entry unavailable";
-  document.getElementById("entry-subtitle").textContent = message;
-  document.getElementById("short-description-content").textContent = message;
-  document.getElementById("lay-summary-content").textContent = message;
-  document.getElementById("entry-header").classList.add("empty-image");
+  setText("entry-title", "Entry unavailable");
+  setText("entry-subtitle", message);
+  setText("short-description-content", message);
+  setText("lay-summary-content", message);
+  document.getElementById("entry-header")?.classList.add("empty-image");
+  scheduleEmbedResize();
 }
 
 function renderEntry(entry) {
   document.title = entry.title
-    ? `${entry.title} | UK DRI Centre for Care Research & Technology`
-    : "Accessible AI Assisted Summary Entry";
+    ? `${entry.title} | LASSOO`
+    : "LASSOO Summary | Helix Centre";
 
-  document.getElementById("entry-title").textContent = entry.title || "Untitled";
-  document.getElementById("entry-subtitle").textContent =
-    `${entry.lab_or_team || "—"} • ${entry.source_type || "—"} • ${entry.project_date || "—"}`;
+  setText("entry-title", entry.title || "Untitled");
+  setText(
+    "entry-subtitle",
+    `${entry.lab_or_team || "-"} | ${entry.source_type || "-"} | ${entry.project_date || "-"}`
+  );
 
-  document.getElementById("prop-team").textContent = entry.lab_or_team || "—";
-  document.getElementById("prop-type").textContent = entry.source_type || "—";
-  document.getElementById("prop-date").textContent = entry.project_date || "—";
-  document.getElementById("prop-contact-name").textContent = entry.corresponding_team_member || "—";
+  setText("prop-team", entry.lab_or_team || "-");
+  setText("prop-type", entry.source_type || "-");
+  setText("prop-date", entry.project_date || "-");
+  setText("prop-contact-name", entry.corresponding_team_member || "-");
+  setText("prop-acknowledgements", entry.acknowledgements || "-");
+  setText("short-description-content", entry.short_description || "No short description provided.");
+  setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
+
   const emailEl = document.getElementById("prop-contact-email");
-  if (entry.contact_email) {
-    emailEl.innerHTML = `<a class="property-link" href="mailto:${entry.contact_email}">${entry.contact_email}</a>`;
-  } else {
-    emailEl.textContent = "—";
+
+  if (emailEl) {
+    if (entry.contact_email) {
+      renderAnchor(emailEl, `mailto:${entry.contact_email}`, entry.contact_email);
+    } else {
+      emailEl.textContent = "-";
+    }
   }
-  document.getElementById("prop-acknowledgements").textContent = entry.acknowledgements || "—";
-
-  const shortDescriptionEl = document.getElementById("short-description-content");
-  const laySummaryEl = document.getElementById("lay-summary-content");
-
-  shortDescriptionEl.textContent = entry.short_description || "No short description provided.";
-  laySummaryEl.textContent = entry.lay_summary || "No lay summary provided.";
 
   const linkContainer = document.getElementById("prop-link");
   const linkRow = document.getElementById("prop-link-row");
 
   if (linkContainer && linkRow) {
-    if (entry.link) {
-      linkContainer.innerHTML = `<a class="property-link" href="${entry.link}" target="_blank" rel="noopener">Link to full paper / work</a>`;
-      linkRow.style.display = "block";
+    if (entry.link && isPublicUrl(entry.link)) {
+      renderAnchor(linkContainer, entry.link, "Link to full paper / work", { external: true });
+      linkRow.hidden = false;
     } else {
-      linkRow.style.display = "none";
+      linkRow.hidden = true;
     }
   }
+
   const keywordsRow = document.getElementById("prop-keywords-row");
   const keywordsContainer = document.getElementById("prop-keywords");
 
   if (keywordsRow && keywordsContainer) {
+    keywordsContainer.replaceChildren();
+
     if (Array.isArray(entry.keywords) && entry.keywords.length) {
-      keywordsContainer.innerHTML = entry.keywords
-        .map(keyword => `<a class="keyword-chip" href="index.html?keyword=${encodeURIComponent(keyword)}">${keyword}</a>`)
-        .join("");
-      keywordsRow.style.display = "block";
+      entry.keywords.forEach(keyword => {
+        const chip = document.createElement("a");
+        chip.className = "keyword-chip";
+        chip.href = `index.html?keyword=${encodeURIComponent(keyword)}`;
+        chip.textContent = keyword;
+        keywordsContainer.appendChild(chip);
+      });
+
+      keywordsRow.hidden = false;
     } else {
-      keywordsRow.style.display = "none";
+      keywordsRow.hidden = true;
     }
   }
-	
+
   const image = document.getElementById("entry-image");
   const header = document.getElementById("entry-header");
 
-  if (entry.image_path) {
-    image.src = entry.image_path;
-    image.alt = entry.title ? `Image for ${entry.title}` : "Entry image";
-  } else {
-    header.classList.add("empty-image");
+  if (image && header) {
+    if (entry.image_path) {
+      image.src = entry.image_path;
+      image.alt = entry.title ? `Image for ${entry.title}` : "Entry image";
+    } else {
+      header.classList.add("empty-image");
+    }
   }
+
+  scheduleEmbedResize();
 }
 
 loadEntry();

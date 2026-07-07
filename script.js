@@ -1,9 +1,12 @@
 let allSubmissions = [];
 let activeKeyword = null;
 
+function scheduleEmbedResize() {
+  window.HelixEmbed?.scheduleResize();
+}
+
 function applySiteConfig() {
   const config = window.SITE_CONFIG || {};
-
   const gptLink = document.getElementById("gpt-link");
   const submissionLink = document.getElementById("submission-link");
 
@@ -16,50 +19,6 @@ function applySiteConfig() {
   }
 }
 
-function formatDate(dateString) {
-  if (!dateString) return "—";
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return dateString;
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
-}
-
-function renderTable(rows) {
-  const tbody = document.getElementById("submissions-body");
-  const count = document.getElementById("results-count");
-
-  count.textContent = `${rows.length} submission${rows.length === 1 ? "" : "s"}`;
-
-  if (!rows.length) {
-    tbody.innerHTML = `
-      <tr>
-<td colspan="5" class="loading-cell">No submissions found.</td>
-      </tr>
-    `;
-    return;
-  }
-
-  tbody.innerHTML = rows.map(item => `
-    <tr class="table-row-link" data-id="${item.response_id}">
-      <td>${escapeHtml(item.title || "Untitled")}</td>
-      <td>${escapeHtml(item.corresponding_team_member || "—")}</td>
-      <td>${escapeHtml(item.lab_or_team || "—")}</td>
-      <td>${escapeHtml(item.source_type || "—")}</td>
-      <td>${escapeHtml(item.project_date || "—")}</td>
-    </tr>
-  `).join("");
-
-  document.querySelectorAll(".table-row-link").forEach(row => {
-    row.addEventListener("click", () => {
-      const id = row.getAttribute("data-id");
-      window.location.href = `entry.html?id=${encodeURIComponent(id)}`;
-    });
-  });
-}
-
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -69,12 +28,63 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function navigateToEntry(id) {
+  window.location.href = `entry.html?id=${encodeURIComponent(id)}`;
+}
+
+function renderTable(rows) {
+  const tbody = document.getElementById("submissions-body");
+  const count = document.getElementById("results-count");
+
+  if (!tbody || !count) {
+    return;
+  }
+
+  count.textContent = `${rows.length} submission${rows.length === 1 ? "" : "s"}`;
+
+  if (!rows.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="loading-cell">No submissions found.</td>
+      </tr>
+    `;
+    scheduleEmbedResize();
+    return;
+  }
+
+  tbody.innerHTML = rows.map(item => `
+    <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
+      <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
+      <td data-label="Corresponding team member">${escapeHtml(item.corresponding_team_member || "-")}</td>
+      <td data-label="Lab or team">${escapeHtml(item.lab_or_team || "-")}</td>
+      <td data-label="Source type">${escapeHtml(item.source_type || "-")}</td>
+      <td data-label="Project / publication date">${escapeHtml(item.project_date || "-")}</td>
+    </tr>
+  `).join("");
+
+  document.querySelectorAll(".table-row-link").forEach(row => {
+    row.addEventListener("click", () => {
+      navigateToEntry(row.getAttribute("data-id"));
+    });
+
+    row.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        navigateToEntry(row.getAttribute("data-id"));
+      }
+    });
+  });
+
+  scheduleEmbedResize();
+}
+
 function getFilteredRows() {
   let rows = activeKeyword
     ? allSubmissions.filter(item => Array.isArray(item.keywords) && item.keywords.includes(activeKeyword))
     : allSubmissions;
 
   const query = document.getElementById("search-input")?.value.trim().toLowerCase();
+
   if (query) {
     rows = rows.filter(item =>
       [
@@ -108,9 +118,9 @@ function setKeywordFilter(keyword) {
 
   if (activeKeyword && filterBar && filterLabel) {
     filterLabel.textContent = activeKeyword;
-    filterBar.style.display = "flex";
+    filterBar.hidden = false;
   } else if (filterBar) {
-    filterBar.style.display = "none";
+    filterBar.hidden = true;
   }
 
   renderTable(getFilteredRows());
@@ -126,8 +136,12 @@ function clearKeywordFilter() {
 async function loadSubmissions() {
   try {
     const response = await fetch("data/submissions.json");
-    const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(`Submissions request failed with ${response.status}`);
+    }
+
+    const data = await response.json();
     allSubmissions = Array.isArray(data) ? data : [];
 
     allSubmissions.sort((a, b) => {
@@ -139,16 +153,27 @@ async function loadSubmissions() {
     const keyword = new URLSearchParams(window.location.search).get("keyword");
     setKeywordFilter(keyword);
 
-    document.getElementById("search-input").addEventListener("input", handleSearch);
+    document.getElementById("search-input")?.addEventListener("input", handleSearch);
     document.getElementById("clear-filter-btn")?.addEventListener("click", clearKeywordFilter);
   } catch (error) {
     console.error(error);
-    document.getElementById("submissions-body").innerHTML = `
-      <tr>
-        <td colspan="4" class="loading-cell">Could not load submissions.</td>
-      </tr>
-    `;
-    document.getElementById("results-count").textContent = "Error loading data";
+
+    const tbody = document.getElementById("submissions-body");
+    const count = document.getElementById("results-count");
+
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" class="loading-cell">Could not load submissions.</td>
+        </tr>
+      `;
+    }
+
+    if (count) {
+      count.textContent = "Error loading data";
+    }
+
+    scheduleEmbedResize();
   }
 }
 
