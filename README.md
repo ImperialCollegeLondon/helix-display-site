@@ -109,7 +109,8 @@ script.js                                   Logic for loading/rendering the tabl
 entry.js                                    Logic for loading/rendering single entries
 embed.js                                    Iframe resize helper used by the Helix Centre embed
 config.js                                   Public-facing links (submission form / DAISy helper)
-ukdri-logo.png                              Branding asset
+helix-logo.png                              Branding asset
+fonts/                                       Circular typeface (Book/Bold + italics, woff2)
 data/submissions.json                       Display data for the site
 images/                                     Uploaded images used by entries (auto-compressed to JPEG ≤1200px)
 scripts/build_site_data.py                  Qualtrics-to-site data build script
