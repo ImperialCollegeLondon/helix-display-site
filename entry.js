@@ -79,8 +79,8 @@ function renderNotFound(message) {
 
 function renderEntry(entry) {
   document.title = entry.title
-    ? `${entry.title} | LASSOO`
-    : "LASSOO Summary | Helix Centre";
+    ? `${entry.title} | Publication Summaries`
+    : "Publication Summary | Helix Centre";
 
   setText("entry-title", entry.title || "Untitled");
   setText(

@@ -1,4 +1,4 @@
-# LASSOO Accessible Summaries Embed
+# Publication Summaries Embed
 
 This repository hosts the embeddable publication table for Accessible AI Assisted Summaries submitted to the UK Dementia Research Institute Centre for Care Research & Technology. It is designed to be published with GitHub Pages and embedded inside the Helix Centre website.
 
@@ -55,12 +55,12 @@ Default GitHub Pages URL:
 
 `https://imperialcollegelondon.github.io/helix-display-site/`
 
-Add this where the LASSOO display should appear on `helixcentre.com`:
+Add this where the Publication Summaries display should appear on `helixcentre.com`:
 
 ```html
 <iframe
-  id="helix-lassoo-embed"
-  title="LASSOO publication table"
+  id="helix-publication-summaries-embed"
+  title="Publication Summaries"
   src="https://imperialcollegelondon.github.io/helix-display-site/"
   loading="lazy"
   referrerpolicy="strict-origin-when-cross-origin"
@@ -69,7 +69,7 @@ Add this where the LASSOO display should appear on `helixcentre.com`:
 
 <script>
   (function () {
-    const iframe = document.getElementById("helix-lassoo-embed");
+    const iframe = document.getElementById("helix-publication-summaries-embed");
     const allowedOrigin = "https://imperialcollegelondon.github.io";
 
     window.addEventListener("message", function (event) {
