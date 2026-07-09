@@ -70,11 +70,22 @@ async function loadEntry() {
 
 function renderNotFound(message) {
   setText("entry-title", "Entry unavailable");
-  setText("entry-subtitle", message);
+  setText("entry-meta", message);
   setText("short-description-content", message);
   setText("lay-summary-content", message);
   document.getElementById("entry-header")?.classList.add("empty-image");
   scheduleEmbedResize();
+}
+
+function addDetailRow(container, label, render) {
+  const dt = document.createElement("dt");
+  dt.textContent = label;
+
+  const dd = document.createElement("dd");
+  render(dd);
+
+  container.appendChild(dt);
+  container.appendChild(dd);
 }
 
 function renderEntry(entry) {
@@ -84,44 +95,15 @@ function renderEntry(entry) {
 
   setText("entry-title", entry.title || "Untitled");
   setText(
-    "entry-subtitle",
-    `${entry.lab_or_team || "-"} | ${entry.source_type || "-"} | ${entry.project_date || "-"}`
+    "entry-meta",
+    [entry.lab_or_team, entry.source_type, entry.project_date].filter(Boolean).join(" · ") || "-"
   );
-
-  setText("prop-team", entry.lab_or_team || "-");
-  setText("prop-type", entry.source_type || "-");
-  setText("prop-date", entry.project_date || "-");
-  setText("prop-contact-name", entry.corresponding_team_member || "-");
-  setText("prop-acknowledgements", entry.acknowledgements || "-");
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
 
-  const emailEl = document.getElementById("prop-contact-email");
+  const keywordsContainer = document.getElementById("entry-keywords");
 
-  if (emailEl) {
-    if (entry.contact_email) {
-      renderAnchor(emailEl, `mailto:${entry.contact_email}`, entry.contact_email);
-    } else {
-      emailEl.textContent = "-";
-    }
-  }
-
-  const linkContainer = document.getElementById("prop-link");
-  const linkRow = document.getElementById("prop-link-row");
-
-  if (linkContainer && linkRow) {
-    if (entry.link && isPublicUrl(entry.link)) {
-      renderAnchor(linkContainer, entry.link, "Link to full paper / work", { external: true });
-      linkRow.hidden = false;
-    } else {
-      linkRow.hidden = true;
-    }
-  }
-
-  const keywordsRow = document.getElementById("prop-keywords-row");
-  const keywordsContainer = document.getElementById("prop-keywords");
-
-  if (keywordsRow && keywordsContainer) {
+  if (keywordsContainer) {
     keywordsContainer.replaceChildren();
 
     if (Array.isArray(entry.keywords) && entry.keywords.length) {
@@ -133,10 +115,42 @@ function renderEntry(entry) {
         keywordsContainer.appendChild(chip);
       });
 
-      keywordsRow.hidden = false;
+      keywordsContainer.hidden = false;
     } else {
-      keywordsRow.hidden = true;
+      keywordsContainer.hidden = true;
     }
+  }
+
+  const details = document.getElementById("entry-details");
+
+  if (details) {
+    details.replaceChildren();
+
+    if (entry.corresponding_team_member) {
+      addDetailRow(details, "Corresponding team member", dd => {
+        dd.textContent = entry.corresponding_team_member;
+      });
+    }
+
+    if (entry.contact_email) {
+      addDetailRow(details, "Contact", dd => {
+        renderAnchor(dd, `mailto:${entry.contact_email}`, entry.contact_email);
+      });
+    }
+
+    if (entry.link && isPublicUrl(entry.link)) {
+      addDetailRow(details, "Full paper / work", dd => {
+        renderAnchor(dd, entry.link, entry.link, { external: true });
+      });
+    }
+
+    if (entry.acknowledgements) {
+      addDetailRow(details, "Acknowledgements", dd => {
+        dd.textContent = entry.acknowledgements;
+      });
+    }
+
+    details.hidden = details.childElementCount === 0;
   }
 
   const image = document.getElementById("entry-image");
@@ -146,6 +160,7 @@ function renderEntry(entry) {
     if (entry.image_path) {
       image.src = entry.image_path;
       image.alt = entry.title ? `Image for ${entry.title}` : "Entry image";
+      header.classList.remove("empty-image");
     } else {
       header.classList.add("empty-image");
     }

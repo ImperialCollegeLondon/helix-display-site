@@ -23,79 +23,34 @@
 
     <main class="page-content">
       <div class="back-link-row">
-        <a class="m3-button m3-button--tonal back-button" href="index.html">Back to summaries</a>
+        <a class="m3-button m3-button--tonal back-button" href="index.html">&larr; Back to summaries</a>
       </div>
 
-      <section id="entry-header" class="entry-hero" aria-labelledby="entry-title">
-        <div class="entry-hero__image-wrap">
-          <img id="entry-image" class="entry-hero__image" alt="" loading="lazy" />
+      <article id="entry-header" aria-labelledby="entry-title">
+        <div class="entry-hero-image-wrap">
+          <img id="entry-image" class="entry-hero-image" alt="" loading="lazy" />
         </div>
-        <div class="entry-hero__content">
-          <p class="eyebrow">Accessible summary entry</p>
+
+        <div class="entry-article">
           <h1 id="entry-title">Loading...</h1>
-          <p id="entry-subtitle" class="hero-text"></p>
+          <p id="entry-meta" class="entry-meta">Loading...</p>
+
+          <div id="entry-keywords" class="entry-keywords" hidden></div>
+
+          <p id="short-description-content" class="entry-lede">Loading...</p>
+
+          <h2>Summary</h2>
+          <div id="lay-summary-content" class="entry-summary">Loading...</div>
+
+          <div id="entry-gallery" class="entry-gallery" hidden></div>
+
+          <dl id="entry-details" class="entry-details" hidden></dl>
         </div>
-      </section>
+      </article>
 
-      <section class="entry-layout" aria-label="Summary details">
-        <aside class="detail-card">
-          <h2>Properties</h2>
-          <dl class="properties-list">
-            <div class="property-row property-row--optional" id="prop-link-row" hidden>
-              <dd id="prop-link"></dd>
-            </div>
-
-            <div class="property-row">
-              <dt>Lab or team</dt>
-              <dd id="prop-team">-</dd>
-            </div>
-
-            <div class="property-row">
-              <dt>Source type</dt>
-              <dd id="prop-type">-</dd>
-            </div>
-
-            <div class="property-row">
-              <dt>Project / publication date</dt>
-              <dd id="prop-date">-</dd>
-            </div>
-
-            <div class="property-row">
-              <dt>Corresponding team member</dt>
-              <dd id="prop-contact-name">-</dd>
-            </div>
-
-            <div class="property-row">
-              <dt>Contact email</dt>
-              <dd id="prop-contact-email">-</dd>
-            </div>
-
-            <div class="property-row property-row--optional" id="prop-keywords-row" hidden>
-              <dt>Keywords</dt>
-              <dd id="prop-keywords"></dd>
-            </div>
-
-            <div class="property-row">
-              <dt>Acknowledgements</dt>
-              <dd id="prop-acknowledgements">-</dd>
-            </div>
-          </dl>
-        </aside>
-
-        <section class="detail-card detail-card--main">
-          <div class="short-description-card">
-            <p class="short-description-label">1-2 sentence summary</p>
-            <div id="short-description-content" class="short-description-content">
-              Loading...
-            </div>
-          </div>
-
-          <h2>Lay summary</h2>
-          <div id="lay-summary-content" class="summary-content">
-            Loading...
-          </div>
-        </section>
-      </section>
+      <div class="back-link-row back-link-row--bottom">
+        <a class="m3-button m3-button--tonal back-button" href="index.html">&larr; Back to summaries</a>
+      </div>
     </main>
   </div>
 
