@@ -291,7 +291,8 @@ def compress_image(path):
             if not has_transparency:
                 jpeg_path = os.path.splitext(path)[0] + ".jpg"
                 img.convert("RGB").save(jpeg_path, "JPEG", quality=82, optimize=True)
-                os.remove(path)
+                if jpeg_path != path:
+                    os.remove(path)
                 return jpeg_path
 
             img.save(path, optimize=True)
