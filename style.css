@@ -168,7 +168,6 @@ body.table-embed,
 }
 
 .hero-card {
-  max-width: 720px;
   margin-bottom: 20px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
@@ -448,7 +447,6 @@ body.table-embed,
 
 .entry-article {
   width: 100%;
-  max-width: 720px;
   margin: 0;
 }
 
