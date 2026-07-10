@@ -41,12 +41,39 @@
     frameRequest = window.requestAnimationFrame(postHeight);
   }
 
+  const navigateMessageType = "helix-display-site:navigate";
+
+  function postNavigation() {
+    if (!isEmbedded()) {
+      return;
+    }
+
+    const path = window.location.pathname.split("/").pop() || "index.html";
+    const params = new URLSearchParams(window.location.search);
+    const message = { type: navigateMessageType, page: "index" };
+
+    if (path === "entry.html" && params.get("id")) {
+      message.page = "entry";
+      message.id = params.get("id");
+    } else if (path === "keyword.html" && params.get("keyword")) {
+      message.page = "keyword";
+      message.keyword = params.get("keyword");
+    } else if (params.get("keyword")) {
+      message.page = "index";
+      message.keyword = params.get("keyword");
+    }
+
+    window.parent.postMessage(message, "*");
+  }
+
   window.HelixEmbed = {
     messageType,
+    navigateMessageType,
     scheduleResize
   };
 
   window.addEventListener("load", scheduleResize);
+  document.addEventListener("DOMContentLoaded", postNavigation);
   window.addEventListener("resize", scheduleResize);
 
   window.addEventListener("message", event => {
