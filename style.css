@@ -159,15 +159,16 @@ input {
 
 body.table-embed,
 .table-embed .app-shell {
-  background: #ececec;
+  background: transparent;
 }
 
 .table-embed .page-content {
   max-width: none;
-  padding: 20px 20px 24px;
+  padding: 0;
 }
 
 .hero-card {
+  max-width: 720px;
   margin-bottom: 20px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
@@ -251,7 +252,7 @@ body.table-embed,
 .table-embed .table-card {
   border: 0;
   border-radius: 0;
-  box-shadow: var(--card-shadow);
+  box-shadow: none;
 }
 
 .table-card__header {
@@ -447,6 +448,7 @@ body.table-embed,
 
 .entry-article {
   width: 100%;
+  max-width: 720px;
   margin: 0;
 }
 
