@@ -2,6 +2,22 @@
   const messageType = "helix-display-site:resize";
   let frameRequest = 0;
 
+  // Deep links on the site itself: #entry=<id> or #keyword=<name> on the
+  // homepage redirect to the matching page (mirrors the parent-page embed).
+  (function handleDeepLinkHash() {
+    const path = window.location.pathname.split("/").pop() || "index.html";
+    if (path !== "index.html") {
+      return;
+    }
+
+    const hash = window.location.hash.slice(1);
+    if (hash.indexOf("entry=") === 0) {
+      window.location.replace("entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6))));
+    } else if (hash.indexOf("keyword=") === 0) {
+      window.location.replace("keyword.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8))));
+    }
+  })();
+
   function isEmbedded() {
     return window.parent && window.parent !== window;
   }
