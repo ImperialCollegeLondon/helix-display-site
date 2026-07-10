@@ -51,14 +51,11 @@ async function loadKeywordPage() {
 
 function renderKeywordTable(items) {
   const tbody = document.getElementById("keyword-submissions-body");
-  const count = document.getElementById("keyword-results-count");
-
-  count.textContent = `${items.length} related submission${items.length === 1 ? "" : "s"}`;
 
   if (!items.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="loading-cell">No related submissions found.</td>
+        <td colspan="3" class="loading-cell">No related submissions found.</td>
       </tr>
     `;
     scheduleEmbedResize();
@@ -68,10 +65,8 @@ function renderKeywordTable(items) {
   tbody.innerHTML = items.map(item => `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
       <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
-      <td data-label="Corresponding team member">${escapeHtml(item.corresponding_team_member || "-")}</td>
-      <td data-label="Lab or team">${escapeHtml(item.lab_or_team || "-")}</td>
-      <td data-label="Source type">${escapeHtml(item.source_type || "-")}</td>
-      <td data-label="Project / publication date">${escapeHtml(item.project_date || "-")}</td>
+      <td data-label="Theme">${escapeHtml(item.theme || "-")}</td>
+      <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
   `).join("");
 
@@ -92,10 +87,9 @@ function renderKeywordTable(items) {
 }
 
 function renderEmpty(message) {
-  document.getElementById("keyword-results-count").textContent = "0 related submissions";
   document.getElementById("keyword-submissions-body").innerHTML = `
     <tr>
-      <td colspan="5" class="loading-cell">${escapeHtml(message)}</td>
+      <td colspan="3" class="loading-cell">${escapeHtml(message)}</td>
     </tr>
   `;
   scheduleEmbedResize();

@@ -96,7 +96,7 @@ function renderEntry(entry) {
   setText("entry-title", entry.title || "Untitled");
   setText(
     "entry-meta",
-    [entry.lab_or_team, entry.source_type, entry.project_date].filter(Boolean).join(" · ") || "-"
+    [entry.theme, entry.source_type, entry.project_date].filter(Boolean).join(" · ") || "-"
   );
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");

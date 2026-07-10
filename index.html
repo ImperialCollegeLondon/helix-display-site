@@ -13,13 +13,9 @@
     <main class="page-content" aria-label="Publication table">
       <section class="table-card" aria-label="Publication summaries">
         <div class="table-card__header">
-          <div>
-            <p id="results-count" class="muted-text">Loading...</p>
-          </div>
-
           <div class="table-actions">
             <label class="visually-hidden" for="search-input">Search submissions</label>
-            <input id="search-input" class="m3-input" type="search" placeholder="Search title, team, or type" autocomplete="off" />
+            <input id="search-input" class="m3-input" type="search" placeholder="Search title, theme, or keyword" autocomplete="off" />
           </div>
         </div>
 
@@ -36,15 +32,13 @@
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Corresponding team member</th>
-                <th>Lab or team</th>
-                <th>Source type</th>
-                <th>Project / publication date</th>
+                <th>Theme</th>
+                <th>Publication Date</th>
               </tr>
             </thead>
             <tbody id="submissions-body">
               <tr>
-                <td colspan="5" class="loading-cell">Loading submissions...</td>
+                <td colspan="3" class="loading-cell">Loading submissions...</td>
               </tr>
             </tbody>
           </table>

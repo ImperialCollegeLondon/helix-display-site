@@ -20,18 +20,15 @@ function navigateToEntry(id) {
 
 function renderTable(rows) {
   const tbody = document.getElementById("submissions-body");
-  const count = document.getElementById("results-count");
 
-  if (!tbody || !count) {
+  if (!tbody) {
     return;
   }
-
-  count.textContent = `${rows.length} submission${rows.length === 1 ? "" : "s"}`;
 
   if (!rows.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="loading-cell">No submissions found.</td>
+        <td colspan="3" class="loading-cell">No submissions found.</td>
       </tr>
     `;
     scheduleEmbedResize();
@@ -41,10 +38,8 @@ function renderTable(rows) {
   tbody.innerHTML = rows.map(item => `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
       <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
-      <td data-label="Corresponding team member">${escapeHtml(item.corresponding_team_member || "-")}</td>
-      <td data-label="Lab or team">${escapeHtml(item.lab_or_team || "-")}</td>
-      <td data-label="Source type">${escapeHtml(item.source_type || "-")}</td>
-      <td data-label="Project / publication date">${escapeHtml(item.project_date || "-")}</td>
+      <td data-label="Theme">${escapeHtml(item.theme || "-")}</td>
+      <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
   `).join("");
 
@@ -76,7 +71,7 @@ function getFilteredRows() {
       [
         item.title,
         item.corresponding_team_member,
-        item.lab_or_team,
+        item.theme,
         item.source_type,
         item.short_description,
         item.lay_summary,
@@ -145,18 +140,13 @@ async function loadSubmissions() {
     console.error(error);
 
     const tbody = document.getElementById("submissions-body");
-    const count = document.getElementById("results-count");
 
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="5" class="loading-cell">Could not load submissions.</td>
+          <td colspan="3" class="loading-cell">Could not load submissions.</td>
         </tr>
       `;
-    }
-
-    if (count) {
-      count.textContent = "Error loading data";
     }
 
     scheduleEmbedResize();

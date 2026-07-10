@@ -15,30 +15,54 @@ QUALTRICS_API_TOKEN = os.getenv("QUALTRICS_API_TOKEN")
 QUALTRICS_DATA_CENTER = os.getenv("QUALTRICS_DATA_CENTER")
 QUALTRICS_SURVEY_ID = os.getenv("QUALTRICS_SURVEY_ID")
 
+# Helix survey (SV_9LdgMtnBVbjZ1gq): QID8 "What are you summarising?" recode values
 SOURCE_TYPE_MAP = {
-    "1": "Single paper",
-    "2": "Multiple works / larger project",
-    "3": "Work in progress",
-    "4": "Other"
+    "6": "Academic paper",
+    "7": "Public report",
+    "8": "White paper",
+    "9": "Blog post",
+    "10": "Other"
 }
 
-LAB_TEAM_MAP = {
-    "1": "Barnaghi Lab",
-    "2": "Constandinou Lab",
-    "3": "Dijk Lab",
-    "4": "Freemont Lab",
-    "5": "Haar Lab",
-    "6": "Jaramillo Lab",
-    "7": "Lally Lab",
-    "8": "Scott Lab",
-    "9": "Sharp Lab",
-    "10": "Vaidyanathan Lab",
-    "16": "SABP",
-    "17": "Malhotra Lab",
-    "18": "Design Team",
-    "19": "Software Engineering Team",
-    "20": "Health & Social Care Translation",
-    "21": "Data Science Team"
+# QID12 "Which of our research themes are you submitting on behalf of?" recode values
+THEME_MAP = {
+    "1": "Enabling the shift to prevention",
+    "4": "PPIE",
+    "23": "Education",
+    "3": "Care in the community",
+    "5": "Designing for marginalised groups"
+}
+
+# Columns are resolved from the CSV label row (question text), so this works
+# whatever the export tags are. Substring match against the normalised label.
+FIELD_LABEL_PATTERNS = {
+    "title": "publication title",
+    "project_date": "date of publication",
+    "short_description": "1-2 sentence summary",
+    "lay_summary": "paste your lay summary",
+    "theme": "which of our research themes",
+    "acknowledgements": "acknowledgements",
+    "link": "insert a link to the full paper",
+    "corresponding_team_member": "corresponding team member for publication / project (name)",
+    "contact_email": "corresponding team member for publication / project (email)",
+}
+
+# Fallbacks if a label can't be matched (QIDs seen in the live Helix survey)
+DEFAULT_COLUMNS = {
+    "title": "QID2",
+    "project_date": "QID14",
+    "short_description": "QID15",
+    "lay_summary": "QID3",
+    "source_type": "QID8",
+    "source_type_other": "QID8_10_TEXT",
+    "theme": "QID12",
+    "acknowledgements": "QID10",
+    "link": "QID16",
+    "corresponding_team_member": "QID11",
+    "contact_email": "QID5",
+    "image_id": "QID7_Id",
+    "image_name": "QID7_Name",
+    "image_type": "QID7_Type",
 }
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -138,17 +162,56 @@ def download_export_file(file_id):
     return response.content
 
 
-def build_keyword_map(header_row, label_row):
+def normalise_label(label):
+    return " ".join(label.strip().lower().split())
+
+
+def resolve_columns(header_row, label_row):
+    """Map logical fields to CSV columns using the question-text label row."""
+    columns = {}
     keyword_map = {}
+
     for field, label in zip(header_row, label_row):
-        if not field.startswith("Keywords_"):
+        norm = normalise_label(label)
+
+        if norm.startswith("keywords"):
+            if " - " in label:
+                keyword_label = label.rsplit(" - ", 1)[-1].strip()
+                if keyword_label:
+                    keyword_map[field] = keyword_label
             continue
-        label = label.strip()
-        if " - " in label:
-            label = label.rsplit(" - ", 1)[-1].strip()
-        if label:
-            keyword_map[field] = label
-    return keyword_map
+
+        if norm.startswith("please upload a photo"):
+            if field.endswith("_Id"):
+                columns["image_id"] = field
+            elif field.endswith("_Name"):
+                columns["image_name"] = field
+            elif field.endswith("_Type"):
+                columns["image_type"] = field
+            continue
+
+        if norm.startswith("what are you summarising"):
+            if norm.endswith("text"):
+                columns["source_type_other"] = field
+            else:
+                columns.setdefault("source_type", field)
+            continue
+
+        for key, pattern in FIELD_LABEL_PATTERNS.items():
+            if key not in columns and pattern in norm:
+                columns[key] = field
+                break
+
+    for key, fallback in DEFAULT_COLUMNS.items():
+        if key not in columns and fallback in header_row:
+            columns[key] = fallback
+
+    missing = [key for key in DEFAULT_COLUMNS if key not in columns]
+    log(f"Resolved columns: {columns}")
+    if missing:
+        log(f"WARNING: could not resolve columns for: {missing}")
+
+    return columns, keyword_map
 
 
 def parse_csv_export(content):
@@ -169,26 +232,26 @@ def parse_csv_export(content):
     lines = text.splitlines()
     header_row = next(csv.reader([lines[0]]))
     label_row = next(csv.reader([lines[1]]))
-    keyword_map = build_keyword_map(header_row, label_row)
+    columns, keyword_map = resolve_columns(header_row, label_row)
     log(f"Detected {len(keyword_map)} keywords from survey: {list(keyword_map.values())}")
 
     reader = csv.DictReader(lines)
-    return list(reader), keyword_map
+    return list(reader), columns, keyword_map
 
 
-def get_real_rows(rows):
+def get_real_rows(rows, columns):
     real_rows = []
 
     for row in rows:
         response_id = row.get("ResponseId", "").strip()
-        finished = row.get("Finished", "").strip()
-        title = row.get("QID2", "").strip()
-        lay_summary = row.get("QID3", "").strip()
+        finished = row.get("Finished", "").strip().lower()
+        title = row.get(columns.get("title", ""), "").strip()
+        lay_summary = row.get(columns.get("lay_summary", ""), "").strip()
 
         if not response_id.startswith("R_"):
             continue
 
-        if finished != "1":
+        if finished not in ("1", "true"):
             continue
 
         if not title and not lay_summary:
@@ -262,25 +325,33 @@ def download_image(response_id, file_id, original_filename, content_type):
     return f"images/{os.path.basename(output_path)}"
 
 
-def convert_row(row, keyword_map):
+def convert_row(row, columns, keyword_map):
+    def col(key):
+        return row.get(columns.get(key, ""), "").strip()
+
     response_id = row.get("ResponseId", "").strip()
-    title = row.get("QID2", "").strip()
-    source_type_code = row.get("QID8", "").strip()
-    lab_or_team_code = row.get("QID12", "").strip()
-    short_description = row.get("QID15", "").strip()
-    lay_summary = row.get("QID3", "").strip()
-    acknowledgements = row.get("QID10", "").strip()
-    link = row.get("Link", "").strip()
-    corresponding_team_member = row.get("QID11", "").strip()
-    contact_email = row.get("QID5", "").strip()
-    project_date = row.get("QID14", "").strip()
+    title = col("title")
+    source_type_code = col("source_type")
+    source_type_other = col("source_type_other")
+    theme_code = col("theme")
+    short_description = col("short_description")
+    lay_summary = col("lay_summary")
+    acknowledgements = col("acknowledgements")
+    link = col("link")
+    corresponding_team_member = col("corresponding_team_member")
+    contact_email = col("contact_email")
+    project_date = col("project_date")
+
+    source_type = SOURCE_TYPE_MAP.get(source_type_code, source_type_code)
+    if source_type_code == "10" and source_type_other:
+        source_type = source_type_other
 
     keywords = extract_keywords(row, keyword_map)
     recorded_date = row.get("RecordedDate", "").strip()
 
-    file_id = row.get("_Id", "").strip()
-    original_filename = row.get("_Name", "").strip()
-    content_type = row.get("_Type", "").strip()
+    file_id = col("image_id")
+    original_filename = col("image_name")
+    content_type = col("image_type")
 
     image_path = ""
     if file_id:
@@ -291,8 +362,8 @@ def convert_row(row, keyword_map):
         "response_id": response_id,
         "recorded_date": recorded_date,
         "title": title or "Untitled",
-        "source_type": SOURCE_TYPE_MAP.get(source_type_code, source_type_code),
-        "lab_or_team": LAB_TEAM_MAP.get(lab_or_team_code, lab_or_team_code),
+        "source_type": source_type,
+        "theme": THEME_MAP.get(theme_code, theme_code),
         "project_date": project_date,
         "corresponding_team_member": corresponding_team_member,
         "contact_email": contact_email,
@@ -319,8 +390,8 @@ def main():
     content = download_export_file(file_id)
 
     log("Parsing CSV...")
-    rows, keyword_map = parse_csv_export(content)
-    real_rows = get_real_rows(rows)
+    rows, columns, keyword_map = parse_csv_export(content)
+    real_rows = get_real_rows(rows, columns)
 
     log(f"Found {len(real_rows)} real responses")
 
@@ -329,7 +400,7 @@ def main():
         try:
             response_id = row.get("ResponseId", "UNKNOWN")
             log(f"Processing {response_id}")
-            submission = convert_row(row, keyword_map)
+            submission = convert_row(row, columns, keyword_map)
             submissions.append(submission)
         except Exception as e:
             response_id = row.get("ResponseId", "UNKNOWN")

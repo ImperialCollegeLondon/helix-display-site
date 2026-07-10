@@ -272,6 +272,7 @@ input {
 
 .table-actions {
   flex: 0 1 340px;
+  margin-left: auto;
 }
 
 .m3-input {
@@ -423,7 +424,6 @@ input {
 
 .entry-hero-image-wrap {
   width: 100%;
-  height: 320px;
   margin: 0 0 28px;
   background: var(--surface-alt);
   overflow: hidden;
@@ -432,7 +432,8 @@ input {
 .entry-hero-image {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 460px;
   object-fit: cover;
 }
 
@@ -674,8 +675,11 @@ input {
   }
 
   .entry-hero-image-wrap {
-    height: 200px;
     margin-bottom: 20px;
+  }
+
+  .entry-hero-image {
+    max-height: 260px;
   }
 
   .entry-article h1 {
