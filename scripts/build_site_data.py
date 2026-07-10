@@ -69,6 +69,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 IMAGES_DIR = os.path.join(BASE_DIR, "images")
 OUTPUT_JSON = os.path.join(DATA_DIR, "submissions.json")
+REFS_JSON = os.path.join(DATA_DIR, "refs.json")
 
 
 def log(message):
@@ -376,6 +377,34 @@ def convert_row(row, columns, keyword_map):
         "image_path": image_path
     }
 
+def assign_refs(submissions):
+    """Give every submission a permanent short reference (001, 002, ...).
+
+    The register in data/refs.json maps response_id -> ref and is only ever
+    appended to, so a paper keeps its number forever and numbers are never
+    reused, even if earlier responses are deleted.
+    """
+    try:
+        with open(REFS_JSON, encoding="utf-8") as f:
+            refs = json.load(f)
+    except Exception:
+        refs = {}
+
+    next_number = max((int(value) for value in refs.values()), default=0) + 1
+
+    for submission in sorted(submissions, key=lambda s: s.get("recorded_date", "")):
+        response_id = submission["response_id"]
+        if response_id not in refs:
+            refs[response_id] = f"{next_number:03d}"
+            next_number += 1
+        submission["ref"] = refs[response_id]
+
+    with open(REFS_JSON, "w", encoding="utf-8") as f:
+        json.dump(refs, f, indent=2, sort_keys=True)
+
+    log(f"Assigned refs: {[s['ref'] for s in submissions]}")
+
+
 def main():
     validate_config()
     ensure_directories()
@@ -406,6 +435,8 @@ def main():
         except Exception as e:
             response_id = row.get("ResponseId", "UNKNOWN")
             log(f"Error processing {response_id}: {repr(e)}")
+
+    assign_refs(submissions)
 
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(submissions, f, indent=2, ensure_ascii=False)

@@ -40,8 +40,9 @@ function renderAnchor(container, href, label, options = {}) {
 
 async function loadEntry() {
   const id = getQueryParam("id");
+  const ref = getQueryParam("ref");
 
-  if (!id) {
+  if (!id && !ref) {
     renderNotFound("No entry ID provided.");
     return;
   }
@@ -54,7 +55,10 @@ async function loadEntry() {
     }
 
     const data = await response.json();
-    const entry = (Array.isArray(data) ? data : []).find(item => item.response_id === id);
+    const paddedRef = ref ? String(parseInt(ref, 10)).padStart(3, "0") : null;
+    const entry = (Array.isArray(data) ? data : []).find(item =>
+      (paddedRef && item.ref === paddedRef) || (id && item.response_id === id)
+    );
 
     if (!entry) {
       renderNotFound("Entry not found.");

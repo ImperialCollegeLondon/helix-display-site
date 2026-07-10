@@ -11,7 +11,9 @@
     }
 
     const hash = window.location.hash.slice(1);
-    if (hash.indexOf("entry=") === 0) {
+    if (/^\d+$/.test(hash)) {
+      window.location.replace("entry.html?ref=" + encodeURIComponent(hash));
+    } else if (hash.indexOf("entry=") === 0) {
       window.location.replace("entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6))));
     } else if (hash.indexOf("keyword=") === 0) {
       window.location.replace("keyword.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8))));
@@ -68,9 +70,14 @@
     const params = new URLSearchParams(window.location.search);
     const message = { type: navigateMessageType, page: "index" };
 
-    if (path === "entry.html" && params.get("id")) {
+    if (path === "entry.html" && (params.get("ref") || params.get("id"))) {
       message.page = "entry";
-      message.id = params.get("id");
+      if (params.get("ref")) {
+        message.ref = params.get("ref");
+      }
+      if (params.get("id")) {
+        message.id = params.get("id");
+      }
     } else if (path === "keyword.html" && params.get("keyword")) {
       message.page = "keyword";
       message.keyword = params.get("keyword");

@@ -16,8 +16,10 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function navigateToEntry(id) {
-  window.location.href = `entry.html?id=${encodeURIComponent(id)}`;
+function navigateToEntry(id, ref) {
+  window.location.href = ref
+    ? `entry.html?ref=${encodeURIComponent(ref)}`
+    : `entry.html?id=${encodeURIComponent(id)}`;
 }
 
 async function loadKeywordPage() {
@@ -63,7 +65,7 @@ function renderKeywordTable(items) {
   }
 
   tbody.innerHTML = items.map(item => `
-    <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
+    <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
       <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
       <td data-label="Theme">${escapeHtml(item.theme || "-")}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
@@ -72,13 +74,13 @@ function renderKeywordTable(items) {
 
   document.querySelectorAll(".table-row-link").forEach(row => {
     row.addEventListener("click", () => {
-      navigateToEntry(row.getAttribute("data-id"));
+      navigateToEntry(row.getAttribute("data-id"), row.getAttribute("data-ref"));
     });
 
     row.addEventListener("keydown", event => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        navigateToEntry(row.getAttribute("data-id"));
+        navigateToEntry(row.getAttribute("data-id"), row.getAttribute("data-ref"));
       }
     });
   });
