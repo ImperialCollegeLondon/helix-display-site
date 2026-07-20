@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "response_id": "R_2jAJDBJYBn4qZ1B",
+    "recorded_date": "2026-07-10 06:31:00",
+    "title": "Co-Design of a Digitally Enabled Habit-Formation Intervention for Community-Dwelling Older Adults with Pre-Frailty or Mild Frailty: A Mixed-Methods Feasibility Study",
+    "source_type": "Academic paper",
+    "theme": "Enabling the shift to prevention",
+    "project_date": "Apr 23, 2026",
+    "corresponding_team_member": "Tori Simpson",
+    "contact_email": "victoria.simpson22@imperial.ac.uk",
+    "acknowledgements": "Souradip Mookerjee;  Alex Dallman-Porter;  Tricia Tay;  Shuang Wu;  Gianpaolo Fusari;  Matthew Harrison;  Kate Grailey;  Jonathan James Gregory;  Michael Fertleman;  Ara Darzi;  Leila Shepherd",
+    "link": "https://preprints.jmir.org/preprint/99262",
+    "keywords": [
+      "Co-design",
+      "UX/UI design",
+      "Usability testing",
+      "Feasibility study",
+      "Frailty prevention",
+      "Community-based care"
+    ],
+    "short_description": "A co-designed app and wearable device programme helped older adults with early frailty move more, sit less, and grow stronger over several weeks, with almost everyone sticking with it.",
+    "lay_summary": "As people get older, some become \"frail\" — weaker, slower, and more likely to have falls or health setbacks. Programmes that combine exercise with lifestyle changes can help reverse this, but people often struggle to stick with them long-term. Researchers wanted to see whether combining digital tools with insights from behavioural science could help — and, importantly, whether designing the programme together with older adults themselves would make it work better.The team worked with 30 people aged 65 and over (average age 73) who showed early signs of frailty. Together with these participants, they built \"Healthy Habits\" — a programme combining a smartwatch, smart scales, and a sleep tracker with a mobile app that gave personalised feedback across seven everyday habits, such as activity and sleep. The programme was refined through four rounds of co-design with older adults before testing began. Participants used it for at least six weeks, with many choosing to continue for longer.The results were encouraging. Almost everyone stayed involved — 29 of the 30 participants were still taking part after six weeks, and most of them chose to keep going, some for up to a year. People wore their devices consistently, and most saw meaningful improvements: nearly 8 in 10 either walked more or sat less each day. Among those using the full app, most increased their daily steps noticeably within six weeks. Grip strength — a marker of physical strength — improved, and scores on a standard frailty scale dropped by nearly half.Overall, the study suggests that a digital programme designed in partnership with older adults can be both practical and appealing to use, and shows early promise for helping people become more active, less sedentary, and less frail. The next step would be a larger trial to confirm these benefits.",
+    "image_path": "images/R_2jAJDBJYBn4qZ1B.jpg",
+    "ref": "001"
+  }
+]
