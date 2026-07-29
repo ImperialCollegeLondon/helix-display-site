@@ -117,7 +117,10 @@ function renderEntry(entry) {
       meta.appendChild(pill);
     });
 
-    const rest = [entry.source_type, entry.project_date].filter(Boolean).join(" · ");
+    const dateText = [entry.project_date, entry.date_range_note]
+      .filter(Boolean)
+      .join(" · ");
+    const rest = [entry.source_type, dateText].filter(Boolean).join(" · ");
 
     if (rest) {
       const restEl = document.createElement("span");

@@ -223,10 +223,13 @@ async function loadSubmissions() {
     const data = await response.json();
     allSubmissions = Array.isArray(data) ? data : [];
 
+    // Newest publication first. Entries whose date couldn't be parsed (older
+    // free-text submissions) fall back to when they were submitted, so they
+    // still appear in a sensible place rather than jumping to the top.
     allSubmissions.sort((a, b) => {
-      const aDate = new Date(a.recorded_date || 0).getTime();
-      const bDate = new Date(b.recorded_date || 0).getTime();
-      return bDate - aDate;
+      const aDate = a.publication_date_iso || a.recorded_date || "";
+      const bDate = b.publication_date_iso || b.recorded_date || "";
+      return bDate.localeCompare(aDate);
     });
 
     const params = new URLSearchParams(window.location.search);

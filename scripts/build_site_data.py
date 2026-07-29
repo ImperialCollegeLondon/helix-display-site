@@ -1,11 +1,13 @@
 import os
 import io
+import re
 import csv
 import json
 import time
 import zipfile
 import requests
 import warnings
+from datetime import datetime
 from PIL import Image
 from urllib3.exceptions import NotOpenSSLWarning
 
@@ -31,6 +33,7 @@ SOURCE_TYPE_MAP = {
 FIELD_LABEL_PATTERNS = {
     "title": "publication title",
     "project_date": "date of publication",
+    "date_range_note": "if the work spans a period",
     "short_description": "1-2 sentence summary",
     "lay_summary": "paste your lay summary",
     "theme": "which of our themes",
@@ -169,6 +172,50 @@ def download_export_file(file_id):
 
 def normalise_label(label):
     return " ".join(label.strip().lower().split())
+
+
+# Accepted date spellings. The survey now uses a dd/mm/yyyy picker, but older
+# responses were free text, so several formats are tried before giving up.
+DATE_FORMATS = [
+    "%d/%m/%Y", "%d-%m-%Y", "%Y-%m-%d", "%Y/%m/%d",
+    # Commas are stripped before matching, so these have no comma in them.
+    "%d %B %Y", "%d %b %Y", "%B %d %Y", "%b %d %Y",
+    "%B %Y", "%b %Y", "%Y",
+]
+
+ORDINAL_PATTERN = re.compile(r"(\d{1,2})(st|nd|rd|th)\b", re.IGNORECASE)
+
+
+def parse_date(value):
+    """Return (iso_date, display_text) for a submitted date, or ("", value).
+
+    iso_date is used for sorting; display_text is a consistent "23 April 2026".
+    Anything unparseable is passed through unchanged so nothing is ever lost.
+    """
+    text = (value or "").strip()
+
+    if not text:
+        return "", ""
+
+    cleaned = ORDINAL_PATTERN.sub(r"\1", text).replace(",", " ")
+    cleaned = " ".join(cleaned.split())
+
+    for fmt in DATE_FORMATS:
+        try:
+            parsed = datetime.strptime(cleaned, fmt)
+        except ValueError:
+            continue
+
+        if fmt == "%Y":
+            return parsed.strftime("%Y-01-01"), parsed.strftime("%Y")
+        if fmt in ("%B %Y", "%b %Y"):
+            return parsed.strftime("%Y-%m-01"), parsed.strftime("%B %Y")
+
+        # %-d isn't portable, so strip a leading zero by hand.
+        return parsed.strftime("%Y-%m-%d"), f"{parsed.day} {parsed.strftime('%B %Y')}"
+
+    log(f"Could not parse date {text!r} — leaving it as typed")
+    return "", text
 
 
 def resolve_columns(header_row, label_row):
@@ -362,7 +409,9 @@ def convert_row(row, columns, multi_maps):
     link = col("link")
     corresponding_team_member = col("corresponding_team_member")
     contact_email = col("contact_email")
-    project_date = col("project_date")
+    project_date_raw = col("project_date")
+    date_range_note = col("date_range_note")
+    publication_date_iso, project_date = parse_date(project_date_raw)
 
     # With useLabels=true these already hold the choice text.
     theme = col("theme")
@@ -396,6 +445,8 @@ def convert_row(row, columns, multi_maps):
         "lead_or_contributed": lead_or_contributed,
         "helix_authors": helix_authors,
         "project_date": project_date,
+        "publication_date_iso": publication_date_iso,
+        "date_range_note": date_range_note,
         "corresponding_team_member": corresponding_team_member,
         "contact_email": contact_email,
         "acknowledgements": acknowledgements,

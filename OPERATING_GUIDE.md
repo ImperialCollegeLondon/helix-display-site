@@ -62,7 +62,8 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Which particular subproject…" | Project (filterable) |
 | "Was this publication Lead by Helix or Helix Contributed?" | "Helix involvement" on the detail page |
 | "What are you summarising?" | Source type (free text used if "Other") |
-| "Date of publication or dates when work was carried out?" | Publication Date |
+| "Date of publication, or the main date this work relates to" | Publication Date (dd/mm/yyyy picker — used to sort the table) |
+| "If the work spans a period…" | Shown after the date on the detail page, e.g. "September 2025 – ongoing" |
 | "1-2 sentence summary of work" | The italic lede |
 | "Please paste your lay summary below" | Summary |
 | "Helix Authors" | Authors under the title |
@@ -77,6 +78,14 @@ Only responses marked finished, with a title or summary, are shown.
 **Editing the survey is safe.** Because the export uses `useLabels`, adding/renaming/reordering options for themes, projects, authors or keywords flows through automatically. There is nothing to change in the code.
 
 **Rewording a question needs a check.** The wording patterns live in `FIELD_LABEL_PATTERNS` at the top of `scripts/build_site_data.py`. A small edit ("Which of our themes…" → "Which theme…") could stop a column being found: the workflow log prints `Resolved columns:` and a `WARNING: could not resolve columns for:` line if anything is missing. Update the pattern to match the new wording.
+
+---
+
+## Dates and table order
+
+The table is ordered by publication date, newest first. The survey asks for a single date via a dd/mm/yyyy picker; the build script converts it to a sortable form and displays every date consistently as "23 April 2026".
+
+Dates submitted before the picker existed were free text, so the script also understands formats like "Apr 23, 2026", "23rd April 2026", "April 2026" and "2026". Anything it can't read (for example "March – September 2025") is displayed exactly as typed and ordered by submission date instead — the run log says which values it couldn't read. If work spans a period, the optional period question is the right place for it, and it appears after the date on the detail page.
 
 ---
 
