@@ -181,6 +181,13 @@ function renderEntry(entry) {
       image.src = entry.image_path;
       image.alt = entry.title ? `Image for ${entry.title}` : "Entry image";
       header.classList.remove("empty-image");
+
+      // A broken or missing file should behave like no photo at all, rather
+      // than leaving an empty grey band on the page.
+      image.addEventListener("error", () => {
+        header.classList.add("empty-image");
+        scheduleEmbedResize();
+      }, { once: true });
     } else {
       header.classList.add("empty-image");
     }
