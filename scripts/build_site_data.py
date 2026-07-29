@@ -457,6 +457,45 @@ def convert_row(row, columns, multi_maps):
         "image_path": image_path
     }
 
+def count_existing_submissions():
+    try:
+        with open(OUTPUT_JSON, encoding="utf-8") as f:
+            return len(json.load(f))
+    except Exception:
+        return 0
+
+
+def check_not_wiping_everything(new_count):
+    """Refuse to publish an empty table over a non-empty one.
+
+    Deleting a response in Qualtrics should remove it from the site, and that
+    works because the data file is rebuilt from each export. But if an export
+    ever comes back empty for the wrong reason — a transient API problem, the
+    wrong survey ID, a filter change — the same mechanism would quietly wipe
+    every entry and delete every image. Failing the run instead leaves the
+    live site untouched and surfaces the problem in the Actions log.
+
+    Set ALLOW_EMPTY_SUBMISSIONS=1 if the survey really has been emptied.
+    """
+    previous_count = count_existing_submissions()
+
+    if new_count == 0 and previous_count > 0:
+        if os.getenv("ALLOW_EMPTY_SUBMISSIONS") == "1":
+            log(f"Export returned no responses; publishing anyway "
+                f"(ALLOW_EMPTY_SUBMISSIONS=1). {previous_count} entries will be removed.")
+            return
+
+        raise Exception(
+            f"Export returned no responses but the site currently shows "
+            f"{previous_count}. Refusing to publish an empty table. If the survey "
+            f"really is empty, re-run with ALLOW_EMPTY_SUBMISSIONS=1."
+        )
+
+    if previous_count and new_count < previous_count:
+        log(f"{previous_count - new_count} response(s) removed since the last run "
+            f"(deleted in Qualtrics or no longer complete).")
+
+
 def assign_refs(submissions):
     """Give every submission a permanent short reference (001, 002, ...).
 
@@ -516,6 +555,7 @@ def main():
             response_id = row.get("ResponseId", "UNKNOWN")
             log(f"Error processing {response_id}: {repr(e)}")
 
+    check_not_wiping_everything(len(submissions))
     assign_refs(submissions)
 
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
