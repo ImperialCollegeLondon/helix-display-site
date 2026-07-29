@@ -360,6 +360,34 @@ body.table-embed,
   line-height: 1.45;
 }
 
+/* Theme and project filters. The brand uses magenta for links, so these read
+   as links rather than buttons — lighter in a dense table than filled blocks. */
+.filter-pill {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--helix-pink);
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.filter-pill:hover,
+.filter-pill:focus {
+  color: var(--helix-navy);
+}
+
+.filter-pill:focus-visible {
+  outline: 2px solid rgba(4, 30, 66, 0.45);
+  outline-offset: 2px;
+}
+
 .cell-title {
   display: block;
 }
@@ -393,10 +421,15 @@ body.table-embed,
 .filter-bar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
-  padding: 10px 18px;
+  padding: 12px 20px;
   background: var(--surface-soft);
   border-bottom: 1px solid var(--border);
+}
+
+.filter-bar__label:not(:first-child) {
+  margin-left: 8px;
 }
 
 .filter-bar[hidden] {
@@ -418,6 +451,28 @@ body.table-embed,
   color: var(--surface);
   font-size: 0.88rem;
   font-weight: 700;
+}
+
+/* Active-filter chips echo the pill colours they came from. */
+.filter-chip--theme {
+  background: #b3e8e4;
+  color: var(--helix-navy);
+}
+
+.filter-chip--project {
+  background: #ffe8b3;
+  color: var(--helix-navy);
+}
+
+.filter-chip--theme .filter-chip__remove,
+.filter-chip--project .filter-chip__remove {
+  background: rgba(4, 30, 66, 0.14);
+  color: var(--helix-navy);
+}
+
+.filter-chip--theme .filter-chip__remove:hover,
+.filter-chip--project .filter-chip__remove:hover {
+  background: rgba(4, 30, 66, 0.24);
 }
 
 .filter-chip__remove {
@@ -531,9 +586,26 @@ body.table-embed,
 }
 
 .entry-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 0 0 16px;
   color: var(--text-secondary);
   font-size: 0.95rem;
+}
+
+a.filter-pill {
+  text-decoration: none;
+}
+
+a.filter-pill:hover,
+a.filter-pill:focus {
+  color: var(--helix-navy);
+}
+
+.entry-meta__text {
+  color: var(--text-secondary);
 }
 
 .entry-keywords {

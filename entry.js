@@ -98,12 +98,38 @@ function renderEntry(entry) {
     : "Publication Summary | Helix Centre";
 
   setText("entry-title", entry.title || "Untitled");
-  setText(
-    "entry-meta",
-    [entry.subproject, entry.theme, entry.source_type, entry.project_date]
-      .filter(Boolean)
-      .join(" · ") || "-"
-  );
+  const meta = document.getElementById("entry-meta");
+
+  if (meta) {
+    meta.replaceChildren();
+
+    // Project and theme link back to the table filtered by that value.
+    const pills = [
+      { value: entry.subproject, param: "project", className: "filter-pill--project" },
+      { value: entry.theme, param: "theme", className: "filter-pill--theme" }
+    ].filter(item => item.value);
+
+    pills.forEach(item => {
+      const pill = document.createElement("a");
+      pill.className = `filter-pill ${item.className}`;
+      pill.href = `index.html?${item.param}=${encodeURIComponent(item.value)}`;
+      pill.textContent = item.value;
+      meta.appendChild(pill);
+    });
+
+    const rest = [entry.source_type, entry.project_date].filter(Boolean).join(" · ");
+
+    if (rest) {
+      const restEl = document.createElement("span");
+      restEl.className = "entry-meta__text";
+      restEl.textContent = rest;
+      meta.appendChild(restEl);
+    }
+
+    if (!pills.length && !rest) {
+      meta.textContent = "-";
+    }
+  }
 
   const authors = document.getElementById("entry-authors");
 
