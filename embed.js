@@ -1,6 +1,7 @@
 (function () {
   const messageType = "helix-display-site:resize";
   let frameRequest = 0;
+  let resizeTimer = 0;
 
   // Deep links on the site itself: #entry=<id> or #keyword=<name> on the
   // homepage redirect to the matching page (mirrors the parent-page embed).
@@ -32,19 +33,35 @@
 
   function getPageHeight() {
     const body = document.body;
-    const html = document.documentElement;
+
+    if (!body) {
+      return 0;
+    }
+
+    // Measure the content only. The <html> element's clientHeight/scrollHeight
+    // are at least the height of the iframe itself, so including them meant the
+    // reported height could only ever grow — leaving white space under short
+    // pages. Measuring the body (plus its bottom margin) lets the frame shrink.
+    const rect = body.getBoundingClientRect();
+    const marginBottom = parseFloat(getComputedStyle(body).marginBottom) || 0;
 
     return Math.ceil(Math.max(
-      body ? body.scrollHeight : 0,
-      body ? body.offsetHeight : 0,
-      html ? html.clientHeight : 0,
-      html ? html.scrollHeight : 0,
-      html ? html.offsetHeight : 0
+      body.scrollHeight,
+      body.offsetHeight,
+      rect.height + marginBottom
     ));
   }
 
   function postHeight() {
-    frameRequest = 0;
+    if (frameRequest) {
+      window.cancelAnimationFrame(frameRequest);
+      frameRequest = 0;
+    }
+
+    if (resizeTimer) {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = 0;
+    }
 
     if (!isEmbedded()) {
       return;
@@ -58,11 +75,20 @@
   }
 
   function scheduleResize() {
+    // Both a frame callback and a timer: requestAnimationFrame is smoother,
+    // but browsers pause it while the iframe is scrolled out of view, which
+    // would leave an embed below the fold never reporting its height. The
+    // timer keeps working in that case; whichever fires first cancels the other.
     if (frameRequest) {
       window.cancelAnimationFrame(frameRequest);
     }
 
+    if (resizeTimer) {
+      window.clearTimeout(resizeTimer);
+    }
+
     frameRequest = window.requestAnimationFrame(postHeight);
+    resizeTimer = window.setTimeout(postHeight, 120);
   }
 
   const navigateMessageType = "helix-display-site:navigate";
@@ -74,7 +100,23 @@
 
     const path = window.location.pathname.split("/").pop() || "index.html";
     const params = new URLSearchParams(window.location.search);
-    const message = { type: navigateMessageType, page: "index" };
+    // Only ask the parent to scroll when this page was reached from another
+    // page of the tool (e.g. clicking a row, or the back link on a detail
+    // page). On first load the reader hasn't clicked anything, so moving the
+    // parent page would be unwelcome.
+    let cameFromInsideFrame = false;
+    try {
+      cameFromInsideFrame = Boolean(document.referrer) &&
+        new URL(document.referrer).origin === window.location.origin;
+    } catch {
+      cameFromInsideFrame = false;
+    }
+
+    const message = {
+      type: navigateMessageType,
+      page: "index",
+      scrollToTop: cameFromInsideFrame
+    };
 
     if (path === "entry.html" && (params.get("ref") || params.get("id"))) {
       message.page = "entry";
