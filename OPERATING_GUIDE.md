@@ -1,373 +1,166 @@
 # Operating Guide
 
-This guide explains how to operate and maintain the UK DRI Centre for Care Research & Technology Accessible AI Assisted Summaries display site.
+Day-to-day maintenance of the **Helix Publication Summaries** display site.
 
 ---
 
 ## What this site does
 
-This site displays Accessible AI Assisted Summaries submitted through Qualtrics.
+Researchers submit an accessible summary of a publication or project through a Qualtrics form. This site displays those summaries as a searchable table, with a detail page for each one, and is embedded in an iframe on [helixcentre.com/publications](https://helixcentre.com/publications).
 
-It is updated automatically by GitHub Actions every 15 minutes.
+GitHub Actions refreshes it every 15 minutes:
 
-The workflow:
-1. pulls the latest responses from Qualtrics
-2. reads keyword labels directly from the Qualtrics CSV export (no hardcoded mapping needed)
-3. rebuilds the JSON data file
-4. downloads any uploaded images and automatically compresses them (max 1200px wide, JPEG quality 82)
-5. commits changes to the repository if needed
-6. republishes the GitHub Pages site
+1. pulls the latest responses from Qualtrics (export requested with `useLabels`, so choice text comes through as written)
+2. works out which CSV column is which by reading the question wording
+3. rebuilds `data/submissions.json`
+4. downloads any uploaded images and compresses them (max 1200px wide, JPEG quality 82)
+5. assigns a permanent short reference to any new submission (`data/refs.json`)
+6. commits changes if anything changed, and GitHub Pages republishes
 
-Deleted Qualtrics responses should also be removed from the site on the next successful update.
-
----
-
-## Where the live site is hosted
-
-The site is hosted through GitHub Pages from this repository.
-
-Any changes committed to the repository will be reflected on the live site once GitHub Pages republishes.
+Deleting a response in Qualtrics removes it from the site on the next successful run.
 
 ---
 
-## Main files to know
+## Main files
 
-### Website files
-- `index.html` — homepage table view and explainer text
-- `entry.html` — detail page for each summary
-- `style.css` — styling
-- `script.js` — logic for loading/rendering the table
-- `entry.js` — logic for loading/rendering single entries
-- `config.js` — public links (submission form / DAISy helper)
+**Website:** `index.html` (table), `entry.html` (detail page), `style.css`, `script.js` (table, search, filters), `entry.js` (detail page), `embed.js` (iframe behaviour), `config.js` (public links).
 
-### Data files
-- `data/submissions.json` — generated submission data used by the site
-- `images/` — downloaded images used by the site
+**Data:** `data/submissions.json` (generated), `data/refs.json` (reference register), `images/`.
 
-### Automation files
-- `scripts/build_site_data.py` — builds the website data from Qualtrics
-- `.github/workflows/update-submissions.yml` — GitHub Actions workflow that runs the update
+**Automation:** `scripts/build_site_data.py`, `.github/workflows/update-submissions.yml`.
+
+`keyword.html` / `keyword.js` are left over from an earlier design and nothing links to them any more — keyword chips now point at the filtered main table.
 
 ---
 
-## Current terminology used on the site
+## What readers see
 
-The site refers to submissions as:
+**The table** lists Title (with Helix authors beneath), Project, Theme and Publication Date. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
 
-**Accessible AI Assisted Summaries**
+**A detail page** shows the image (if any), title, Helix authors, a meta line with project, theme, source type and date, keyword chips, the short lede, the full summary, then contact and acknowledgement details, and a pink "All publication summaries" link at the bottom. If no image was uploaded, the image area is removed entirely rather than left blank.
 
-This terminology is used instead of the earlier “lay summaries” wording in most front-end copy.
+**Links you can share:**
 
----
+| Link | Opens |
+| --- | --- |
+| `helixcentre.com/publications#001` | that summary's detail page |
+| `…/publications#keyword=Co-design` | the table filtered by keyword |
+| `…?theme=Dementia` or `?project=Minder` | the table filtered by theme or project (direct on the GitHub Pages site) |
 
-## Current homepage structure
-
-The homepage includes:
-- branding and navigation
-- a button for the **Lay Summary AI Assistant**
-- a button for the **Submission Form**
-- an explainer section describing the 3-step workflow
-- a note explaining that summaries are AI-supported and that publication-facing summaries should be reviewed with a member of the public
-- a searchable table of existing summaries
+`#001` style references are permanent — see "Short references" below.
 
 ---
 
-## Current detail page structure
+## Fields from Qualtrics
 
-Each summary detail page includes:
-- a large header image (shown fully, not cropped)
-- title
-- subtitle with:
-  - lab/team
-  - source type
-  - project/publication date
-- a properties panel including:
-  - optional link to full paper/work
-  - lab/team
-  - source type
-  - project/publication date
-  - corresponding team member
-  - contact email
-  - keywords (as clickable chips — each chip links back to the filtered homepage)
-  - acknowledgements
-- a short description section
-- the full summary text
+Columns are matched by **question wording**, not by QID, so renumbering questions does not break the site. Current questions and where they appear:
 
-If no link is provided, the link row is hidden entirely. If no keywords are provided, the keyword row is hidden entirely.
+| Question (starts with) | Shown as |
+| --- | --- |
+| "Publication title" | Title |
+| "Which of our themes…" | Theme (filterable) |
+| "Which particular subproject…" | Project (filterable) |
+| "Was this publication Lead by Helix or Helix Contributed?" | "Helix involvement" on the detail page |
+| "What are you summarising?" | Source type (free text used if "Other") |
+| "Date of publication or dates when work was carried out?" | Publication Date |
+| "1-2 sentence summary of work" | The italic lede |
+| "Please paste your lay summary below" | Summary |
+| "Helix Authors" | Authors under the title |
+| "Keywords (select up to 5)" | Keyword chips |
+| "Acknowledgements…" | Acknowledgements |
+| "If available, please insert a link…" | Full paper / work |
+| "Corresponding team member … (name)" / "(email)" | Contact details |
+| "Please upload a photo…" | Header image |
 
-### Keyword filtering
+Only responses marked finished, with a title or summary, are shown.
 
-Clicking a keyword chip on a detail page takes the user to:
+**Editing the survey is safe.** Because the export uses `useLabels`, adding/renaming/reordering options for themes, projects, authors or keywords flows through automatically. There is nothing to change in the code.
 
-```
-index.html?keyword=<keyword>
-```
-
-The homepage table auto-filters to show only submissions with that keyword, and displays a dismissible **"Keyword: X ✕"** chip. Clicking ✕ or navigating back clears the filter.
+**Rewording a question needs a check.** The wording patterns live in `FIELD_LABEL_PATTERNS` at the top of `scripts/build_site_data.py`. A small edit ("Which of our themes…" → "Which theme…") could stop a column being found: the workflow log prints `Resolved columns:` and a `WARNING: could not resolve columns for:` line if anything is missing. Update the pattern to match the new wording.
 
 ---
 
-## Fields currently expected from Qualtrics
+## Short references
 
-Important export mappings currently used by the site build script:
-
-- `QID2` → title
-- `QID3` → full summary
-- `QID5` → contact email
-- `QID8` → source type code
-- `QID10` → acknowledgements
-- `QID11` → corresponding team member
-- `QID12` → lab/team code
-- `QID14` → project/publication date
-- `QID15` → short description
-- `Link` → URL link to the work
-- `_Id` → image file ID
-- `_Name` → image file name
-- `_Type` → image file type
-- `ResponseId` → response ID
-- `Finished` → used to exclude incomplete responses
-- `Keywords_*` → keyword checkbox columns (e.g. `Keywords_1`, `Keywords_2`, …)
-
-### Keywords are read dynamically
-
-The keyword labels are **not hardcoded** in the build script. Instead, the script reads them directly from the second row of the Qualtrics CSV export (the label row), which contains the human-readable option text for each column.
-
-This means you can add, remove, or rename keyword options in the Qualtrics survey and they will be reflected on the site automatically on the next workflow run — no code changes needed.
-
-The one requirement is that the keyword question's variable name in Qualtrics must remain set to `Keywords`, so that the exported columns are named `Keywords_1`, `Keywords_2`, etc.
+Every submission gets a permanent number (`001`, `002`, …) stored in `data/refs.json`, mapping Qualtrics response ID to reference. The file is only ever added to, so numbers are never reused or renumbered and `#001` keeps pointing at the same paper. It is committed by the workflow — do not edit it by hand.
 
 ---
 
-## Current source type mapping
+## Running the update manually
 
-Stored in:
-
-`scripts/build_site_data.py`
-
-```python
-SOURCE_TYPE_MAP = {
-    "1": "Single paper",
-    "2": "Multiple works / larger project",
-    "3": "Work in progress",
-    "4": "Other"
-}
-```
+**Actions** tab → **Update submissions** → **Run workflow** → `main`. Useful when you don't want to wait for the next scheduled run.
 
 ---
 
-## Current lab/team mapping
+## Credentials
 
-Stored in:
+Stored as GitHub repository secrets: `QUALTRICS_API_TOKEN`, `QUALTRICS_DATA_CENTER`, `QUALTRICS_SURVEY_ID`. Manage in **Settings → Secrets and variables → Actions**. Never put these in the repository or in `config.js`.
 
-`scripts/build_site_data.py`
-
-```python
-LAB_TEAM_MAP = {
-    "1": "Barnaghi Lab",
-    "2": "Constandinou Lab",
-    "3": "Dijk Lab",
-    "4": "Freemont Lab",
-    "5": "Haar Lab",
-    "6": "Jaramillo Lab",
-    "7": "Lally Lab",
-    "8": "Scott Lab",
-    "9": "Sharp Lab",
-    "10": "Vaidyanathan Lab",
-    "17": "Malhotra Lab",
-    "18": "Design Team",
-    "19": "Software Engineering Team",
-    "20": "Health & Social Care Translation",
-    "21": "Data Science Team"
-}
-```
-
-### Important note
-Qualtrics internal choice codes may not match the visible order of options in the form.
-
-If a team starts displaying as a number instead of a name, inspect the live Qualtrics choice mapping before editing this dictionary.
+If the survey is replaced, update `QUALTRICS_SURVEY_ID` **and** the form link in `config.js`.
 
 ---
 
-## How the site updates automatically
+## Making changes
 
-The GitHub Actions workflow runs every 15 minutes.
+- **Public links** (submission form, DAIsy helper): `config.js`
+- **Styling and branding**: `style.css` — brand colours are CSS variables at the top (navy `#041e42`, turquoise `#00bfb3`, magenta `#d0006f`)
+- **Table columns and wording**: `index.html` and `script.js`
+- **Detail page layout**: `entry.html` and `entry.js`
+- **Embed behaviour** (height, deep links): `embed.js` *and* the matching block on the helixcentre.com page
 
-It can also be triggered manually through the **Actions** tab in GitHub.
-
-### To run it manually
-1. Open the repository on GitHub
-2. Click **Actions**
-3. Click **Update submissions**
-4. Click **Run workflow**
-5. Select the `main` branch and run it
-
-This is useful if you want to force an update without waiting for the next scheduled run.
+Commit and push; the live site updates when GitHub Pages republishes (usually under a minute).
 
 ---
 
-## Where the Qualtrics credentials are stored
-
-The Qualtrics credentials are stored as **GitHub repository secrets**.
-
-They are:
-- `QUALTRICS_API_TOKEN`
-- `QUALTRICS_DATA_CENTER`
-- `QUALTRICS_SURVEY_ID`
-
-### To view or update them
-1. Open the repository on GitHub
-2. Go to **Settings**
-3. Go to **Secrets and variables**
-4. Click **Actions**
-
-Do **not** store these values directly in the repository.
-
----
-
-## How to change the public links on the site
-
-The public-facing links are stored in:
-
-`config.js`
-
-This file controls links such as:
-- the Qualtrics submission form
-- the DAISy Lay Summary AI Assistant
-
-### To update a link
-1. Edit `config.js`
-2. Commit the change
-3. Push to GitHub
-
-The live site will update after GitHub Pages republishes.
-
----
-
-## How to update branding or text
-
-### Branding and layout
-Main visual styling is controlled in:
-
-`style.css`
-
-### Homepage wording
-Main explainer text and headings are controlled in:
-
-`index.html`
-
-### Detail page wording
-Detail-page layout and labels are controlled in:
-
-`entry.html` and `entry.js`
-
----
-
-## How to preview the site locally
-
-To preview the site locally:
+## Previewing locally
 
 ```bash
-cd ~/Projects/ukdri-display-site
-python3 -m http.server 8000
+cd ~/Projects/helix-display-site
+python3 -m http.server 8123
 ```
 
-Then open:
+Then open `http://localhost:8123`. A web server is needed — opening the files directly won't work, because the pages fetch `data/submissions.json`.
 
-```text
-http://localhost:8000
-```
-
-This is only for local preview.  
-The live publishing flow is through GitHub Actions and GitHub Pages.
+To check the embed behaviour (height changes, deep links), view the site inside a test iframe rather than on its own.
 
 ---
 
-## What to do if a new submission does not appear
+## Troubleshooting
 
-Check these in order:
+**A new submission doesn't appear**
 
-1. Wait at least 15 minutes for the scheduled workflow
-2. Check the **Actions** tab and see whether the latest workflow run succeeded
-3. If needed, run the workflow manually
-4. Check whether the submission exists in Qualtrics
-5. Check whether the response is marked as finished
-6. Check whether the submission includes the expected content fields
-7. Check whether the field mappings in `scripts/build_site_data.py` still match the current Qualtrics export
+1. Wait for the next run, or trigger it manually
+2. Check the latest **Update submissions** run succeeded
+3. Confirm the response exists in Qualtrics and is marked finished
+4. Confirm it has a title or summary
+5. Check the run log for `WARNING: could not resolve columns for:` — a reworded question may need its pattern updating in `scripts/build_site_data.py`
 
----
+**An image doesn't appear**
 
-## Image compression
+1. Confirm a file was actually uploaded with the response
+2. Check the run succeeded and a file appeared in `images/`
+3. Check the entry in `data/submissions.json` has an `image_path`
 
-Images uploaded through Qualtrics are automatically compressed when downloaded by the build script:
+A missing or broken image is handled gracefully — the page renders without it.
 
-- resized to a maximum width of 1200px (aspect ratio preserved)
-- converted to JPEG at quality 82 (unless the image has transparency, in which case it is kept as PNG)
+**A workflow run fails.** Open the failed run in **Actions** and read the failing step. Common causes: wrong or expired Qualtrics secrets, a reworded question, network problems, or a push conflict when a manual commit and a scheduled run overlap (the workflow prefers its own data for `data/`).
 
-This keeps image file sizes small (typically under 200KB) without needing to manually resize before uploading.
+**Values show as numbers instead of names.** That means the export came back without labels. Check the `useLabels` flag is still set in `start_export()` in the build script.
 
-The `Pillow` Python library handles this and is listed in `requirements.txt`.
-
----
-
-## What to do if images do not appear
-
-Check:
-
-1. whether the Qualtrics submission actually included an uploaded file
-2. whether the latest GitHub Actions run succeeded
-3. whether a file was added into the `images/` folder in the repo (it will be a `.jpg` unless the original had transparency)
-4. whether the entry in `data/submissions.json` has a valid `image_path`
-
-The build script clears old generated images before rebuilding.
-
----
-
-## What to do if a workflow run fails
-
-1. Open the repository on GitHub
-2. Click **Actions**
-3. Click the failed **Update submissions** run
-4. Open the failing step and read the error message
-
-Common causes:
-- incorrect Qualtrics secret values
-- changed Qualtrics field codes (QID numbers)
-- changed lab/team option codes in Qualtrics (the `LAB_TEAM_MAP` in `build_site_data.py` may need updating)
-- temporary GitHub Actions or network issues
-- Git push conflicts if a manual code commit and a scheduled workflow run overlap (the workflow is configured to prefer its own data in this case)
+**Pushing gives "non-fast-forward".** The scheduled workflow committed while you were working. Run `git pull --rebase origin main`, then push again.
 
 ---
 
 ## What not to do
 
-Do **not**:
-- commit API tokens or passwords into the repository
-- add `.env` files to the repository
-- store private credentials in `config.js`
-- put private internal-only documents into this public repository unless they are intended to be public
-
----
-
-## Development history
-
-This project originally began as a local workflow using Qualtrics, a local Python sync, and a separate display layer.
-
-It was later migrated to a GitHub Actions + GitHub Pages workflow.
-
-Older local folders may still exist as backup/reference only and are not part of the live system.
+Don't commit API tokens, passwords or `.env` files; don't put credentials in `config.js`; don't hand-edit `data/submissions.json` or `data/refs.json` (the workflow overwrites the first and appends to the second); don't put private documents in this public repository.
 
 ---
 
 ## In summary
 
-For normal operation, you usually only need to know these things:
-
-- **Links** are updated in `config.js`
-- **Branding/styles** are updated in `style.css`
-- **Homepage explainer text** is updated in `index.html`
-- **Detail page layout** is updated in `entry.html` and `entry.js`
-- **Source type and lab/team mappings** are updated in `scripts/build_site_data.py`
-- **Keywords** are read automatically from Qualtrics — no code changes needed when the survey changes
-- **Images** are automatically compressed on download — no manual resizing needed
-- **Manual refresh** is done from the **Actions** tab
-- **Secrets** are managed in **Settings → Secrets and variables → Actions**
+- **Editing survey options** (themes, projects, authors, keywords) needs no code change
+- **Rewording a survey question** may need a pattern update in `scripts/build_site_data.py`
+- **Links** → `config.js`; **styling** → `style.css`; **table** → `index.html` / `script.js`; **detail page** → `entry.html` / `entry.js`
+- **Manual refresh** → Actions tab; **secrets** → Settings → Secrets and variables → Actions
+- **Images** are compressed automatically; **short references** are assigned automatically and never change

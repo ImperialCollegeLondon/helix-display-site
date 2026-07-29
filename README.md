@@ -1,61 +1,39 @@
-# Publication Summaries Embed
+# Helix Publication Summaries
 
-This repository hosts the embeddable publication table for Accessible AI Assisted Summaries submitted to the UK Dementia Research Institute Centre for Care Research & Technology. It is designed to be published with GitHub Pages and embedded inside the Helix Centre website.
+This repository hosts the embeddable Publication Summaries table for the **Helix Centre** (Imperial College London & the Royal College of Art). Researchers submit an accessible summary of a publication or project through a Qualtrics form; this site displays those summaries and is embedded in an iframe on [helixcentre.com/publications](https://helixcentre.com/publications).
 
 The site provides:
 
-- a Helix-compatible embeddable publication table
-- a browsable table of submitted summaries
-- keyword filtering on the main table
-- a detail page for each entry with keyword chips
-- uploaded image display
-- project and publication metadata
+- a browsable, searchable table of submitted summaries
+- a detail page for each summary, with a permanent short reference (`001`, `002`, …)
+- filtering by theme, project or keyword, reflected in the URL so a filtered view can be shared
+- deep links to individual summaries (`…/publications#001`)
+- uploaded images, automatically compressed
+- an iframe resize helper so the embed grows and shrinks to fit its content
 
-The site is published through GitHub Pages and updated automatically from Qualtrics using GitHub Actions.
+Content is refreshed automatically from Qualtrics by GitHub Actions and published through GitHub Pages.
 
 ---
 
 ## What this repository contains
 
-This repository contains the files needed to serve the embeddable public-facing display website, including:
-
-- HTML pages
-- CSS styling
-- JavaScript
-- iframe resize helper
-- display data in JSON format
-- public image files
-- branding assets
-- the GitHub Actions workflow used to refresh site data from Qualtrics
-
----
+HTML pages, CSS, JavaScript, the iframe helper, display data (`data/submissions.json`), the reference register (`data/refs.json`), uploaded images, branding assets, the Qualtrics build script, and the GitHub Actions workflow.
 
 ## What this repository does **not** contain
 
-This repository should never contain private credentials or private automation configuration.
-
-It does **not** include:
-
-- Qualtrics API tokens
-- Notion API tokens
-- `.env` files
-- private local automation scripts with embedded credentials
-- GitHub personal access tokens
-- passwords of any kind
-
-Qualtrics credentials are stored securely as **GitHub repository secrets**.
+No credentials of any kind: no Qualtrics or Notion API tokens, no `.env` files, no GitHub personal access tokens, no passwords. Qualtrics credentials live in **GitHub repository secrets**.
 
 ---
 
 ## How the embed works
 
-The website is a static site hosted with GitHub Pages. The iframe content sends a small `postMessage` event to its parent page whenever its height changes, allowing the Helix Centre page to resize the iframe and avoid nested scrolling.
+The site is static. Inside the iframe it measures its own content height and posts a message to the parent page, which resizes the frame — so there is never an internal scrollbar and the frame follows the content up *and* down. It also tells the parent page which summary is being viewed, so the parent can keep a shareable `#001` style link in the address bar.
 
-Default GitHub Pages URL:
+GitHub Pages URL:
 
 `https://imperialcollegelondon.github.io/helix-display-site/`
 
-Add this where the Publication Summaries display should appear on `helixcentre.com`:
+The block below goes on the `helixcentre.com` publications page. Replace the whole block if updating — the script references the iframe by `id`.
 
 ```html
 <iframe
@@ -63,118 +41,108 @@ Add this where the Publication Summaries display should appear on `helixcentre.c
   title="Publication Summaries"
   src="https://imperialcollegelondon.github.io/helix-display-site/"
   loading="lazy"
+  allowtransparency="true"
   referrerpolicy="strict-origin-when-cross-origin"
-  style="width: 100%; min-height: 420px; border: 0; display: block;"
+  style="width: 100%; min-height: 200px; border: 0; display: block; background: transparent;"
 ></iframe>
 
 <script>
   (function () {
-    const iframe = document.getElementById("helix-publication-summaries-embed");
-    const allowedOrigin = "https://imperialcollegelondon.github.io";
+    var iframe = document.getElementById("helix-publication-summaries-embed");
+    var allowedOrigin = "https://imperialcollegelondon.github.io";
+    var base = allowedOrigin + "/helix-display-site/";
+
+    // Deep links: #001 (short reference), #entry=<response id>, #keyword=<name>
+    var hash = window.location.hash.slice(1);
+    if (/^\d+$/.test(hash)) {
+      iframe.src = base + "entry.html?ref=" + encodeURIComponent(hash);
+    } else if (hash.indexOf("entry=") === 0) {
+      iframe.src = base + "entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6)));
+    } else if (hash.indexOf("keyword=") === 0) {
+      iframe.src = base + "keyword.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8)));
+    }
 
     window.addEventListener("message", function (event) {
-      const data = event.data || {};
-
       if (event.origin !== allowedOrigin) return;
-      if (data.type !== "helix-display-site:resize") return;
-      if (typeof data.height !== "number") return;
+      var data = event.data || {};
 
-      iframe.style.height = Math.max(520, Math.ceil(data.height)) + "px";
+      // Grow and shrink the frame to fit its content.
+      if (data.type === "helix-display-site:resize" && typeof data.height === "number") {
+        iframe.style.height = Math.max(200, Math.ceil(data.height)) + "px";
+      }
+
+      // Keep the page URL in step with what the reader is looking at.
+      if (data.type === "helix-display-site:navigate") {
+        var newHash = "";
+        if (data.page === "entry" && (data.ref || data.id)) {
+          newHash = data.ref ? String(data.ref) : "entry=" + encodeURIComponent(data.id);
+        } else if ((data.page === "keyword" || data.page === "index") && data.keyword) {
+          newHash = "keyword=" + encodeURIComponent(data.keyword);
+        }
+        history.replaceState(null, "", newHash ? "#" + newHash : window.location.pathname + window.location.search);
+
+        if (data.scrollToTop) {
+          iframe.scrollIntoView({ block: "start", behavior: "smooth" });
+        }
+      }
     });
   })();
 </script>
 ```
 
-If the repository later moves to a custom domain, update both the iframe `src` and `allowedOrigin`.
+If the site later moves to a custom domain, update the iframe `src`, `allowedOrigin` and `base`.
 
-## How the site works
+---
 
-The displayed content is stored in:
+## How the site updates
 
-- `data/submissions.json`
-- `images/`
+A GitHub Actions workflow runs every 15 minutes (and can be run by hand from the **Actions** tab). It pulls the latest Qualtrics responses, rebuilds `data/submissions.json`, downloads and compresses any uploaded images, assigns short references to new submissions, commits anything that changed, and GitHub Pages republishes.
 
-A GitHub Actions workflow pulls the latest responses from Qualtrics every 15 minutes, rebuilds the JSON data and images, commits any changes back to the repository, and GitHub Pages republishes the site automatically.
+The Qualtrics export is requested with **`useLabels`**, so choice questions arrive as their visible text. Adding, renaming or reordering themes, projects, authors or keywords in the survey therefore needs **no code change** — the site picks them up on the next run.
+
+---
+
+## Short references
+
+Every submission gets a permanent number — `001`, `002`, … — stored in `data/refs.json`, which maps Qualtrics response IDs to references and is only ever appended to. Numbers are never reused or renumbered, so `#001` keeps pointing at the same paper even if earlier submissions are deleted. This file is committed by the workflow and should not be edited by hand.
 
 ---
 
 ## Repository structure
 
 ```text
-index.html                                  Main table view of all summaries (supports ?keyword= filter)
-entry.html                                  Detail page for a single summary
-keyword.html                                Legacy keyword page (no longer linked to; filter is on index)
+index.html                                  Table of all summaries (supports ?theme= ?project= ?keyword=)
+entry.html                                  Detail page for a single summary (?ref=001 or ?id=R_…)
+keyword.html                                Legacy keyword page — nothing links to it any more
 style.css                                   Site styling
-script.js                                   Logic for loading/rendering the table and keyword filter
-entry.js                                    Logic for loading/rendering single entries
-embed.js                                    Iframe resize helper used by the Helix Centre embed
-config.js                                   Public-facing links (submission form / DAISy helper)
+script.js                                   Table rendering, search and filtering
+entry.js                                    Detail page rendering
+embed.js                                    Iframe height reporting, deep links, navigation messages
+config.js                                   Public links (submission form / DAIsy helper)
 helix-logo.png                              Branding asset
-fonts/                                       Circular typeface (Book/Bold + italics, woff2)
-data/submissions.json                       Display data for the site
-images/                                     Uploaded images used by entries (auto-compressed to JPEG ≤1200px)
-scripts/build_site_data.py                  Qualtrics-to-site data build script
-requirements.txt                            Python dependencies for the GitHub Action
+fonts/                                      Circular typeface (Book/Bold + italics, woff2)
+data/submissions.json                       Generated display data
+data/refs.json                              Permanent response ID → short reference register
+images/                                     Uploaded images (auto-compressed, JPEG ≤1200px wide)
+scripts/build_site_data.py                  Qualtrics-to-site build script
+requirements.txt                            Python dependencies for the workflow
 .github/workflows/update-submissions.yml    GitHub Actions workflow
-README.md                                   Project overview
+README.md                                   This file
 OPERATING_GUIDE.md                          Day-to-day maintenance guide
 ```
 
 ---
 
-## Public links
-
-Optional public links for the submission form and DAISy-based summary helper are stored in:
-
-`config.js`
-
-This file controls links such as:
-- the Qualtrics submission form
-- the DAISy-based summary helper
-
-If these links need changing, update `config.js`, then commit and push the change.
-
----
-
-## GitHub Actions automation
-
-This repository uses GitHub Actions to refresh displayed submission data from Qualtrics every 15 minutes.
-
-The workflow file is:
-
-`.github/workflows/update-submissions.yml`
-
-The workflow:
-
-1. runs on a schedule every 15 minutes
-2. can also be triggered manually from the Actions tab
-3. pulls the latest responses from Qualtrics
-4. reads keyword labels directly from the Qualtrics CSV (no hardcoded mapping)
-5. downloads and compresses uploaded images (resized to max 1200px wide, converted to JPEG)
-6. updates:
-   - `data/submissions.json`
-   - files in `images/`
-7. commits changes back to the repository if anything changed
-8. allows GitHub Pages to republish the site automatically
-
----
-
-## GitHub Secrets required
-
-The GitHub Actions workflow depends on the following repository secrets:
+## GitHub secrets required
 
 - `QUALTRICS_API_TOKEN`
 - `QUALTRICS_DATA_CENTER`
 - `QUALTRICS_SURVEY_ID`
 
-These must be configured in:
-
-**Repository Settings → Secrets and variables → Actions**
+Set in **Settings → Secrets and variables → Actions**. If the survey is ever replaced, update `QUALTRICS_SURVEY_ID` here *and* the form link in `config.js`.
 
 ---
 
 ## Further documentation
 
-For day-to-day maintenance and operating instructions, see:
-
-- [OPERATING_GUIDE.md](OPERATING_GUIDE.md)
+See [OPERATING_GUIDE.md](OPERATING_GUIDE.md) for day-to-day maintenance, troubleshooting and how the Qualtrics fields map onto the site.
