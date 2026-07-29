@@ -100,8 +100,18 @@ function renderEntry(entry) {
   setText("entry-title", entry.title || "Untitled");
   setText(
     "entry-meta",
-    [entry.theme, entry.source_type, entry.project_date].filter(Boolean).join(" · ") || "-"
+    [entry.subproject, entry.theme, entry.source_type, entry.project_date]
+      .filter(Boolean)
+      .join(" · ") || "-"
   );
+
+  const authors = document.getElementById("entry-authors");
+
+  if (authors) {
+    const names = Array.isArray(entry.helix_authors) ? entry.helix_authors : [];
+    authors.textContent = names.join(", ");
+    authors.hidden = names.length === 0;
+  }
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
 
@@ -151,6 +161,12 @@ function renderEntry(entry) {
     if (entry.acknowledgements) {
       addDetailRow(details, "Acknowledgements", dd => {
         dd.textContent = entry.acknowledgements;
+      });
+    }
+
+    if (entry.lead_or_contributed) {
+      addDetailRow(details, "Helix involvement", dd => {
+        dd.textContent = entry.lead_or_contributed;
       });
     }
 

@@ -15,7 +15,7 @@
         <div class="table-card__header">
           <div class="table-actions">
             <label class="visually-hidden" for="search-input">Search submissions</label>
-            <input id="search-input" class="m3-input" type="search" placeholder="Search title, theme, or keyword" autocomplete="off" />
+            <input id="search-input" class="m3-input" type="search" placeholder="Search title, author, project, theme, or keyword" autocomplete="off" />
           </div>
         </div>
 
@@ -32,13 +32,14 @@
             <thead>
               <tr>
                 <th>Title</th>
+                <th>Project</th>
                 <th>Theme</th>
                 <th>Publication Date</th>
               </tr>
             </thead>
             <tbody id="submissions-body">
               <tr>
-                <td colspan="3" class="loading-cell">Loading submissions...</td>
+                <td colspan="4" class="loading-cell">Loading submissions...</td>
               </tr>
             </tbody>
           </table>

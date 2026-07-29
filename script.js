@@ -30,7 +30,7 @@ function renderTable(rows) {
   if (!rows.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="3" class="loading-cell">No submissions found.</td>
+        <td colspan="4" class="loading-cell">No submissions found.</td>
       </tr>
     `;
     scheduleEmbedResize();
@@ -39,7 +39,13 @@ function renderTable(rows) {
 
   tbody.innerHTML = rows.map(item => `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
-      <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
+      <td data-label="Title">
+        <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
+        ${Array.isArray(item.helix_authors) && item.helix_authors.length
+          ? `<span class="cell-authors">${escapeHtml(item.helix_authors.join(", "))}</span>`
+          : ""}
+      </td>
+      <td data-label="Project">${escapeHtml(item.subproject || "-")}</td>
       <td data-label="Theme">${escapeHtml(item.theme || "-")}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
@@ -74,9 +80,12 @@ function getFilteredRows() {
         item.title,
         item.corresponding_team_member,
         item.theme,
+        item.subproject,
+        item.lead_or_contributed,
         item.source_type,
         item.short_description,
         item.lay_summary,
+        Array.isArray(item.helix_authors) ? item.helix_authors.join(" ") : "",
         Array.isArray(item.keywords) ? item.keywords.join(" ") : ""
       ]
         .filter(Boolean)
@@ -146,7 +155,7 @@ async function loadSubmissions() {
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="3" class="loading-cell">Could not load submissions.</td>
+          <td colspan="4" class="loading-cell">Could not load submissions.</td>
         </tr>
       `;
     }

@@ -24,6 +24,12 @@
     return window.parent && window.parent !== window;
   }
 
+  // Lets the stylesheet suppress scrollbars only when embedded (the parent
+  // page grows the iframe to fit, so an internal scrollbar is never wanted).
+  if (isEmbedded()) {
+    document.documentElement.classList.add("is-embedded");
+  }
+
   function getPageHeight() {
     const body = document.body;
     const html = document.documentElement;

@@ -57,7 +57,7 @@ function renderKeywordTable(items) {
   if (!items.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="3" class="loading-cell">No related submissions found.</td>
+        <td colspan="4" class="loading-cell">No related submissions found.</td>
       </tr>
     `;
     scheduleEmbedResize();
@@ -66,7 +66,13 @@ function renderKeywordTable(items) {
 
   tbody.innerHTML = items.map(item => `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
-      <td data-label="Title">${escapeHtml(item.title || "Untitled")}</td>
+      <td data-label="Title">
+        <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
+        ${Array.isArray(item.helix_authors) && item.helix_authors.length
+          ? `<span class="cell-authors">${escapeHtml(item.helix_authors.join(", "))}</span>`
+          : ""}
+      </td>
+      <td data-label="Project">${escapeHtml(item.subproject || "-")}</td>
       <td data-label="Theme">${escapeHtml(item.theme || "-")}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
@@ -91,7 +97,7 @@ function renderKeywordTable(items) {
 function renderEmpty(message) {
   document.getElementById("keyword-submissions-body").innerHTML = `
     <tr>
-      <td colspan="3" class="loading-cell">${escapeHtml(message)}</td>
+      <td colspan="4" class="loading-cell">${escapeHtml(message)}</td>
     </tr>
   `;
   scheduleEmbedResize();

@@ -15,22 +15,15 @@ QUALTRICS_API_TOKEN = os.getenv("QUALTRICS_API_TOKEN")
 QUALTRICS_DATA_CENTER = os.getenv("QUALTRICS_DATA_CENTER")
 QUALTRICS_SURVEY_ID = os.getenv("QUALTRICS_SURVEY_ID")
 
-# Helix survey (SV_9LdgMtnBVbjZ1gq): QID8 "What are you summarising?" recode values
+# The export is requested with useLabels=true, so choice questions come through
+# as their visible text ("Academic paper", "Dementia", ...) rather than numeric
+# recode values. These maps are only a fallback for older numeric exports.
 SOURCE_TYPE_MAP = {
     "6": "Academic paper",
     "7": "Public report",
     "8": "White paper",
     "9": "Blog post",
     "10": "Other"
-}
-
-# QID12 "Which of our research themes are you submitting on behalf of?" recode values
-THEME_MAP = {
-    "1": "Enabling the shift to prevention",
-    "4": "PPIE",
-    "23": "Education",
-    "3": "Care in the community",
-    "5": "Designing for marginalised groups"
 }
 
 # Columns are resolved from the CSV label row (question text), so this works
@@ -40,11 +33,19 @@ FIELD_LABEL_PATTERNS = {
     "project_date": "date of publication",
     "short_description": "1-2 sentence summary",
     "lay_summary": "paste your lay summary",
-    "theme": "which of our research themes",
+    "theme": "which of our themes",
+    "subproject": "which particular subproject",
+    "lead_or_contributed": "lead by helix or helix contributed",
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
     "corresponding_team_member": "corresponding team member for publication / project (name)",
     "contact_email": "corresponding team member for publication / project (email)",
+}
+
+# Multi-select questions: every "<prefix> - <choice>" column becomes a list item.
+MULTI_SELECT_PATTERNS = {
+    "keywords": "keywords",
+    "helix_authors": "helix authors",
 }
 
 # Fallbacks if a label can't be matched (QIDs seen in the live Helix survey)
@@ -113,7 +114,10 @@ def start_export():
 
     payload = {
         "format": "csv",
-        "compress": False
+        "compress": False,
+        # Export choice text rather than numeric recode values, so the site
+        # keeps working when survey choices are edited or reordered.
+        "useLabels": True
     }
 
     response = requests.post(url, headers=headers, json=payload, timeout=60)
@@ -170,16 +174,20 @@ def normalise_label(label):
 def resolve_columns(header_row, label_row):
     """Map logical fields to CSV columns using the question-text label row."""
     columns = {}
-    keyword_map = {}
+    multi_maps = {key: {} for key in MULTI_SELECT_PATTERNS}
 
     for field, label in zip(header_row, label_row):
         norm = normalise_label(label)
 
-        if norm.startswith("keywords"):
+        matched_multi = next(
+            (key for key, prefix in MULTI_SELECT_PATTERNS.items() if norm.startswith(prefix)),
+            None
+        )
+        if matched_multi:
             if " - " in label:
-                keyword_label = label.rsplit(" - ", 1)[-1].strip()
-                if keyword_label:
-                    keyword_map[field] = keyword_label
+                choice_label = label.rsplit(" - ", 1)[-1].strip()
+                if choice_label:
+                    multi_maps[matched_multi][field] = choice_label
             continue
 
         if norm.startswith("please upload a photo"):
@@ -212,7 +220,10 @@ def resolve_columns(header_row, label_row):
     if missing:
         log(f"WARNING: could not resolve columns for: {missing}")
 
-    return columns, keyword_map
+    for key, mapping in multi_maps.items():
+        log(f"Detected {len(mapping)} {key} options: {list(mapping.values())}")
+
+    return columns, multi_maps
 
 
 def parse_csv_export(content):
@@ -233,11 +244,10 @@ def parse_csv_export(content):
     lines = text.splitlines()
     header_row = next(csv.reader([lines[0]]))
     label_row = next(csv.reader([lines[1]]))
-    columns, keyword_map = resolve_columns(header_row, label_row)
-    log(f"Detected {len(keyword_map)} keywords from survey: {list(keyword_map.values())}")
+    columns, multi_maps = resolve_columns(header_row, label_row)
 
     reader = csv.DictReader(lines)
-    return list(reader), columns, keyword_map
+    return list(reader), columns, multi_maps
 
 
 def get_real_rows(rows, columns):
@@ -261,11 +271,22 @@ def get_real_rows(rows, columns):
         real_rows.append(row)
 
     return real_rows
-def extract_keywords(row, keyword_map):
-    return [
-        label for field, label in keyword_map.items()
-        if row.get(field, "").strip() == "1"
-    ]
+def extract_multi_select(row, choice_map):
+    """Selected options for a checkbox question.
+
+    Handles both export styles: useLabels=true puts the choice text in the
+    cell, the older numeric export puts "1". Anything non-empty (other than a
+    literal "0"/"false") counts as selected, and the label comes from the
+    header so the value format doesn't matter.
+    """
+    selected = []
+
+    for field, label in choice_map.items():
+        value = row.get(field, "").strip()
+        if value and value.lower() not in ("0", "false", "no"):
+            selected.append(label)
+
+    return selected
 
 def get_file_extension(filename, content_type):
     if filename and "." in filename:
@@ -327,7 +348,7 @@ def download_image(response_id, file_id, original_filename, content_type):
     return f"images/{os.path.basename(output_path)}"
 
 
-def convert_row(row, columns, keyword_map):
+def convert_row(row, columns, multi_maps):
     def col(key):
         return row.get(columns.get(key, ""), "").strip()
 
@@ -335,7 +356,6 @@ def convert_row(row, columns, keyword_map):
     title = col("title")
     source_type_code = col("source_type")
     source_type_other = col("source_type_other")
-    theme_code = col("theme")
     short_description = col("short_description")
     lay_summary = col("lay_summary")
     acknowledgements = col("acknowledgements")
@@ -344,11 +364,17 @@ def convert_row(row, columns, keyword_map):
     contact_email = col("contact_email")
     project_date = col("project_date")
 
+    # With useLabels=true these already hold the choice text.
+    theme = col("theme")
+    subproject = col("subproject")
+    lead_or_contributed = col("lead_or_contributed")
+
     source_type = SOURCE_TYPE_MAP.get(source_type_code, source_type_code)
-    if source_type_code == "10" and source_type_other:
+    if source_type_code in ("10", "Other") and source_type_other:
         source_type = source_type_other
 
-    keywords = extract_keywords(row, keyword_map)
+    keywords = extract_multi_select(row, multi_maps.get("keywords", {}))
+    helix_authors = extract_multi_select(row, multi_maps.get("helix_authors", {}))
     recorded_date = row.get("RecordedDate", "").strip()
 
     file_id = col("image_id")
@@ -365,7 +391,10 @@ def convert_row(row, columns, keyword_map):
         "recorded_date": recorded_date,
         "title": title or "Untitled",
         "source_type": source_type,
-        "theme": THEME_MAP.get(theme_code, theme_code),
+        "theme": theme,
+        "subproject": subproject,
+        "lead_or_contributed": lead_or_contributed,
+        "helix_authors": helix_authors,
         "project_date": project_date,
         "corresponding_team_member": corresponding_team_member,
         "contact_email": contact_email,
@@ -420,7 +449,7 @@ def main():
     content = download_export_file(file_id)
 
     log("Parsing CSV...")
-    rows, columns, keyword_map = parse_csv_export(content)
+    rows, columns, multi_maps = parse_csv_export(content)
     real_rows = get_real_rows(rows, columns)
 
     log(f"Found {len(real_rows)} real responses")
@@ -430,7 +459,7 @@ def main():
         try:
             response_id = row.get("ResponseId", "UNKNOWN")
             log(f"Processing {response_id}")
-            submission = convert_row(row, columns, keyword_map)
+            submission = convert_row(row, columns, multi_maps)
             submissions.append(submission)
         except Exception as e:
             response_id = row.get("ResponseId", "UNKNOWN")
