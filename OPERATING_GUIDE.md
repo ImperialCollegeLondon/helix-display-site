@@ -17,7 +17,13 @@ GitHub Actions refreshes it every 15 minutes:
 5. assigns a permanent short reference to any new submission (`data/refs.json`)
 6. commits changes if anything changed, and GitHub Pages republishes
 
-Deleting a response in Qualtrics removes it from the site on the next successful run.
+## Deleting a submission
+
+Delete the response in Qualtrics (Data & Analysis → select the response → Delete). It disappears from the site on the next run — the data file is rebuilt from scratch each time and the entry's image is removed with it. The run log says how many entries were removed.
+
+Its short reference is retired, not reused: if `002` is deleted, the next new submission still gets `003`, so old `#002` links never silently point at a different paper.
+
+As a safety net the build refuses to publish an *empty* table over a non-empty one, so a failed or misconfigured export can't wipe every entry — the run fails instead and the live site is left alone. If the survey genuinely has been emptied and you want that reflected, re-run the workflow with `ALLOW_EMPTY_SUBMISSIONS` set to `1`.
 
 ---
 
