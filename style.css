@@ -289,8 +289,14 @@ body.table-embed,
 }
 
 .table-actions {
-  flex: 0 1 340px;
+  flex: 0 1 380px;
+  min-width: 220px;
   margin-left: auto;
+}
+
+/* Long placeholders should trail off cleanly rather than clip mid-word. */
+.m3-input::placeholder {
+  text-overflow: ellipsis;
 }
 
 .m3-input {
