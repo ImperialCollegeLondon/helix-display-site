@@ -16,7 +16,7 @@ concurrency:
 env:
   # Who gets notified if the sync breaks. GitHub emails issue assignees, so
   # this needs to be a GitHub username with access to the repository.
-  ALERT_ASSIGNEE: victoria-simpson-ic
+  ALERT_ASSIGNEE: torisimpss
 
 jobs:
   update-submissions:
