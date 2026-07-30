@@ -726,6 +726,66 @@ a.filter-pill:focus {
   text-decoration: underline;
 }
 
+.pager {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.pager[hidden] {
+  display: none;
+}
+
+.pager__status {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.pager__controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pager__button {
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--helix-navy);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pager__button:hover:not(:disabled) {
+  border-color: var(--helix-navy);
+}
+
+.pager__button:disabled {
+  color: var(--helix-gray);
+  cursor: default;
+}
+
+.pager__button--current {
+  background: var(--helix-navy);
+  border-color: var(--helix-navy);
+  color: var(--surface);
+}
+
+.pager__button:focus-visible {
+  outline: 2px solid rgba(4, 30, 66, 0.45);
+  outline-offset: 2px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -912,5 +972,15 @@ a.filter-pill:focus {
 
   .table-card__header {
     padding: 14px 16px;
+  }
+
+  .pager {
+    justify-content: center;
+    padding: 14px 16px;
+  }
+
+  .pager__status {
+    width: 100%;
+    text-align: center;
   }
 }

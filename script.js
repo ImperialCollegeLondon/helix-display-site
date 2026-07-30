@@ -14,6 +14,10 @@ const FILTER_LABELS = {
   project: "Project"
 };
 
+// Longer lists are split into pages so the embed doesn't grow indefinitely.
+const PAGE_SIZE = 15;
+let currentPage = 1;
+
 function scheduleEmbedResize() {
   window.HelixEmbed?.scheduleResize();
 }
@@ -33,22 +37,29 @@ function navigateToEntry(id, ref) {
     : `entry.html?id=${encodeURIComponent(id)}`;
 }
 
-function renderTable(rows) {
+function renderTable(allRows) {
   const tbody = document.getElementById("submissions-body");
 
   if (!tbody) {
     return;
   }
 
-  if (!rows.length) {
+  if (!allRows.length) {
     tbody.innerHTML = `
       <tr>
         <td colspan="4" class="loading-cell">No submissions found.</td>
       </tr>
     `;
+    renderPager(0, 0);
     scheduleEmbedResize();
     return;
   }
+
+  const pageCount = Math.max(1, Math.ceil(allRows.length / PAGE_SIZE));
+  currentPage = Math.min(Math.max(currentPage, 1), pageCount);
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const rows = allRows.slice(start, start + PAGE_SIZE);
 
   tbody.innerHTML = rows.map(item => `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
@@ -99,7 +110,78 @@ function renderTable(rows) {
     });
   });
 
+  renderPager(allRows.length, pageCount);
   scheduleEmbedResize();
+}
+
+function goToPage(page) {
+  currentPage = page;
+  renderTable(getFilteredRows());
+
+  // Bring the top of the list into view — inside the embed that means asking
+  // the parent page, which can't be scrolled directly from here.
+  window.scrollTo({ top: 0 });
+  window.parent?.postMessage(
+    { type: "helix-display-site:navigate", page: "index", scrollToTop: true },
+    "*"
+  );
+}
+
+function renderPager(totalRows, pageCount) {
+  const pager = document.getElementById("pager");
+
+  if (!pager) {
+    return;
+  }
+
+  if (pageCount <= 1) {
+    pager.hidden = true;
+    pager.replaceChildren();
+    return;
+  }
+
+  const first = (currentPage - 1) * PAGE_SIZE + 1;
+  const last = Math.min(currentPage * PAGE_SIZE, totalRows);
+
+  const status = document.createElement("p");
+  status.className = "pager__status";
+  status.textContent = `${first}–${last} of ${totalRows}`;
+
+  const controls = document.createElement("div");
+  controls.className = "pager__controls";
+
+  const makeButton = (label, page, disabled, ariaLabel) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "pager__button";
+    button.textContent = label;
+    button.disabled = disabled;
+    if (ariaLabel) {
+      button.setAttribute("aria-label", ariaLabel);
+    }
+    button.addEventListener("click", () => goToPage(page));
+    return button;
+  };
+
+  controls.appendChild(
+    makeButton("← Previous", currentPage - 1, currentPage === 1, "Previous page")
+  );
+
+  for (let page = 1; page <= pageCount; page += 1) {
+    const button = makeButton(String(page), page, false, `Page ${page}`);
+    if (page === currentPage) {
+      button.classList.add("pager__button--current");
+      button.setAttribute("aria-current", "page");
+    }
+    controls.appendChild(button);
+  }
+
+  controls.appendChild(
+    makeButton("Next →", currentPage + 1, currentPage === pageCount, "Next page")
+  );
+
+  pager.replaceChildren(status, controls);
+  pager.hidden = false;
 }
 
 function getFilteredRows() {
@@ -146,6 +228,8 @@ function getFilteredRows() {
 }
 
 function handleSearch() {
+  // Any change to what's being shown starts again at page one.
+  currentPage = 1;
   renderTable(getFilteredRows());
 }
 
@@ -208,6 +292,7 @@ function setFilter(type, value) {
 
   window.history.replaceState({}, "", url);
 
+  currentPage = 1;
   renderFilterBar();
   renderTable(getFilteredRows());
 }

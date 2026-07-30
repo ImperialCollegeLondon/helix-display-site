@@ -41,7 +41,7 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 ## What readers see
 
-**The table** lists Title (with Helix authors beneath), Project, Theme and Publication Date. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
+**The table** lists Title (with Helix authors beneath), Project, Theme and Publication Date, newest publication first. Up to 15 entries are shown per page; beyond that a pager appears at the bottom, and searching or filtering starts again at page one. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
 
 **A detail page** shows the image (if any), title, Helix authors, a meta line with project, theme, source type and date, keyword chips, the short lede, the full summary, then contact and acknowledgement details, and a pink "All publication summaries" link at the bottom. If no image was uploaded, the image area is removed entirely rather than left blank.
 
@@ -158,7 +158,11 @@ To check the embed behaviour (height changes, deep links), view the site inside 
 
 A missing or broken image is handled gracefully — the page renders without it.
 
-**A workflow run fails.** Open the failed run in **Actions** and read the failing step. Common causes: wrong or expired Qualtrics secrets, a reworded question, network problems, or a push conflict when a manual commit and a scheduled run overlap (the workflow prefers its own data for `data/`).
+**A workflow run fails.** You'll get an email: the workflow opens a GitHub issue titled "Publication Summaries sync is failing", assigned to Tori, and GitHub emails issue assignees. While the problem persists the same issue is commented on rather than a new one raised every 15 minutes, and it closes itself once a run succeeds. The issue lists the failed run and the usual causes.
+
+To change who is alerted, edit `ALERT_ASSIGNEE` at the top of `.github/workflows/update-submissions.yml` — it takes a GitHub username with access to the repository, not an email address.
+
+Open the failed run in **Actions** and read the failing step. Common causes: wrong or expired Qualtrics secrets, a reworded question, network problems, or a push conflict when a manual commit and a scheduled run overlap (the workflow prefers its own data for `data/`).
 
 **Values show as numbers instead of names.** That means the export came back without labels. Check the `useLabels` flag is still set in `start_export()` in the build script.
 
