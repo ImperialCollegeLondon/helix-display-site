@@ -66,13 +66,13 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Publication title" | Title |
 | "Which of our themes…" | Theme (filterable) |
 | "Which particular subproject…" | Project (filterable) |
-| "Was this publication Lead by Helix or Helix Contributed?" | "Helix involvement" on the detail page |
+| "Was this publication Led by Helix or Helix Contributed?" | "Helix involvement" on the detail page |
 | "What are you summarising?" | Source type (free text used if "Other") |
 | "Date of publication, or the main date this work relates to" | Publication Date (dd/mm/yyyy picker — used to sort the table) |
 | "If the work spans a period…" | Shown after the date on the detail page, e.g. "September 2025 – ongoing" |
 | "1-2 sentence summary of work" | The italic lede |
 | "Please paste your lay summary below" | Summary |
-| "Helix Authors" | Authors under the title |
+| "Helix Authors" | Listed under the title **in the table only** — detail pages show acknowledgements instead, which cover Helix and external contributors together |
 | "Keywords (select up to 5)" | Keyword chips |
 | "Acknowledgements…" | Acknowledgements |
 | "If available, please insert a link…" | Full paper / work |

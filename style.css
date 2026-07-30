@@ -580,17 +580,6 @@ body.table-embed,
   line-height: 1.25;
 }
 
-.entry-authors {
-  margin: 0 0 6px;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.entry-authors[hidden] {
-  display: none;
-}
-
 .entry-meta {
   display: flex;
   align-items: center;

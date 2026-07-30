@@ -134,13 +134,9 @@ function renderEntry(entry) {
     }
   }
 
-  const authors = document.getElementById("entry-authors");
-
-  if (authors) {
-    const names = Array.isArray(entry.helix_authors) ? entry.helix_authors : [];
-    authors.textContent = names.join(", ");
-    authors.hidden = names.length === 0;
-  }
+  // Helix authors are shown in the table only. On the detail page the
+  // acknowledgements cover everyone who worked on the piece, Helix and
+  // otherwise, so listing Helix authors separately here would double up.
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
 
@@ -193,9 +189,9 @@ function renderEntry(entry) {
       });
     }
 
-    if (entry.lead_or_contributed) {
+    if (entry.led_or_contributed) {
       addDetailRow(details, "Helix involvement", dd => {
-        dd.textContent = entry.lead_or_contributed;
+        dd.textContent = entry.led_or_contributed;
       });
     }
 

@@ -38,7 +38,10 @@ FIELD_LABEL_PATTERNS = {
     "lay_summary": "paste your lay summary",
     "theme": "which of our themes",
     "subproject": "which particular subproject",
-    "lead_or_contributed": "lead by helix or helix contributed",
+    # Matched on the tail of the question so it works whether the survey says
+    # "Led by Helix" or "Lead by Helix" — the earlier pattern assumed "lead"
+    # and silently stopped matching when the survey was corrected to "Led".
+    "led_or_contributed": "helix or helix contributed",
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
     "corresponding_team_member": "corresponding team member for publication / project (name)",
@@ -416,7 +419,7 @@ def convert_row(row, columns, multi_maps):
     # With useLabels=true these already hold the choice text.
     theme = col("theme")
     subproject = col("subproject")
-    lead_or_contributed = col("lead_or_contributed")
+    led_or_contributed = col("led_or_contributed")
 
     source_type = SOURCE_TYPE_MAP.get(source_type_code, source_type_code)
     if source_type_code in ("10", "Other") and source_type_other:
@@ -442,7 +445,7 @@ def convert_row(row, columns, multi_maps):
         "source_type": source_type,
         "theme": theme,
         "subproject": subproject,
-        "lead_or_contributed": lead_or_contributed,
+        "led_or_contributed": led_or_contributed,
         "helix_authors": helix_authors,
         "project_date": project_date,
         "publication_date_iso": publication_date_iso,

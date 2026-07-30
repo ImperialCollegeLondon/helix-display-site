@@ -210,7 +210,7 @@ function getFilteredRows() {
         item.corresponding_team_member,
         item.theme,
         item.subproject,
-        item.lead_or_contributed,
+        item.led_or_contributed,
         item.source_type,
         item.short_description,
         item.lay_summary,
