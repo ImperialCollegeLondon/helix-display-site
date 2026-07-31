@@ -75,7 +75,6 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Author list" | Under the title, in both the table (clamped to two lines) and detail pages |
 | "Acknowledgements…" (optional) | At the bottom of the detail page; the row is hidden if left blank |
 | "Keywords (select up to 5)" | Keyword chips |
-| "Acknowledgements…" | Acknowledgements |
 | "If available, please insert a link…" | Full paper / work |
 | "Corresponding team member … (name)" / "(email)" | Contact details |
 | "Please upload a photo…" | Header image |
