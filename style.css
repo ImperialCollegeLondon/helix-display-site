@@ -537,19 +537,27 @@ body.table-embed,
   flex-wrap: wrap;
 }
 
+/* The image area is capped in height. Tall images shrink to fit inside it
+   rather than being cropped, and are centred on a neutral background. */
 .entry-hero-image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  max-height: 460px;
   margin: 0 0 28px;
   background: var(--surface-alt);
   overflow: hidden;
 }
 
-/* Show the whole image, never a crop: no fixed height and no object-fit, so
-   tall or unusually shaped uploads are shown complete rather than cut off. */
+/* object-fit: contain scales the image down to fit the cap, so the whole
+   image is always visible — nothing is cut off, however tall or narrow it is. */
 .entry-hero-image {
   display: block;
   width: 100%;
+  max-height: 460px;
   height: auto;
+  object-fit: contain;
 }
 
 /* Photos are optional. With no photo the wrapper is removed entirely (rather
@@ -940,7 +948,12 @@ a.filter-pill:focus {
   }
 
   .entry-hero-image-wrap {
+    max-height: 300px;
     margin-bottom: 20px;
+  }
+
+  .entry-hero-image {
+    max-height: 300px;
   }
 
 
