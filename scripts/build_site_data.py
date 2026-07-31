@@ -226,6 +226,7 @@ def resolve_columns(header_row, label_row):
     """Map logical fields to CSV columns using the question-text label row."""
     columns = {}
     multi_maps = {key: {} for key in MULTI_SELECT_PATTERNS}
+    deferred = []
 
     for field, label in zip(header_row, label_row):
         norm = normalise_label(label)
@@ -257,6 +258,23 @@ def resolve_columns(header_row, label_row):
                 columns.setdefault("source_type", field)
             continue
 
+        # Prefer a question that *starts* with the pattern. One question can
+        # mention another's wording — the acknowledgements question refers to
+        # the "author list" — and without this the wrong column would win
+        # whenever the questions were reordered.
+        exact = next(
+            (key for key, pattern in FIELD_LABEL_PATTERNS.items()
+             if key not in columns and norm.startswith(pattern)),
+            None
+        )
+
+        if exact:
+            columns[exact] = field
+        else:
+            deferred.append((field, norm))
+
+    # Second pass: anything still unmatched may appear mid-question.
+    for field, norm in deferred:
         for key, pattern in FIELD_LABEL_PATTERNS.items():
             if key not in columns and pattern in norm:
                 columns[key] = field
