@@ -41,9 +41,11 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 ## What readers see
 
-**The table** lists Title (with Helix authors beneath), Project, Theme and Publication Date, newest publication first. Up to 15 entries are shown per page; beyond that a pager appears at the bottom, and searching or filtering starts again at page one. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
+**The table** lists Title (with the authors beneath, trimmed to two lines), Theme, Project and Publication Date, newest publication first. Up to 15 entries are shown per page; beyond that a pager appears at the bottom, and searching or filtering starts again at page one. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
 
-**A detail page** shows the image (if any), title, Helix authors, a meta line with project, theme, source type and date, keyword chips, the short lede, the full summary, then contact and acknowledgement details, and a pink "All publication summaries" link at the bottom. If no image was uploaded, the image area is removed entirely rather than left blank.
+**A detail page** shows the image (if any), title, the full author list, a meta line with project, theme, source type and date, keyword chips, the short lede, the full summary, then contact details, acknowledgements and Helix involvement, and a pink "All publication summaries" link at the bottom.
+
+Two things are hidden rather than shown empty: if no image was uploaded the image area is removed entirely, and if acknowledgements are left blank that row doesn't appear. Images are never cropped — the area is capped in height (460px, 300px on phones) and taller images shrink to fit inside it.
 
 **Links you can share:**
 
@@ -59,7 +61,7 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 ## Fields from Qualtrics
 
-Columns are matched by **question wording**, not by QID, so renumbering questions does not break the site. Current questions and where they appear:
+Columns are matched by **question wording**, not by QID, so renumbering questions does not break the site. A field is matched first to a question that *begins* with its wording, and only then to one that mentions it midway — that stops the acknowledgements question, which refers to the "author list", from claiming the author field. Current questions and where they appear:
 
 | Question (starts with) | Shown as |
 | --- | --- |

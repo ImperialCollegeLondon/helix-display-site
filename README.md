@@ -4,12 +4,13 @@ This repository hosts the embeddable Publication Summaries table for the **Helix
 
 The site provides:
 
-- a browsable, searchable table of submitted summaries
+- a browsable, searchable table of submitted summaries, paged at 15 per page
 - a detail page for each summary, with a permanent short reference (`001`, `002`, …)
 - filtering by theme, project or keyword, reflected in the URL so a filtered view can be shared
 - deep links to individual summaries (`…/publications#001`)
-- uploaded images, automatically compressed
+- uploaded images, automatically compressed and shown uncropped
 - an iframe resize helper so the embed grows and shrinks to fit its content
+- an alert if the Qualtrics sync ever fails
 
 Content is refreshed automatically from Qualtrics by GitHub Actions and published through GitHub Pages.
 
@@ -98,7 +99,9 @@ If the site later moves to a custom domain, update the iframe `src`, `allowedOri
 
 A GitHub Actions workflow runs every 15 minutes (and can be run by hand from the **Actions** tab). It pulls the latest Qualtrics responses, rebuilds `data/submissions.json`, downloads and compresses any uploaded images, assigns short references to new submissions, commits anything that changed, and GitHub Pages republishes.
 
-The Qualtrics export is requested with **`useLabels`**, so choice questions arrive as their visible text. Adding, renaming or reordering themes, projects, authors or keywords in the survey therefore needs **no code change** — the site picks them up on the next run.
+The Qualtrics export is requested with **`useLabels`**, so choice questions arrive as their visible text. Adding, renaming or reordering themes, projects or keywords in the survey therefore needs **no code change** — the site picks them up on the next run. Rewording a *question* can need a small change; see the operating guide.
+
+If a run fails, the workflow opens a GitHub issue assigned to the person named in `ALERT_ASSIGNEE` at the top of the workflow file (GitHub emails issue assignees), reuses that issue while the fault persists, and closes it once a run succeeds. It also refuses to publish an empty table over a non-empty one, so a bad export can't wipe the site.
 
 ---
 
