@@ -7,16 +7,8 @@
     "theme": "Healthy Ageing",
     "subproject": "Healthy Habits App",
     "led_or_contributed": "Led by Helix",
-    "helix_authors": [
-      "Leila Shepherd",
-      "Matthew Harrison",
-      "Gianpaolo Fusari",
-      "Alex Dallman-Porter",
-      "Shuang Wu",
-      "Souradip Mookerjee",
-      "Tori Simpson",
-      "Tricia Tay"
-    ],
+    "authors": "",
+    "helix_authors": [],
     "project_date": "23 April 2026",
     "publication_date_iso": "2026-04-23",
     "date_range_note": "",
@@ -45,10 +37,8 @@
     "theme": "Rehabilitation",
     "subproject": "OnTrack",
     "led_or_contributed": "Helix Contributed",
-    "helix_authors": [
-      "Leila Shepherd",
-      "Gianpaolo Fusari"
-    ],
+    "authors": "",
+    "helix_authors": [],
     "project_date": "27 March 2026",
     "publication_date_iso": "2026-03-27",
     "date_range_note": "",
@@ -76,12 +66,8 @@
     "theme": "End of Life Care",
     "subproject": "Palliate",
     "led_or_contributed": "Helix Contributed",
-    "helix_authors": [
-      "Leila Shepherd",
-      "Kate Grailey",
-      "David Sunkersing",
-      "Ivor Williams"
-    ],
+    "authors": "",
+    "helix_authors": [],
     "project_date": "24 November 2025",
     "publication_date_iso": "2025-11-24",
     "date_range_note": "Most people would rather be cared for and die at home, but symptoms can go untreated while families wait for a nurse. This study asked patients, carers and clinicians what they thought about training family carers to give end-of-life medicines themselves — and found broad support, provided it stays voluntary and well supported.",
