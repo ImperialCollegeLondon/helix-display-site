@@ -36,5 +36,68 @@
     "lay_summary": "As people get older, some become \"frail\" — weaker, slower, and more likely to have falls or health setbacks. Programmes that combine exercise with lifestyle changes can help reverse this, but people often struggle to stick with them long-term. Researchers wanted to see whether combining digital tools with insights from behavioural science could help — and, importantly, whether designing the programme together with older adults themselves would make it work better.The team worked with 30 people aged 65 and over (average age 73) who showed early signs of frailty. Together with these participants, they built \"Healthy Habits\" — a programme combining a smartwatch, smart scales, and a sleep tracker with a mobile app that gave personalised feedback across seven everyday habits, such as activity and sleep. The programme was refined through four rounds of co-design with older adults before testing began. Participants used it for at least six weeks, with many choosing to continue for longer.The results were encouraging. Almost everyone stayed involved — 29 of the 30 participants were still taking part after six weeks, and most of them chose to keep going, some for up to a year. People wore their devices consistently, and most saw meaningful improvements: nearly 8 in 10 either walked more or sat less each day. Among those using the full app, most increased their daily steps noticeably within six weeks. Grip strength — a marker of physical strength — improved, and scores on a standard frailty scale dropped by nearly half.Overall, the study suggests that a digital programme designed in partnership with older adults can be both practical and appealing to use, and shows early promise for helping people become more active, less sedentary, and less frail. The next step would be a larger trial to confirm these benefits.",
     "image_path": "images/R_2SRzkWPTZ0pxRTz.jpg",
     "ref": "004"
+  },
+  {
+    "response_id": "R_8NxkoWuJgmob9Dj",
+    "recorded_date": "2026-07-31 11:48:57",
+    "title": "Feedback from wearable devices accelerates recovery after breast cancer surgery",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Helix Contributed",
+    "helix_authors": [
+      "Leila Shepherd",
+      "Gianpaolo Fusari"
+    ],
+    "project_date": "27 March 2026",
+    "publication_date_iso": "2026-03-27",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Ara Darzi, Daniel R. Leff",
+    "link": "https://www.sciencedirect.com/science/article/pii/S0748798326004038?via%3Dihub",
+    "keywords": [
+      "User-centred design",
+      "UX/UI design",
+      "Clinical trial",
+      "Software development",
+      "Wearables"
+    ],
+    "short_description": "The OnTrack system, a smartwatch that tracked arm movement and set personalised weekly goals helped women recover the use of their arm faster after breast cancer surgery, returning to their pre-surgery activity levels within about a week.",
+    "lay_summary": "Surgery to remove lymph nodes from the armpit is a common part of breast cancer treatment, but it often leaves people with a stiff, painful or weak shoulder and arm afterwards. Doing the right exercises helps, yet access to physiotherapy is patchy — many people are sent home with a leaflet and some verbal advice rather than structured support.This study tested OnTrack, a system built around an ordinary smartwatch. Worn on the operated side, it measures how much someone is actually using that arm, sends encouraging messages as they work towards a daily movement goal, and offers self-management guidance. Forty-nine women took part. Ten had goals that a clinician reviewed and adjusted each week to match their progress; ten had a fixed daily goal; and a further twenty-nine, who had taken part in an earlier study, wore a monitor with no feedback at all.People stuck with it — the watch was worn as intended around nine days in ten. The group whose goals were adjusted weekly by a clinician recovered fastest: by eight days after surgery they were slightly above their pre-surgery activity level, while the fixed-goal and no-feedback groups were still below theirs. Their recovery also levelled off sooner, at four days rather than five or seven.This was a small study, and most participants had the less extensive form of armpit surgery, so the findings need confirming in a larger randomised trial before the approach could become routine. But it suggests something practical: a familiar device, combined with a clinician checking in and adjusting goals, could extend rehabilitation support to people who currently get very little.",
+    "image_path": "images/R_8NxkoWuJgmob9Dj.png",
+    "ref": "005"
+  },
+  {
+    "response_id": "R_2HbZ2xPbYrLKdrA",
+    "recorded_date": "2026-07-31 11:58:11",
+    "title": "Acceptability of supporting lay-carer administration of anticipatory subcutaneous medications at home: a qualitative study using the theoretical framework of acceptability",
+    "source_type": "Academic paper",
+    "theme": "End of Life Care",
+    "subproject": "Palliate",
+    "led_or_contributed": "Helix Contributed",
+    "helix_authors": [
+      "Leila Shepherd",
+      "Kate Grailey",
+      "David Sunkersing",
+      "Ivor Williams"
+    ],
+    "project_date": "24 November 2025",
+    "publication_date_iso": "2025-11-24",
+    "date_range_note": "Most people would rather be cared for and die at home, but symptoms can go untreated while families wait for a nurse. This study asked patients, carers and clinicians what they thought about training family carers to give end-of-life medicines themselves — and found broad support, provided it stays voluntary and well supported.",
+    "corresponding_team_member": "David Sunkersing",
+    "contact_email": "d.sunkersing@imperial.ac.uk",
+    "acknowledgements": "David Sunkersing, Leila Shepherd, Calandra Feather, Ivor Williams, Imogen Eastwood, Joanne Droney, Bryony Dean Franklin, Bee Wee, Lisa O’Hara, Ara Darzi, and Kate Grailey1",
+    "link": "https://doi.org/10.1186/s12904-025-01942-9",
+    "keywords": [
+      "User-centred design",
+      "End-of-life care",
+      "Community-based care",
+      "NHS service improvement"
+    ],
+    "short_description": "Most people would rather be cared for and die at home, but symptoms can go untreated while families wait for a nurse. This study asked patients, carers and clinicians what they thought about training family carers to give end-of-life medicines themselves — and found broad support, provided it stays voluntary and well supported.",
+    "lay_summary": "When someone is dying at home, they may need injections to relieve pain, sickness or agitation. These medicines are usually kept at the house ready to be used, but only a nurse can give them — so if a nurse is delayed, symptoms can go untreated for hours. Palliate is a nurse-led approach that trains willing family carers to give these injections themselves, with written guidance and a record to complete.Before offering something like this more widely, it matters whether the people involved would actually find it acceptable. The team interviewed thirty people across the UK: patients living with advanced illness, family carers, and the professionals around them — district nurses, GPs, pharmacists, commissioners and clinical leaders. Some had already used Palliate in practice. The interviews explored seven aspects of acceptability, from how people felt about it emotionally to whether they believed it would work and whether they felt able to do it.Most people were positive. They described faster symptom relief, less waiting, fewer unscheduled call-outs, and families feeling more able to care for someone at home rather than standing by helplessly. But the concerns were just as clear, and they were mostly emotional rather than practical: fear of causing harm, the weight of responsibility at an already painful time, and unease about the line between being a family member and being a carer. As one pharmacist put it, this is something that should always be voluntary and very willingly taken on.The conclusion was that Palliate is acceptable — but conditionally. It depends on carers being properly trained, having a professional they can reach when they need one, and being genuinely free to say no. This was an exploratory study in one country, with limited ethnic diversity among participants, so it points to what matters rather than settling the question.",
+    "image_path": "",
+    "ref": "006"
   }
 ]
