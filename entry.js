@@ -104,9 +104,13 @@ function renderEntry(entry) {
     meta.replaceChildren();
 
     // Project and theme link back to the table filtered by that value.
+    // "One-off Project" is a bookkeeping answer meaning the work sits outside
+    // the research themes, so it's left off rather than shown as a theme.
+    const isOneOff = (entry.theme || "").trim().toLowerCase() === "one-off project";
+
     const pills = [
       { value: entry.subproject, param: "project", className: "filter-pill--project" },
-      { value: entry.theme, param: "theme", className: "filter-pill--theme" }
+      { value: isOneOff ? "" : entry.theme, param: "theme", className: "filter-pill--theme" }
     ].filter(item => item.value);
 
     pills.forEach(item => {

@@ -18,6 +18,15 @@ const FILTER_LABELS = {
 const PAGE_SIZE = 15;
 let currentPage = 1;
 
+// Submissions that aren't part of a research theme pick "One-off Project".
+// That's a bookkeeping answer rather than a theme, so it isn't displayed or
+// offered as a filter — the table shows "-" and detail pages omit it.
+const ONE_OFF_THEME = "one-off project";
+
+function isRealTheme(theme) {
+  return Boolean(theme) && theme.trim().toLowerCase() !== ONE_OFF_THEME;
+}
+
 function scheduleEmbedResize() {
   window.HelixEmbed?.scheduleResize();
 }
@@ -72,7 +81,7 @@ function renderTable(allRows) {
       <td data-label="Project">${item.subproject
         ? `<button type="button" class="filter-pill filter-pill--project" data-filter="project" data-value="${escapeHtml(item.subproject)}">${escapeHtml(item.subproject)}</button>`
         : "-"}</td>
-      <td data-label="Theme">${item.theme
+      <td data-label="Theme">${isRealTheme(item.theme)
         ? `<button type="button" class="filter-pill filter-pill--theme" data-filter="theme" data-value="${escapeHtml(item.theme)}">${escapeHtml(item.theme)}</button>`
         : "-"}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>

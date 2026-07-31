@@ -73,7 +73,9 @@ function renderKeywordTable(items) {
           : ""}
       </td>
       <td data-label="Project">${escapeHtml(item.subproject || "-")}</td>
-      <td data-label="Theme">${escapeHtml(item.theme || "-")}</td>
+      <td data-label="Theme">${item.theme && item.theme.trim().toLowerCase() !== "one-off project"
+        ? escapeHtml(item.theme)
+        : "-"}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
   `).join("");
