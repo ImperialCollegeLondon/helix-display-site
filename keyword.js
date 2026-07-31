@@ -68,13 +68,15 @@ function renderKeywordTable(items) {
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
       <td data-label="Title">
         <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
-        ${Array.isArray(item.helix_authors) && item.helix_authors.length
-          ? `<span class="cell-authors">${escapeHtml(item.helix_authors.join(", "))}</span>`
+        ${(item.authors || (Array.isArray(item.helix_authors) ? item.helix_authors.join(", ") : ""))
+          ? `<span class="cell-authors">${escapeHtml(item.authors || item.helix_authors.join(", "))}</span>`
           : ""}
       </td>
-      <td data-label="Project">${escapeHtml(item.subproject || "-")}</td>
       <td data-label="Theme">${item.theme && item.theme.trim().toLowerCase() !== "one-off project"
         ? escapeHtml(item.theme)
+        : "-"}</td>
+      <td data-label="Project">${item.subproject && !["n/a","na","none"].includes(item.subproject.trim().toLowerCase())
+        ? escapeHtml(item.subproject)
         : "-"}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>

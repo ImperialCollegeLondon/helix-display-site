@@ -27,6 +27,12 @@ function isRealTheme(theme) {
   return Boolean(theme) && theme.trim().toLowerCase() !== ONE_OFF_THEME;
 }
 
+// Likewise, work that doesn't belong to a subproject is marked "N/A", which
+// is bookkeeping rather than a project name: the table shows "-" and no filter.
+function isRealProject(project) {
+  return Boolean(project) && !["n/a", "na", "none"].includes(project.trim().toLowerCase());
+}
+
 function scheduleEmbedResize() {
   window.HelixEmbed?.scheduleResize();
 }
@@ -38,6 +44,16 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+// Authors come through as free text now. Older entries stored a list of Helix
+// authors, so both are handled.
+function authorsText(item) {
+  if (item.authors) {
+    return item.authors;
+  }
+
+  return Array.isArray(item.helix_authors) ? item.helix_authors.join(", ") : "";
 }
 
 function navigateToEntry(id, ref) {
@@ -74,15 +90,15 @@ function renderTable(allRows) {
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
       <td data-label="Title">
         <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
-        ${Array.isArray(item.helix_authors) && item.helix_authors.length
-          ? `<span class="cell-authors">${escapeHtml(item.helix_authors.join(", "))}</span>`
+        ${authorsText(item)
+          ? `<span class="cell-authors">${escapeHtml(authorsText(item))}</span>`
           : ""}
       </td>
-      <td data-label="Project">${item.subproject
-        ? `<button type="button" class="filter-pill filter-pill--project" data-filter="project" data-value="${escapeHtml(item.subproject)}">${escapeHtml(item.subproject)}</button>`
-        : "-"}</td>
       <td data-label="Theme">${isRealTheme(item.theme)
         ? `<button type="button" class="filter-pill filter-pill--theme" data-filter="theme" data-value="${escapeHtml(item.theme)}">${escapeHtml(item.theme)}</button>`
+        : "-"}</td>
+      <td data-label="Project">${isRealProject(item.subproject)
+        ? `<button type="button" class="filter-pill filter-pill--project" data-filter="project" data-value="${escapeHtml(item.subproject)}">${escapeHtml(item.subproject)}</button>`
         : "-"}</td>
       <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
     </tr>
@@ -217,6 +233,7 @@ function getFilteredRows() {
       [
         item.title,
         item.corresponding_team_member,
+        authorsText(item),
         item.theme,
         item.subproject,
         item.led_or_contributed,

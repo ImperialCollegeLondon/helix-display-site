@@ -64,15 +64,16 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | Question (starts with) | Shown as |
 | --- | --- |
 | "Publication title" | Title |
-| "Which of our themes…" | Theme (filterable) |
-| "Which particular subproject…" | Project (filterable) |
+| "Which of our themes…" | Theme (filterable). Choosing **One-off Project** means the work sits outside the themes: the table shows "-" and the detail page omits it |
+| "Which particular subproject…" | Project (filterable). Choosing **N/A** behaves the same way |
 | "Was this publication Led by Helix or Helix Contributed?" | "Helix involvement" on the detail page |
 | "What are you summarising?" | Source type (free text used if "Other") |
 | "Date of publication, or the main date this work relates to" | Publication Date (dd/mm/yyyy picker — used to sort the table) |
 | "If the work spans a period…" | Shown after the date on the detail page, e.g. "September 2025 – ongoing" |
 | "1-2 sentence summary of work" | The italic lede |
 | "Please paste your lay summary below" | Summary |
-| "Helix Authors" | Listed under the title **in the table only** — detail pages show acknowledgements instead, which cover Helix and external contributors together |
+| "Author list" | Under the title, in both the table (clamped to two lines) and detail pages |
+| "Acknowledgements…" (optional) | At the bottom of the detail page; the row is hidden if left blank |
 | "Keywords (select up to 5)" | Keyword chips |
 | "Acknowledgements…" | Acknowledgements |
 | "If available, please insert a link…" | Full paper / work |

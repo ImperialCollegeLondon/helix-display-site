@@ -398,8 +398,13 @@ body.table-embed,
   display: block;
 }
 
+/* Author lists can be long. Show at most two lines and let the browser add
+   an ellipsis, so a paper with thirty authors doesn't dominate the row. */
 .cell-authors {
-  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   margin-top: 4px;
   color: var(--text-secondary);
   font-size: 0.85rem;
@@ -539,12 +544,12 @@ body.table-embed,
   overflow: hidden;
 }
 
+/* Show the whole image, never a crop: no fixed height and no object-fit, so
+   tall or unusually shaped uploads are shown complete rather than cut off. */
 .entry-hero-image {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 460px;
-  object-fit: cover;
 }
 
 /* Photos are optional. With no photo the wrapper is removed entirely (rather
@@ -578,6 +583,17 @@ body.table-embed,
   color: var(--helix-navy);
   font-size: 1.4rem;
   line-height: 1.25;
+}
+
+.entry-authors {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.entry-authors[hidden] {
+  display: none;
 }
 
 .entry-meta {
@@ -927,9 +943,6 @@ a.filter-pill:focus {
     margin-bottom: 20px;
   }
 
-  .entry-hero-image {
-    max-height: 260px;
-  }
 
   .entry-article {
     padding: 0 16px;

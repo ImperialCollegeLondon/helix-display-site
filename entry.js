@@ -104,12 +104,13 @@ function renderEntry(entry) {
     meta.replaceChildren();
 
     // Project and theme link back to the table filtered by that value.
-    // "One-off Project" is a bookkeeping answer meaning the work sits outside
-    // the research themes, so it's left off rather than shown as a theme.
+    // "One-off Project" and a project of "N/A" are bookkeeping answers meaning
+    // the work sits outside the themes or projects, so they're left off.
     const isOneOff = (entry.theme || "").trim().toLowerCase() === "one-off project";
+    const noProject = ["n/a", "na", "none"].includes((entry.subproject || "").trim().toLowerCase());
 
     const pills = [
-      { value: entry.subproject, param: "project", className: "filter-pill--project" },
+      { value: noProject ? "" : entry.subproject, param: "project", className: "filter-pill--project" },
       { value: isOneOff ? "" : entry.theme, param: "theme", className: "filter-pill--theme" }
     ].filter(item => item.value);
 
@@ -138,9 +139,16 @@ function renderEntry(entry) {
     }
   }
 
-  // Helix authors are shown in the table only. On the detail page the
-  // acknowledgements cover everyone who worked on the piece, Helix and
-  // otherwise, so listing Helix authors separately here would double up.
+  // The full author list sits directly under the title. Acknowledgements are
+  // separate and optional, and appear at the bottom with the other details.
+  const authors = document.getElementById("entry-authors");
+
+  if (authors) {
+    const text = entry.authors ||
+      (Array.isArray(entry.helix_authors) ? entry.helix_authors.join(", ") : "");
+    authors.textContent = text;
+    authors.hidden = !text;
+  }
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
 

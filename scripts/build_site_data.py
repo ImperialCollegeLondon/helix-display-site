@@ -42,6 +42,7 @@ FIELD_LABEL_PATTERNS = {
     # "Led by Helix" or "Lead by Helix" — the earlier pattern assumed "lead"
     # and silently stopped matching when the survey was corrected to "Led".
     "led_or_contributed": "helix or helix contributed",
+    "authors": "author list",
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
     "corresponding_team_member": "corresponding team member for publication / project (name)",
@@ -426,7 +427,14 @@ def convert_row(row, columns, multi_maps):
         source_type = source_type_other
 
     keywords = extract_multi_select(row, multi_maps.get("keywords", {}))
+    authors = col("authors")
+
+    # The survey used to have a Helix Authors tick-list; it has been replaced
+    # by a free-text author list. Older responses still carry the tick-list, so
+    # fall back to it when the free-text answer isn't there.
     helix_authors = extract_multi_select(row, multi_maps.get("helix_authors", {}))
+    if not authors and helix_authors:
+        authors = ", ".join(helix_authors)
     recorded_date = row.get("RecordedDate", "").strip()
 
     file_id = col("image_id")
@@ -446,6 +454,7 @@ def convert_row(row, columns, multi_maps):
         "theme": theme,
         "subproject": subproject,
         "led_or_contributed": led_or_contributed,
+        "authors": authors,
         "helix_authors": helix_authors,
         "project_date": project_date,
         "publication_date_iso": publication_date_iso,
