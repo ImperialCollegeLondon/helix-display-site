@@ -30,6 +30,35 @@
     "ref": "004"
   },
   {
+    "response_id": "R_8NxkoWuJgmob9Dj",
+    "recorded_date": "2026-07-31 11:48:57",
+    "title": "Feedback from wearable devices accelerates recovery after breast cancer surgery",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "",
+    "helix_authors": [],
+    "project_date": "27 March 2026",
+    "publication_date_iso": "2026-03-27",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Ara Darzi, Daniel R. Leff",
+    "link": "https://www.sciencedirect.com/science/article/pii/S0748798326004038?via%3Dihub",
+    "keywords": [
+      "User-centred design",
+      "UX/UI design",
+      "Clinical trial",
+      "Software development",
+      "Wearables"
+    ],
+    "short_description": "The OnTrack system, a smartwatch that tracked arm movement and set personalised weekly goals helped women recover the use of their arm faster after breast cancer surgery, returning to their pre-surgery activity levels within about a week.",
+    "lay_summary": "Surgery to remove lymph nodes from the armpit is a common part of breast cancer treatment, but it often leaves people with a stiff, painful or weak shoulder and arm afterwards. Doing the right exercises helps, yet access to physiotherapy is patchy — many people are sent home with a leaflet and some verbal advice rather than structured support.This study tested OnTrack, a system built around an ordinary smartwatch. Worn on the operated side, it measures how much someone is actually using that arm, sends encouraging messages as they work towards a daily movement goal, and offers self-management guidance. Forty-nine women took part. Ten had goals that a clinician reviewed and adjusted each week to match their progress; ten had a fixed daily goal; and a further twenty-nine, who had taken part in an earlier study, wore a monitor with no feedback at all.People stuck with it — the watch was worn as intended around nine days in ten. The group whose goals were adjusted weekly by a clinician recovered fastest: by eight days after surgery they were slightly above their pre-surgery activity level, while the fixed-goal and no-feedback groups were still below theirs. Their recovery also levelled off sooner, at four days rather than five or seven.This was a small study, and most participants had the less extensive form of armpit surgery, so the findings need confirming in a larger randomised trial before the approach could become routine. But it suggests something practical: a familiar device, combined with a clinician checking in and adjusting goals, could extend rehabilitation support to people who currently get very little.",
+    "image_path": "images/R_8NxkoWuJgmob9Dj.png",
+    "ref": "005"
+  },
+  {
     "response_id": "R_2HbZ2xPbYrLKdrA",
     "recorded_date": "2026-07-31 11:58:11",
     "title": "Acceptability of supporting lay-carer administration of anticipatory subcutaneous medications at home: a qualitative study using the theoretical framework of acceptability",
