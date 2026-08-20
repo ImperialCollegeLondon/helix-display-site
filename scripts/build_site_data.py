@@ -310,13 +310,23 @@ def parse_csv_export(content):
             if text is None:
                 raise Exception("Could not find CSV file in ZIP")
 
-    lines = text.splitlines()
-    header_row = next(csv.reader([lines[0]]))
-    label_row = next(csv.reader([lines[1]]))
+    # The CSV must be read as a single stream, not as a list of lines. Long
+    # answers contain paragraph breaks, and in a CSV those sit inside a quoted
+    # field. Splitting the text into lines first hides them from the reader,
+    # which then joins the paragraphs together with nothing between them.
+    stream = io.StringIO(text.replace("\r\n", "\n").replace("\r", "\n"), newline="")
+    reader = csv.reader(stream)
+    header_row = next(reader)
+    label_row = next(reader)
     columns, multi_maps = resolve_columns(header_row, label_row)
 
-    reader = csv.DictReader(lines)
-    return list(reader), columns, multi_maps
+    rows = []
+    for row in reader:
+        # Pad or trim so a malformed row can never shift every later column.
+        row = (row + [""] * len(header_row))[:len(header_row)]
+        rows.append(dict(zip(header_row, row)))
+
+    return rows, columns, multi_maps
 
 
 def get_real_rows(rows, columns):
