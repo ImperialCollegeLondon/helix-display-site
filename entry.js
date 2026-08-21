@@ -152,6 +152,32 @@ function renderEntry(entry) {
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
 
+  // An optional diagram sits directly under the summary. Unlike the header
+  // photo it is shown whole rather than cropped, because cropping a diagram
+  // loses the very thing it is there to explain. The caption is only shown if
+  // one was written, and the whole figure disappears if there is no diagram.
+  const diagram = document.getElementById("entry-diagram");
+
+  if (diagram) {
+    const diagramImage = document.getElementById("entry-diagram-image");
+    const diagramCaption = document.getElementById("entry-diagram-caption");
+    const caption = (entry.diagram_caption || "").trim();
+
+    if (entry.diagram_path) {
+      diagramImage.src = entry.diagram_path;
+      diagramImage.alt = caption || `Diagram accompanying ${entry.title || "this summary"}`;
+      diagramCaption.textContent = caption;
+      diagramCaption.hidden = !caption;
+      diagram.hidden = false;
+
+      // A late-loading image changes the page height, so remeasure the frame.
+      diagramImage.addEventListener("load", scheduleEmbedResize, { once: true });
+      diagramImage.addEventListener("error", () => { diagram.hidden = true; scheduleEmbedResize(); }, { once: true });
+    } else {
+      diagram.hidden = true;
+    }
+  }
+
   const keywordsContainer = document.getElementById("entry-keywords");
 
   if (keywordsContainer) {

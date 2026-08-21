@@ -45,6 +45,7 @@ FIELD_LABEL_PATTERNS = {
     "authors": "author list",
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
+    "diagram_caption": "if you uploaded a diagram",
     # The corresponding team member's name and email are handled separately in
     # resolve_columns — they are two rows of one question and share its wording.
 }
@@ -251,6 +252,17 @@ def resolve_columns(header_row, label_row):
                 columns["image_type"] = field
             continue
 
+        # The optional second upload, for a diagram shown under the summary.
+        # Qualtrics splits every file upload into _Id / _Name / _Type columns.
+        if norm.startswith("if a diagram is absolutely necessary"):
+            if field.endswith("_Id"):
+                columns["diagram_id"] = field
+            elif field.endswith("_Name"):
+                columns["diagram_name"] = field
+            elif field.endswith("_Type"):
+                columns["diagram_type"] = field
+            continue
+
         # Name and email are two rows of a single question, so both columns
         # carry the same question wording and differ only at the end
         # ("… - Name" / "… - Email"). Earlier responses came from two separate
@@ -392,13 +404,12 @@ def get_file_extension(filename, content_type):
     return ".bin"
 
 
-def compress_image(path):
+def compress_image(path, max_width=1600):
     try:
         with Image.open(path) as img:
             # The detail page shows the photo as a full-width banner, so it is
             # displayed larger than it used to be and needs a little more pixel
             # width to stay sharp on high-resolution screens.
-            max_width = 1600
             if img.width > max_width:
                 ratio = max_width / img.width
                 img = img.resize((max_width, int(img.height * ratio)), Image.LANCZOS)
@@ -419,7 +430,13 @@ def compress_image(path):
         return path
 
 
-def download_image(response_id, file_id, original_filename, content_type):
+def download_image(response_id, file_id, original_filename, content_type, suffix=""):
+    """Fetch one uploaded file and save it as images/<response id><suffix>.
+
+    The suffix keeps the second upload (the optional diagram) from overwriting
+    the first. Both still begin with the response ID, so both are cleared and
+    rebuilt on every run along with everything else.
+    """
     if not file_id:
         return ""
 
@@ -433,7 +450,7 @@ def download_image(response_id, file_id, original_filename, content_type):
     response.raise_for_status()
 
     extension = get_file_extension(original_filename, content_type)
-    output_filename = f"{response_id}{extension}"
+    output_filename = f"{response_id}{suffix}{extension}"
     output_path = os.path.join(IMAGES_DIR, output_filename)
 
     with open(output_path, "wb") as f:
@@ -490,6 +507,16 @@ def convert_row(row, columns, multi_maps):
         log(f"Downloading image for {response_id}")
         image_path = download_image(response_id, file_id, original_filename, content_type)
 
+    # The optional diagram, shown under the summary with its caption.
+    diagram_id = col("diagram_id")
+    diagram_path = ""
+    if diagram_id:
+        log(f"Downloading diagram for {response_id}")
+        diagram_path = download_image(
+            response_id, diagram_id, col("diagram_name"), col("diagram_type"),
+            suffix="-diagram"
+        )
+
     return {
         "response_id": response_id,
         "recorded_date": recorded_date,
@@ -510,7 +537,9 @@ def convert_row(row, columns, multi_maps):
         "keywords": keywords,
         "short_description": short_description,
         "lay_summary": lay_summary,
-        "image_path": image_path
+        "image_path": image_path,
+        "diagram_path": diagram_path,
+        "diagram_caption": col("diagram_caption")
     }
 
 def count_existing_submissions():

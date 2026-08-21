@@ -47,7 +47,9 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 Two things are hidden rather than shown empty: if no image was uploaded the image area is removed entirely, and if acknowledgements are left blank that row doesn't appear.
 
-The image runs the full width of the embed as a fixed-ratio banner — 5:2 on a computer, 16:9 on a phone — so every detail page is shaped the same way. Whatever doesn't fit that ratio **is cropped**, evenly from both edges, keeping the middle of the picture. The form therefore asks for landscape photographs, not diagrams or posters: text or fine detail near an edge will be cut off. To change the shape, edit `aspect-ratio` on `.entry-hero-image-wrap` in `style.css` (there is a second value in the mobile block near the bottom).
+A second, optional upload sits directly under the summary: a diagram, with an italic caption beneath it if one was written. Unlike the header photo this one is **never cropped** — a diagram cut in half loses the thing it is there to explain — so it scales down whole to fit the column, capped at 520px tall (360px on phones). Small diagrams are shown at their own size rather than stretched. If no diagram was uploaded the whole block, caption included, disappears.
+
+The header image runs the full width of the embed as a fixed-ratio banner — 5:2 on a computer, 16:9 on a phone — so every detail page is shaped the same way. Whatever doesn't fit that ratio **is cropped**, evenly from both edges, keeping the middle of the picture. The form therefore asks for landscape photographs, not diagrams or posters: text or fine detail near an edge will be cut off. To change the shape, edit `aspect-ratio` on `.entry-hero-image-wrap` in `style.css` (there is a second value in the mobile block near the bottom).
 
 **Links you can share:**
 
@@ -82,6 +84,8 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "If available, please insert a link…" | Full paper / work |
 | "Corresponding team member for publication / project" (one question, Name and Email rows) | Contact details |
 | "Please upload a photo…" | Header image |
+| "If a diagram is absolutely necessary…" (optional) | Diagram shown under the summary |
+| "If you uploaded a diagram, please write a small caption…" (optional) | Italic caption under the diagram |
 
 Only responses marked finished, with a title or summary, are shown.
 
