@@ -80,7 +80,7 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Acknowledgements…" (optional) | At the bottom of the detail page; the row is hidden if left blank |
 | "Keywords (select up to 5)" | Keyword chips |
 | "If available, please insert a link…" | Full paper / work |
-| "Corresponding team member … (name)" / "(email)" | Contact details |
+| "Corresponding team member for publication / project" (one question, Name and Email rows) | Contact details |
 | "Please upload a photo…" | Header image |
 
 Only responses marked finished, with a title or summary, are shown.

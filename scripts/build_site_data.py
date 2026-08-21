@@ -45,8 +45,8 @@ FIELD_LABEL_PATTERNS = {
     "authors": "author list",
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
-    "corresponding_team_member": "corresponding team member for publication / project (name)",
-    "contact_email": "corresponding team member for publication / project (email)",
+    # The corresponding team member's name and email are handled separately in
+    # resolve_columns — they are two rows of one question and share its wording.
 }
 
 # Multi-select questions: every "<prefix> - <choice>" column becomes a list item.
@@ -249,6 +249,19 @@ def resolve_columns(header_row, label_row):
                 columns["image_name"] = field
             elif field.endswith("_Type"):
                 columns["image_type"] = field
+            continue
+
+        # Name and email are two rows of a single question, so both columns
+        # carry the same question wording and differ only at the end
+        # ("… - Name" / "… - Email"). Earlier responses came from two separate
+        # questions ending "(Name)" and "(Email)". Matching on the last word
+        # covers both, whatever punctuation Qualtrics puts in between.
+        if norm.startswith("corresponding team member"):
+            last_word = norm.rstrip(") .:").rsplit(" ", 1)[-1]
+            if last_word.endswith("email"):
+                columns.setdefault("contact_email", field)
+            elif last_word.endswith("name"):
+                columns.setdefault("corresponding_team_member", field)
             continue
 
         if norm.startswith("what are you summarising"):
