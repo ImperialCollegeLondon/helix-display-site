@@ -234,6 +234,14 @@ function renderEntry(entry) {
       });
     }
 
+    // Optional, and checked the same way as the paper link: anything that
+    // isn't a plain http(s) address is ignored rather than made clickable.
+    if (entry.video_link && isPublicUrl(entry.video_link)) {
+      addDetailRow(details, "Video", dd => {
+        renderAnchor(dd, entry.video_link, entry.video_link, { external: true });
+      });
+    }
+
     if (entry.acknowledgements) {
       addDetailRow(details, "Acknowledgements", dd => {
         dd.textContent = entry.acknowledgements;
