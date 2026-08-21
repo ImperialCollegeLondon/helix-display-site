@@ -13,7 +13,7 @@ GitHub Actions refreshes it every 15 minutes:
 1. pulls the latest responses from Qualtrics (export requested with `useLabels`, so choice text comes through as written)
 2. works out which CSV column is which by reading the question wording
 3. rebuilds `data/submissions.json`
-4. downloads any uploaded images and compresses them (max 1200px wide, JPEG quality 82)
+4. downloads any uploaded images and compresses them (max 1600px wide, JPEG quality 82)
 5. assigns a permanent short reference to any new submission (`data/refs.json`)
 6. commits changes if anything changed, and GitHub Pages republishes
 
@@ -132,7 +132,7 @@ If the survey is replaced, update `QUALTRICS_SURVEY_ID` **and** the form link in
 ## Making changes
 
 - **Public links** (submission form, DAIsy helper): `config.js`
-- **Styling and branding**: `style.css` — brand colours are CSS variables at the top (navy `#041e42`, turquoise `#00bfb3`, magenta `#d0006f`)
+- **Styling and branding**: `style.css` — brand colours are CSS variables at the top (navy `#2b3a63`, turquoise `#00bfb3`, magenta `#d0006f`)
 - **Table columns and wording**: `index.html` and `script.js`
 - **Detail page layout**: `entry.html` and `entry.js`
 - **Embed behaviour** (height, deep links): `embed.js` *and* the matching block on the helixcentre.com page

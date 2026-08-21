@@ -1,5 +1,5 @@
 :root {
-  --helix-navy: #041e42;
+  --helix-navy: #2b3a63;
   --helix-teal: #52bbb5;
   --helix-pink: #d0006f;
   --helix-yellow: #fbb33d;
@@ -390,7 +390,7 @@ body.table-embed,
 }
 
 .filter-pill:focus-visible {
-  outline: 2px solid rgba(4, 30, 66, 0.45);
+  outline: 2px solid rgba(43, 58, 99, 0.45);
   outline-offset: 2px;
 }
 
@@ -477,13 +477,13 @@ body.table-embed,
 
 .filter-chip--theme .filter-chip__remove,
 .filter-chip--project .filter-chip__remove {
-  background: rgba(4, 30, 66, 0.14);
+  background: rgba(43, 58, 99, 0.14);
   color: var(--helix-navy);
 }
 
 .filter-chip--theme .filter-chip__remove:hover,
 .filter-chip--project .filter-chip__remove:hover {
-  background: rgba(4, 30, 66, 0.24);
+  background: rgba(43, 58, 99, 0.24);
 }
 
 .filter-chip__remove {
@@ -827,7 +827,7 @@ a.filter-pill:focus {
 }
 
 .pager__button:focus-visible {
-  outline: 2px solid rgba(4, 30, 66, 0.45);
+  outline: 2px solid rgba(43, 58, 99, 0.45);
   outline-offset: 2px;
 }
 
