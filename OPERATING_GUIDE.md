@@ -45,7 +45,9 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 **A detail page** shows the image (if any), title, the full author list, a meta line with project, theme, source type and date, keyword chips, the short lede, the full summary, then contact details, acknowledgements and Helix involvement, and a pink "All publication summaries" link at the bottom.
 
-Two things are hidden rather than shown empty: if no image was uploaded the image area is removed entirely, and if acknowledgements are left blank that row doesn't appear. Images are never cropped — the area is capped in height (460px, 300px on phones) and taller images shrink to fit inside it.
+Two things are hidden rather than shown empty: if no image was uploaded the image area is removed entirely, and if acknowledgements are left blank that row doesn't appear.
+
+The image runs the full width of the embed as a fixed-ratio banner — 5:2 on a computer, 16:9 on a phone — so every detail page is shaped the same way. Whatever doesn't fit that ratio **is cropped**, evenly from both edges, keeping the middle of the picture. The form therefore asks for landscape photographs, not diagrams or posters: text or fine detail near an edge will be cut off. To change the shape, edit `aspect-ratio` on `.entry-hero-image-wrap` in `style.css` (there is a second value in the mobile block near the bottom).
 
 **Links you can share:**
 

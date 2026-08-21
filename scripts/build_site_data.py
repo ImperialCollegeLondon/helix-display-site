@@ -382,7 +382,10 @@ def get_file_extension(filename, content_type):
 def compress_image(path):
     try:
         with Image.open(path) as img:
-            max_width = 1200
+            # The detail page shows the photo as a full-width banner, so it is
+            # displayed larger than it used to be and needs a little more pixel
+            # width to stay sharp on high-resolution screens.
+            max_width = 1600
             if img.width > max_width:
                 ratio = max_width / img.width
                 img = img.resize((max_width, int(img.height * ratio)), Image.LANCZOS)

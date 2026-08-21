@@ -8,7 +8,7 @@ The site provides:
 - a detail page for each summary, with a permanent short reference (`001`, `002`, …)
 - filtering by theme, project or keyword, reflected in the URL so a filtered view can be shared
 - deep links to individual summaries (`…/publications#001`)
-- uploaded images, automatically compressed and shown uncropped
+- uploaded images, automatically compressed and shown as a full-width banner
 - an iframe resize helper so the embed grows and shrinks to fit its content
 - an alert if the Qualtrics sync ever fails
 

@@ -537,28 +537,26 @@ body.table-embed,
   flex-wrap: wrap;
 }
 
-/* The image area is capped in height. Tall or narrow images shrink to fit
-   inside it rather than being cropped, and sit centred on white so there is
-   no visible band around images that don't fill the full width. */
+/* A fixed-ratio banner running the full width of the embed. Every entry gets
+   the same shaped image regardless of what was uploaded, so the pages sit
+   consistently next to each other. The form asks for landscape photographs,
+   not diagrams, because this area crops. */
 .entry-hero-image-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  max-height: 460px;
+  aspect-ratio: 5 / 2;
   margin: 0 0 28px;
   background: var(--surface);
   overflow: hidden;
 }
 
-/* object-fit: contain scales the image down to fit the cap, so the whole
-   image is always visible — nothing is cut off, however tall or narrow it is. */
+/* object-fit: cover fills the banner and trims whatever doesn't fit, taking
+   it evenly from both edges so the middle of the photo is always kept. */
 .entry-hero-image {
   display: block;
   width: 100%;
-  max-height: 460px;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Photos are optional. With no photo the wrapper is removed entirely (rather
@@ -948,13 +946,10 @@ a.filter-pill:focus {
     padding: 10px 14px;
   }
 
+  /* A 5:2 banner would be a thin strip on a phone, so the crop gets taller. */
   .entry-hero-image-wrap {
-    max-height: 300px;
+    aspect-ratio: 16 / 9;
     margin-bottom: 20px;
-  }
-
-  .entry-hero-image {
-    max-height: 300px;
   }
 
 
