@@ -132,7 +132,9 @@ If the survey is replaced, update `QUALTRICS_SURVEY_ID` **and** the form link in
 ## Making changes
 
 - **Public links** (submission form, DAIsy helper): `config.js`
-- **Styling and branding**: `style.css` — brand colours are CSS variables at the top (navy `#2b3a63`, turquoise `#00bfb3`, magenta `#d0006f`)
+- **Styling and branding**: `style.css` — brand colours are CSS variables at the top (navy `#2b3a63`, turquoise `#52bbb5`, magenta `#d0006f`)
+
+  These are taken from **helixcentre.com**, not from the Brand Principles PDF, because the embed has to sit inside that page without a visible colour shift. The website uses softer versions of two of the printed brand colours: navy is `#2b3a63` on the site against `#041e42` in the PDF, and turquoise is `#52bbb5` against `#00bfb3`. Magenta is `#d0006f` in both. If the colours ever look slightly off against the parent page, check the live site's stylesheet rather than the PDF.
 - **Table columns and wording**: `index.html` and `script.js`
 - **Detail page layout**: `entry.html` and `entry.js`
 - **Embed behaviour** (height, deep links): `embed.js` *and* the matching block on the helixcentre.com page
