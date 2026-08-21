@@ -114,27 +114,40 @@ function renderEntry(entry) {
       { value: isOneOff ? "" : entry.theme, param: "theme", className: "filter-pill--theme" }
     ].filter(item => item.value);
 
-    pills.forEach(item => {
+    // Every part of the line is built as its own element, so a separator can
+    // be placed between them all — including between the project and theme
+    // links. Anything blank is dropped first, so a missing field never leaves
+    // a stray dot behind.
+    const parts = pills.map(item => {
       const pill = document.createElement("a");
       pill.className = `filter-pill ${item.className}`;
       pill.href = `index.html?${item.param}=${encodeURIComponent(item.value)}`;
       pill.textContent = item.value;
-      meta.appendChild(pill);
+      return pill;
     });
 
-    const dateText = [entry.project_date, entry.date_range_note]
+    [entry.source_type, entry.project_date, entry.date_range_note]
       .filter(Boolean)
-      .join(" · ");
-    const rest = [entry.source_type, dateText].filter(Boolean).join(" · ");
+      .forEach(value => {
+        const text = document.createElement("span");
+        text.className = "entry-meta__text";
+        text.textContent = value;
+        parts.push(text);
+      });
 
-    if (rest) {
-      const restEl = document.createElement("span");
-      restEl.className = "entry-meta__text";
-      restEl.textContent = rest;
-      meta.appendChild(restEl);
-    }
+    parts.forEach((part, index) => {
+      if (index > 0) {
+        const separator = document.createElement("span");
+        separator.className = "entry-meta__separator";
+        // Hidden from screen readers: it's decoration, not content.
+        separator.setAttribute("aria-hidden", "true");
+        separator.textContent = "·";
+        meta.appendChild(separator);
+      }
+      meta.appendChild(part);
+    });
 
-    if (!pills.length && !rest) {
+    if (!parts.length) {
       meta.textContent = "-";
     }
   }

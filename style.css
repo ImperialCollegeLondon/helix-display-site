@@ -626,6 +626,12 @@ a.filter-pill:focus {
   color: var(--text-secondary);
 }
 
+/* Separates every part of the meta line. Kept lighter than the text either
+   side of it so it reads as punctuation rather than as another field. */
+.entry-meta__separator {
+  color: var(--helix-gray);
+}
+
 .entry-keywords {
   margin: 0 0 22px;
 }
