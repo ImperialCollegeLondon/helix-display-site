@@ -581,12 +581,42 @@ def check_not_wiping_everything(new_count):
             f"(deleted in Qualtrics or no longer complete).")
 
 
+def identity_key(submission):
+    """A stable identity for a submission, independent of its response ID.
+
+    Editing a response in Qualtrics does not update it in place: Qualtrics
+    creates a *new* response with a new ID and retires the original. Keying the
+    register on the response ID therefore meant that correcting a typo gave the
+    entry a new number and broke every link to it.
+
+    The paper doesn't change when the summary is corrected, so the register is
+    keyed on the link to the paper, falling back to the title where no link was
+    given. Editing a summary, a date, an author list or an image all keep the
+    number. Changing the link (or, with no link, the title) is the one edit
+    that starts a new entry.
+    """
+    link = (submission.get("link") or "").strip().lower()
+    if link:
+        # So that http/https, a stray "www." and a trailing slash don't read as
+        # different papers. Anything after "#" is a position within a page.
+        link = link.split("#", 1)[0].rstrip("/")
+        for prefix in ("https://", "http://"):
+            if link.startswith(prefix):
+                link = link[len(prefix):]
+        if link.startswith("www."):
+            link = link[4:]
+        if link:
+            return f"link:{link}"
+
+    return f"title:{' '.join((submission.get('title') or '').lower().split())}"
+
+
 def assign_refs(submissions):
     """Give every submission a permanent short reference (001, 002, ...).
 
-    The register in data/refs.json maps response_id -> ref and is only ever
-    appended to, so a paper keeps its number forever and numbers are never
-    reused, even if earlier responses are deleted.
+    The register in data/refs.json maps an identity key (see identity_key) to a
+    reference and is only ever appended to, so a paper keeps its number forever
+    and numbers are never reused, even if a response is deleted or re-edited.
     """
     try:
         with open(REFS_JSON, encoding="utf-8") as f:
@@ -597,11 +627,11 @@ def assign_refs(submissions):
     next_number = max((int(value) for value in refs.values()), default=0) + 1
 
     for submission in sorted(submissions, key=lambda s: s.get("recorded_date", "")):
-        response_id = submission["response_id"]
-        if response_id not in refs:
-            refs[response_id] = f"{next_number:03d}"
+        key = identity_key(submission)
+        if key not in refs:
+            refs[key] = f"{next_number:03d}"
             next_number += 1
-        submission["ref"] = refs[response_id]
+        submission["ref"] = refs[key]
 
     with open(REFS_JSON, "w", encoding="utf-8") as f:
         json.dump(refs, f, indent=2, sort_keys=True)

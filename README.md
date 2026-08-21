@@ -107,7 +107,11 @@ If a run fails, the workflow opens a GitHub issue assigned to the person named i
 
 ## Short references
 
-Every submission gets a permanent number — `001`, `002`, … — stored in `data/refs.json`, which maps Qualtrics response IDs to references and is only ever appended to. Numbers are never reused or renumbered, so `#001` keeps pointing at the same paper even if earlier submissions are deleted. This file is committed by the workflow and should not be edited by hand.
+Every submission gets a permanent number — `001`, `002`, … — stored in `data/refs.json`, which is only ever appended to. Numbers are never reused or renumbered, so `#001` keeps pointing at the same paper even if earlier submissions are deleted.
+
+The register is keyed on the **link to the paper** (or, where no link was given, the title) rather than on the Qualtrics response ID. This matters because editing a response in Qualtrics does not update it in place — Qualtrics creates a new response with a new ID and retires the original — so a response-ID key meant that correcting a typo renumbered the entry and broke every link to it. Correcting a summary, date, author list or image now keeps the number.
+
+This file is committed by the workflow and should not be edited by hand.
 
 ---
 
