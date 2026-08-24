@@ -121,5 +121,37 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "004"
+  },
+  {
+    "response_id": "R_8usX4NV1f0Qpx5L",
+    "recorded_date": "2026-08-24 11:12:04",
+    "title": "End User and Primary Care Physicians’ Perspectives on Digital Innovations in Dementia Risk Detection: Focus on a Digital Sleep Biomarker",
+    "source_type": "Academic paper",
+    "theme": "Dementia",
+    "subproject": "InSleep46",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "Ríona McArdle, Marie Poole, Sophie Horrocks, Josh King-Robson, Jonathan Schott, David Sharp, Matthew Harrison, Louise Robinson",
+    "helix_authors": [],
+    "project_date": "1 December 2025",
+    "publication_date_iso": "2025-12-01",
+    "date_range_note": "",
+    "corresponding_team_member": "Matthew Harrison",
+    "contact_email": "matthew.jc.harrison@imperial.ac.uk",
+    "acknowledgements": "",
+    "link": "https://aging.jmir.org/2025/1/e74307",
+    "video_link": "",
+    "keywords": [
+      "Co-design",
+      "Design research",
+      "Dementia care",
+      "PPIE",
+      "Care in the community"
+    ],
+    "short_description": "Researchers asked members of the public and GPs what they thought about using a digital sleep mat to help spot early signs of dementia risk, and found that while the public were generally open to the idea, GPs wanted stronger evidence and clearer guidance before they would use it in practice.",
+    "lay_summary": "Sleep problems are common in people with dementia and may appear before memory symptoms do. This has led researchers to ask whether tracking sleep patterns could help identify people at higher risk of developing dementia. A team led by Newcastle University, in collaboration with Imperial College London and UCL, explored what members of the public and GPs think about using a digital sleep mat for this purpose. The Helix Centre at Imperial contributed co-design and public involvement expertise to the project.\n\nThe sleep mat sits under the mattress and records sleep patterns over three months. From this data, researchers can calculate a score (called the DRI-SI) that may indicate dementia risk. The team wanted to understand whether people would be willing to use the mat at home, and whether GPs would feel comfortable offering it as part of NHS care.\n\nThirty-one members of the public took part in focus groups in Newcastle and London. All had some connection to dementia, either through their own concerns, a family history, or experience as a carer. Seven GPs from across England were interviewed separately.\n\nThe public were generally positive. They found the mat unobtrusive and liked the idea of catching problems early. Their concerns were practical: how to set it up, who would pay for it, and whether factors like a restless partner or getting up in the night might affect the results. Some worried about data privacy, particularly if commercial companies were involved.\n\nGPs were more cautious. They wanted to see published evidence that the sleep score is accurate and that acting on it would genuinely help patients. Without clear guidance on what to do with a high-risk result, they worried about causing anxiety without being able to offer a next step. They also raised concerns about adding to their workload when primary care is already stretched.\n\nThe study highlights a gap between public enthusiasm and clinical readiness. The authors suggest that integrating the sleep mat into specialist brain health clinics, rather than general practice, might be a useful next step. This would allow further research while keeping the tool within a clinical setting where follow-up support is available.\n\nThe findings offer five recommendations for anyone developing digital tools to detect dementia risk: train clinical staff on the science behind the tool; make sure the technology is easy to use for everyone; be clear about how the tool has been tested and validated; present results in a way that is meaningful to patients and clinicians; and be transparent about how data is stored and used.",
+    "image_path": "images/R_8usX4NV1f0Qpx5L.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "005"
   }
 ]
