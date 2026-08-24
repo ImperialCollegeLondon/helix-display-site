@@ -394,6 +394,26 @@ body.table-embed,
   outline-offset: 2px;
 }
 
+/* Thumbnail column. Fixed width so the titles line up down the table whether
+   or not a given entry has an image. */
+.cell-thumb {
+  width: 92px;
+  padding-right: 0;
+}
+
+.thumb {
+  display: block;
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  background: var(--surface-alt);
+}
+
+/* No image: an empty square rather than nothing, so rows stay aligned. */
+.thumb--empty {
+  background: var(--surface-alt);
+}
+
 .cell-title {
   display: block;
 }
@@ -942,9 +962,22 @@ a.filter-pill:focus {
     padding: 6px 0 12px;
   }
 
+  /* In the stacked card layout the thumbnail sits above the title, with no
+     "Image" label — the picture doesn't need announcing. */
+  .m3-table td.cell-thumb {
+    display: block;
+    width: auto;
+    padding: 12px 16px 0;
+  }
+
+  .m3-table td.cell-thumb::before {
+    content: "";
+    display: none;
+  }
+
   .m3-table td[data-label="Title"] {
     display: block;
-    padding-top: 12px;
+    padding-top: 10px;
     padding-bottom: 10px;
   }
 

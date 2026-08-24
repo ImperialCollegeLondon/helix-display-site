@@ -431,6 +431,38 @@ def compress_image(path, max_width=1600):
         return path
 
 
+THUMBNAIL_SIZE = 240
+
+
+def make_thumbnail(image_path, response_id):
+    """Write a small square crop of the header image for the table.
+
+    Generated rather than shrinking the full image in the browser: the table
+    shows up to 15 rows at once, and full-size headers are around 1600px wide,
+    so the page would download several megabytes to display a few small
+    squares. The crop is taken from the centre and saved at twice its display
+    size so it stays sharp on high-resolution screens.
+    """
+    source = os.path.join(BASE_DIR, image_path)
+    output_path = os.path.join(IMAGES_DIR, f"{response_id}-thumb.jpg")
+
+    try:
+        with Image.open(source) as img:
+            img = img.convert("RGB")
+            side = min(img.width, img.height)
+            left = (img.width - side) // 2
+            top = (img.height - side) // 2
+            square = img.crop((left, top, left + side, top + side))
+            square = square.resize((THUMBNAIL_SIZE, THUMBNAIL_SIZE), Image.LANCZOS)
+            square.save(output_path, "JPEG", quality=80, optimize=True)
+
+        return f"images/{os.path.basename(output_path)}"
+    except Exception as e:
+        # A missing thumbnail just leaves an empty square, so never fail a run.
+        log(f"Could not create thumbnail for {response_id}: {e}")
+        return ""
+
+
 def download_image(response_id, file_id, original_filename, content_type, suffix=""):
     """Fetch one uploaded file and save it as images/<response id><suffix>.
 
@@ -505,9 +537,12 @@ def convert_row(row, columns, multi_maps):
     content_type = col("image_type")
 
     image_path = ""
+    thumbnail_path = ""
     if file_id:
         log(f"Downloading image for {response_id}")
         image_path = download_image(response_id, file_id, original_filename, content_type)
+        if image_path:
+            thumbnail_path = make_thumbnail(image_path, response_id)
 
     # The optional diagram, shown under the summary with its caption.
     diagram_id = col("diagram_id")
@@ -541,6 +576,7 @@ def convert_row(row, columns, multi_maps):
         "short_description": short_description,
         "lay_summary": lay_summary,
         "image_path": image_path,
+        "thumbnail_path": thumbnail_path,
         "diagram_path": diagram_path,
         "diagram_caption": col("diagram_caption")
     }

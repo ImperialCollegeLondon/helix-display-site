@@ -129,8 +129,8 @@ config.js                                   Public links (submission form / DAIs
 helix-logo.png                              Branding asset
 fonts/                                      Circular typeface (Book/Bold + italics, woff2)
 data/submissions.json                       Generated display data
-data/refs.json                              Permanent response ID → short reference register
-images/                                     Uploaded images (auto-compressed, JPEG ≤1600px wide)
+data/refs.json                              Permanent short-reference register (keyed on paper link / title)
+images/                                     Uploaded images (auto-compressed, JPEG ≤1600px wide) plus generated 240px square thumbnails
 scripts/build_site_data.py                  Qualtrics-to-site build script
 requirements.txt                            Python dependencies for the workflow
 .github/workflows/update-submissions.yml    GitHub Actions workflow

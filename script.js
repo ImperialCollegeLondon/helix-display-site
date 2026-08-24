@@ -72,7 +72,7 @@ function renderTable(allRows) {
   if (!allRows.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="4" class="loading-cell">No submissions found.</td>
+        <td colspan="5" class="loading-cell">No submissions found.</td>
       </tr>
     `;
     renderPager(0, 0);
@@ -88,6 +88,11 @@ function renderTable(allRows) {
 
   tbody.innerHTML = rows.map(item => `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
+      <td data-label="Image" class="cell-thumb">
+        ${item.thumbnail_path
+          ? `<img class="thumb" src="${escapeHtml(item.thumbnail_path)}" alt="" loading="lazy" />`
+          : `<span class="thumb thumb--empty"></span>`}
+      </td>
       <td data-label="Title">
         <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
         ${authorsText(item)
@@ -360,7 +365,7 @@ async function loadSubmissions() {
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="4" class="loading-cell">Could not load submissions.</td>
+          <td colspan="5" class="loading-cell">Could not load submissions.</td>
         </tr>
       `;
     }
