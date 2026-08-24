@@ -56,8 +56,12 @@ The header image runs the full width of the embed as a fixed-ratio banner — 5:
 | Link | Opens |
 | --- | --- |
 | `helixcentre.com/publications#001` | that summary's detail page |
+| `…/publications#theme=Dementia` | the table filtered by theme |
+| `…/publications#project=Minder` | the table filtered by project |
 | `…/publications#keyword=Co-design` | the table filtered by keyword |
-| `…?theme=Dementia` or `?project=Minder` | the table filtered by theme or project (direct on the GitHub Pages site) |
+| `…/publications#theme=Dementia&project=Minder` | filters combined |
+
+Every filtered view is a filtered version of the **normal table**, with removable chips above it — there is no separate page design for any of them. Adding or removing a filter updates the address bar as you go, so the link can be copied at any point. The same parameters also work as `?theme=` `?project=` `?keyword=` directly on the GitHub Pages site.
 
 `#001` style references are permanent — see "Short references" below.
 

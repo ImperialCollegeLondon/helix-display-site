@@ -3,6 +3,21 @@
   let frameRequest = 0;
   let resizeTimer = 0;
 
+  // The filters the table understands, in a fixed order so the same view
+  // always produces the same shareable link.
+  const FILTER_KEYS = ["theme", "project", "keyword"];
+
+  function filterParams(params) {
+    const filters = new URLSearchParams();
+    FILTER_KEYS.forEach(key => {
+      const value = params.get(key);
+      if (value) {
+        filters.set(key, value);
+      }
+    });
+    return filters.toString();
+  }
+
   // Deep links on the site itself: #entry=<id> or #keyword=<name> on the
   // homepage redirect to the matching page (mirrors the parent-page embed).
   (function handleDeepLinkHash() {
@@ -16,10 +31,15 @@
       window.location.replace("entry.html?ref=" + encodeURIComponent(hash));
     } else if (hash.indexOf("entry=") === 0) {
       window.location.replace("entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6))));
-    } else if (hash.indexOf("keyword=") === 0) {
-      // Keywords filter the main table, the same as theme and project, so the
-      // reader gets a removable chip and can combine it with other filters.
-      window.location.replace("index.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8))));
+    } else {
+      // Theme, project and keyword all filter the main table. They can be
+      // combined ("#theme=Dementia&project=Minder"), so the hash is read as a
+      // query string and passed straight through rather than handled one at a
+      // time. Nothing here opens a differently designed page.
+      const filters = filterParams(new URLSearchParams(hash));
+      if (filters) {
+        window.location.replace("index.html?" + filters);
+      }
     }
   })();
 
@@ -95,10 +115,14 @@
 
   const navigateMessageType = "helix-display-site:navigate";
 
-  function postNavigation() {
+  function postNavigation(options) {
     if (!isEmbedded()) {
       return;
     }
+
+    // Used directly as a DOMContentLoaded listener, so the argument may be an
+    // Event rather than an options object.
+    const settings = (options && !(options instanceof Event)) ? options : {};
 
     const path = window.location.pathname.split("/").pop() || "index.html";
     const params = new URLSearchParams(window.location.search);
@@ -117,7 +141,9 @@
     const message = {
       type: navigateMessageType,
       page: "index",
-      scrollToTop: cameFromInsideFrame
+      scrollToTop: settings.scrollToTop === undefined
+        ? cameFromInsideFrame
+        : settings.scrollToTop
     };
 
     if (path === "entry.html" && (params.get("ref") || params.get("id"))) {
@@ -131,9 +157,18 @@
     } else if (path === "keyword.html" && params.get("keyword")) {
       message.page = "keyword";
       message.keyword = params.get("keyword");
-    } else if (params.get("keyword")) {
-      message.page = "index";
-      message.keyword = params.get("keyword");
+    } else {
+      const filters = filterParams(params);
+      if (filters) {
+        message.page = "index";
+        message.filters = filters;
+        // Kept for the embed block already live on helixcentre.com, which only
+        // knows about keywords. Harmless for the newer block, which reads
+        // message.filters.
+        if (params.get("keyword")) {
+          message.keyword = params.get("keyword");
+        }
+      }
     }
 
     window.parent.postMessage(message, "*");
@@ -142,7 +177,10 @@
   window.HelixEmbed = {
     messageType,
     navigateMessageType,
-    scheduleResize
+    scheduleResize,
+    // Called by the table after a filter is added or removed, so the parent
+    // page's address bar keeps matching what is on screen.
+    notifyNavigation: () => postNavigation({ scrollToTop: false })
   };
 
   window.addEventListener("load", scheduleResize);

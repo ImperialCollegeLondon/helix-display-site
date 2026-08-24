@@ -53,14 +53,26 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
     var allowedOrigin = "https://imperialcollegelondon.github.io";
     var base = allowedOrigin + "/helix-display-site/";
 
-    // Deep links: #001 (short reference), #entry=<response id>, #keyword=<name>
+    // Deep links: #001 (short reference), #entry=<response id>, and any
+    // combination of #theme= #project= #keyword=, which open the filtered table.
+    var filterKeys = ["theme", "project", "keyword"];
+
+    function filterParams(params) {
+      var filters = new URLSearchParams();
+      filterKeys.forEach(function (key) {
+        if (params.get(key)) filters.set(key, params.get(key));
+      });
+      return filters.toString();
+    }
+
     var hash = window.location.hash.slice(1);
     if (/^\d+$/.test(hash)) {
       iframe.src = base + "entry.html?ref=" + encodeURIComponent(hash);
     } else if (hash.indexOf("entry=") === 0) {
       iframe.src = base + "entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6)));
-    } else if (hash.indexOf("keyword=") === 0) {
-      iframe.src = base + "index.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8)));
+    } else if (hash) {
+      var filters = filterParams(new URLSearchParams(hash));
+      if (filters) iframe.src = base + "index.html?" + filters;
     }
 
     window.addEventListener("message", function (event) {
@@ -77,7 +89,10 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
         var newHash = "";
         if (data.page === "entry" && (data.ref || data.id)) {
           newHash = data.ref ? String(data.ref) : "entry=" + encodeURIComponent(data.id);
-        } else if ((data.page === "keyword" || data.page === "index") && data.keyword) {
+        } else if (data.filters) {
+          // "theme=Dementia&project=Minder" — already encoded by the iframe.
+          newHash = data.filters;
+        } else if (data.keyword) {
           newHash = "keyword=" + encodeURIComponent(data.keyword);
         }
         history.replaceState(null, "", newHash ? "#" + newHash : window.location.pathname + window.location.search);

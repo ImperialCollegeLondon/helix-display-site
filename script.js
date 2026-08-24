@@ -323,6 +323,10 @@ function setFilter(type, value) {
 
   window.history.replaceState({}, "", url);
 
+  // Tell the parent page so its address bar matches what's on screen and the
+  // filtered view can be copied and shared. Not a page change, so no scroll.
+  window.HelixEmbed?.notifyNavigation?.();
+
   currentPage = 1;
   renderFilterBar();
   renderTable(getFilteredRows());
