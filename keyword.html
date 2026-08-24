@@ -3,50 +3,40 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Browse Publication Summaries by keyword." />
-  <title>Related Publication Summaries | Helix Centre</title>
+  <meta name="robots" content="noindex" />
+  <title>Publication Summaries | Helix Centre</title>
   <link rel="icon" href="helix-logo.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!--
+    This page used to be a separate "related summaries by keyword" view. Keywords
+    now filter the main table instead, so a reader gets a removable chip and can
+    combine the keyword with a theme or project.
+
+    It is kept only as a redirect, because the embed block on helixcentre.com
+    still sends #keyword= links here. Anyone arriving lands on the filtered
+    table rather than a dead end, whether or not that block has been updated.
+  -->
   <div class="app-shell">
     <main class="page-content">
-      <section class="hero-card" aria-labelledby="keyword-page-title">
-        <p class="eyebrow">Related research</p>
-        <h1 id="keyword-page-title">Keyword</h1>
-        <p class="hero-text">Showing related publication summaries for this keyword.</p>
-      </section>
-
-      <section class="table-card" aria-labelledby="related-title">
-        <div class="table-card__header">
-          <div>
-            <h2 id="related-title">Related summaries</h2>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table class="m3-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Theme</th>
-                <th>Project</th>
-                <th>Publication Date</th>
-              </tr>
-            </thead>
-            <tbody id="keyword-submissions-body">
-              <tr>
-                <td colspan="4" class="loading-cell">Loading submissions...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <p class="hero-text" id="redirect-note">
+        Taking you to the publication summaries…
+      </p>
     </main>
   </div>
 
-  <script src="config.js"></script>
-  <script src="embed.js"></script>
-  <script src="keyword.js"></script>
+  <script>
+    (function () {
+      var keyword = new URLSearchParams(window.location.search).get("keyword");
+      var target = keyword
+        ? "index.html?keyword=" + encodeURIComponent(keyword)
+        : "index.html";
+
+      // replace() so the back button returns to wherever the reader came from
+      // rather than bouncing them through this page again.
+      window.location.replace(target);
+    })();
+  </script>
 </body>
 </html>

@@ -35,7 +35,7 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 **Automation:** `scripts/build_site_data.py`, `.github/workflows/update-submissions.yml`.
 
-`keyword.html` / `keyword.js` are left over from an earlier design and nothing links to them any more — keyword chips now point at the filtered main table.
+`keyword.html` is now only a redirect: it forwards `?keyword=` to `index.html?keyword=` so that keyword links still work even where an older embed block is still in place on helixcentre.com. `keyword.js` has been removed.
 
 ---
 

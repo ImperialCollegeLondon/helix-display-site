@@ -17,7 +17,9 @@
     } else if (hash.indexOf("entry=") === 0) {
       window.location.replace("entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6))));
     } else if (hash.indexOf("keyword=") === 0) {
-      window.location.replace("keyword.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8))));
+      // Keywords filter the main table, the same as theme and project, so the
+      // reader gets a removable chip and can combine it with other filters.
+      window.location.replace("index.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8))));
     }
   })();
 

@@ -60,7 +60,7 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
     } else if (hash.indexOf("entry=") === 0) {
       iframe.src = base + "entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6)));
     } else if (hash.indexOf("keyword=") === 0) {
-      iframe.src = base + "keyword.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8)));
+      iframe.src = base + "index.html?keyword=" + encodeURIComponent(decodeURIComponent(hash.slice(8)));
     }
 
     window.addEventListener("message", function (event) {
@@ -120,7 +120,7 @@ This file is committed by the workflow and should not be edited by hand.
 ```text
 index.html                                  Table of all summaries (supports ?theme= ?project= ?keyword=)
 entry.html                                  Detail page for a single summary (?ref=001 or ?id=R_…)
-keyword.html                                Legacy keyword page — nothing links to it any more
+keyword.html                                Redirect stub — sends old ?keyword= links to the filtered table
 style.css                                   Site styling
 script.js                                   Table rendering, search and filtering
 entry.js                                    Detail page rendering
