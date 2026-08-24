@@ -158,5 +158,39 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "005"
+  },
+  {
+    "response_id": "R_8z8yzpTJGmQx1j5",
+    "recorded_date": "2026-08-24 15:19:31",
+    "title": "Designing for healthy ageing: Lessons learned from engaging pre-frail older adults in the development of digital self-monitoring health technologies",
+    "source_type": "Academic paper",
+    "theme": "Healthy Ageing",
+    "subproject": "Healthy Habits App",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Alex Dallman-Porter, Tori Simpson, Andrew Watt, Tricia Tay, Souradip Mookerjee, Shuang Wu, Gianpaolo Fusari, Matthew Harrison, David Sunkersing, Kate Grailey, Jonathan J Gregory, Michael Fertleman, Ara Darzi, Leila Shepherd",
+    "helix_authors": [],
+    "project_date": "24 August 2026",
+    "publication_date_iso": "2026-08-24",
+    "date_range_note": "",
+    "corresponding_team_member": "Tori Simpson",
+    "contact_email": "victoria.simpson22@imperial.ac.uk",
+    "acknowledgements": "Helix Centre team (including Damion Lambert, Brian Quan); Clinical Reference Group (including Simon Dryden, Hutan Ashrafian, Sabaa Gauhar, Ana Luísa Neves, Brendan Delaney, Alison Buttenheim, Louis Koizia, Cerys Morgan, George Peck, Melanie Dani); Helix interns (Madeline Tatum, Jessica Shields).",
+    "link": "https://www.researchsquare.com/article/rs-10548546/v1",
+    "video_link": "",
+    "keywords": [
+      "Co-design",
+      "UX/UI design",
+      "Usability testing",
+      "Design research",
+      "Software development",
+      "Enabling the shift to prevention"
+    ],
+    "short_description": "Thirty older adults tested a home health-monitoring system using smartwatches, passive sensors, and an our Healthy Habits app. While most found the technology easy to use and were happy to have the system in their homes for extended periods, when it came to interacting with the app many only glanced at their data without acting on it, pointing to a need for clearer, more personalised guidance.",
+    "lay_summary": "People are living longer than previous generations, but the extra years are not always healthy ones. Frailty, a gradual loss of strength and energy, becomes more common with age. Catching this early, at the \"pre-frail\" stage, gives the best chance of slowing or reversing it through exercise and lifestyle changes. Wearable devices and health apps could help people track their activity and sleep at home, but older adults have been slower to adopt these tools than younger groups. This study set out to understand why, and to learn how such technology could be designed to work better for them.\n\nThirty people aged 65 and over, all living independently in London and showing early signs of frailty, took part. Each received a smartwatch, a sleep sensor placed under the mattress, and small sensors around the home, along with a tablet app that displayed their data and offered tips for staying active. Participants used the system for at least six weeks, and most chose to continue longer (the average was about seven months). The research team visited regularly and collected feedback through questionnaires and conversations.\n\nMost participants found the equipment unobtrusive and were comfortable having sensors in their homes. Nearly 8 in 10 chose to extend their time in the study, and the overall feedback was positive. However, the way people engaged with their data was often shallow: they would check their daily step count or sleep score but rarely look at trends over time or set goals. Several factors contributed to this. Some joined out of curiosity rather than a firm intention to change habits. Others worried about pressing the wrong button or \"breaking\" something. Many felt the advice was too generic, or doubted the accuracy of the readings.Participants said they would value more human guidance, such as a conversation with a professional who could explain what the numbers meant and suggest realistic next steps. At the same time, they disliked being \"nagged\" by automated reminders, highlighting a tricky balance for designers: people want support, but also want to feel in control.\n\nThe study has limitations. Participants were recruited in London and tended to be relatively confident with technology, so the findings may not apply to less digitally experienced groups. Feedback was captured in notes rather than full transcripts, which may have introduced some bias. The authors suggest that future versions of this kind of system could use conversational AI to give people a more natural way to ask questions and receive tailored explanations, though more research is needed on how to do this safely and effectively for older adults.",
+    "image_path": "images/R_8z8yzpTJGmQx1j5.jpg",
+    "thumbnail_path": "images/R_8z8yzpTJGmQx1j5-thumb.jpg",
+    "diagram_path": "images/R_8z8yzpTJGmQx1j5-diagram.jpg",
+    "diagram_caption": "Selected screens from the Healthy Habits app: goal setting, overview of steps data, detailed historical steps data, and information on why the habit 'steps' is important. The same views are available across 4 'healthy habits': Steps, Sleep, Sedentary Time, and Active Minutes.",
+    "ref": "006"
   }
 ]
