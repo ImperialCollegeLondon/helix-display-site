@@ -62,6 +62,38 @@
     "ref": "002"
   },
   {
+    "response_id": "R_8K0Y6FROeNxf69U",
+    "recorded_date": "2026-08-24 09:52:50",
+    "title": "Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study",
+    "source_type": "Academic paper",
+    "theme": "Dementia",
+    "subproject": "InSleep46",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "Josh King-Robson, Eyal Soreq, Molly R E Cartlidge, Matthew Harrison, Heidi Murray-Smith, Lina Aimola, Marie Poole, Ríona Mc Ardle, Ashvini Keshavan, David M Cash, William Coath, Louise Robinson, David J Sharp, Jonathan M Schott",
+    "helix_authors": [],
+    "project_date": "9 January 2026",
+    "publication_date_iso": "2026-01-09",
+    "date_range_note": "",
+    "corresponding_team_member": "Matthew Harrison",
+    "contact_email": "matthew.jc.harrison@imperial.ac.uk",
+    "acknowledgements": "Sophie Horrocks",
+    "link": "https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/alz70856_105509",
+    "video_link": "",
+    "keywords": [
+      "Service design",
+      "Dementia care",
+      "Passive sensors",
+      "PPIE"
+    ],
+    "short_description": "Researchers tested whether a sleep sensor placed under the mattress at home could detect early signs of Alzheimer's disease in people with no symptoms, and found it performed as well as a blood test at identifying those with significant brain changes.",
+    "lay_summary": "Detecting Alzheimer's disease before symptoms appear could open the door to earlier treatment, but current methods (brain scans and blood tests) are expensive or require a clinic visit. This study asked whether patterns in sleep and body rhythms, collected at home using a simple sensor, could flag people at higher risk.\n\nThe research was led by teams at UCL, the UK Dementia Research Institute Care Research & Technology Centre at Imperial College London, and Newcastle University, as part of the Insight 46 study. Helix designed the participant experience, making it possible for over 250 people in their late 70s to install the sleep sensors themselves at home. Helix also led focus groups with a diverse group of participants to explore how acceptable this kind of monitoring felt.\n\nParticipants were all born in March 1946 and had already taken part in brain scans and blood tests as part of the wider study. At around age 78, they were sent a thin sensor to place under their mattress. The device recorded sleep stages, heart rate, breathing rate, snoring and time spent awake each night, without the person having to do anything. In total, the team collected data from over 63,000 nights of sleep (about 174 years' worth), with each participant contributing an average of 240 nights.\n\nThe researchers built a computer model to see whether these sleep patterns could predict who had a build-up of tau protein in the brain, a hallmark of Alzheimer's. The model performed well for people with more advanced tau deposits (Braak stage 3 or higher), achieving an accuracy score comparable to a blood test for phosphorylated tau (pTau217). It was less effective at picking up earlier stages of the disease or amyloid protein alone.\n\nThis is a proof-of-concept study, not a finished screening tool. The participants were all the same age and from a single birth cohort, so the findings need to be tested in other groups. The team is now working to refine the model, confirm the results elsewhere, and find out how many nights of recording are needed for a reliable prediction.\n\nIf the approach holds up, it could offer a low-cost, low-burden way to identify people who might benefit from further testing or future treatments, all from data collected while they sleep.",
+    "image_path": "images/R_8K0Y6FROeNxf69U.jpg",
+    "thumbnail_path": "images/R_8K0Y6FROeNxf69U-thumb.jpg",
+    "diagram_path": "images/R_8K0Y6FROeNxf69U-diagram.jpg",
+    "diagram_caption": "Diagram showing the process or recruitment, data collection and analysis.",
+    "ref": "003"
+  },
+  {
     "response_id": "R_2a9BeNJYeTuOead",
     "recorded_date": "2026-08-24 10:32:59",
     "title": "InSleep46: Designing future dementia care through sleep data",
