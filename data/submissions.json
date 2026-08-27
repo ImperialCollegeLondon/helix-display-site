@@ -1,5 +1,35 @@
 [
   {
+    "response_id": "R_2PaNhHqGyjvnWqY",
+    "recorded_date": "2026-08-21 11:42:38",
+    "title": "Designing healthcare for people and planet: What if every act of care also cared for the planet?",
+    "source_type": "Blog post",
+    "theme": "One-off Project",
+    "subproject": "",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Sophie Horrocks & Tori Simpson",
+    "helix_authors": [],
+    "project_date": "5 September 2025",
+    "publication_date_iso": "2025-09-05",
+    "date_range_note": "",
+    "corresponding_team_member": "Tori Simpson",
+    "contact_email": "victoria.simpson22@imperial.ac.uk",
+    "acknowledgements": "Aws Almukhtar, Daniella Watson, Jessica Newberry Le Vay, Leila Shepherd, Matt Harrison, and Natalia Kurek",
+    "link": "https://blogs.imperial.ac.uk/ighi/2025/09/05/designing-healthcare-for-people-and-planet/",
+    "video_link": "",
+    "keywords": [
+      "Design research",
+      "NHS service improvement"
+    ],
+    "short_description": "This blog explores how healthcare can be designed to reduce its environmental impact, setting out six areas where design can help the NHS cut waste and emissions while improving care.",
+    "lay_summary": "Healthcare contributes to climate change, but it can also be part of the solution. In the UK, the NHS accounts for around 4 to 5 per cent of the country's total carbon emissions. At the same time, climate change is making people ill through heatwaves, floods and worsening air quality. This creates a double challenge: health systems need to reduce their own environmental footprint while also preparing for rising demand.\n\nThis blog, written by Helix Centre designers Sophie Horrocks and Tori Simpson, sets out six areas where design can help. These are: reducing clinical waste, making care pathways more sustainable, greening digital health technologies, designing hospital buildings for a low-carbon future, shifting care into communities, and embedding sustainability into policy and everyday practice.\n\nFor each area, the authors describe the problem, share examples of work already underway, and point to sessions at the World Design Congress where these ideas were being explored further. The examples range from a behavioural \"nudge\" tested by Helix to reduce unnecessary glove use on hospital wards (which led to an 11 per cent improvement in hand hygiene compliance), to the NHS's first zero-emissions ambulance being trialled in the West Midlands, to solar panels at Milton Keynes University Hospital generating around 8 per cent of the site's electricity.\n\nThe blog also highlights tensions that need to be navigated. For example, digital tools can cut travel and improve efficiency, but data centres use large amounts of energy and water. Reusable medical equipment can reduce waste, but sterilising it is sometimes as carbon-intensive as replacing it. And while moving care into communities can lower emissions, it must be done in ways that do not leave people behind.\n\nThe authors argue that sustainability should not feel like an extra burden for already stretched health services. Instead, there are \"win-wins\" to be found, where greener choices also improve care, save money, or support staff wellbeing. They invite designers, clinicians and partners to join the conversation and help shape healthcare that protects both people and the planet.",
+    "image_path": "images/R_2PaNhHqGyjvnWqY.jpg",
+    "thumbnail_path": "images/R_2PaNhHqGyjvnWqY-thumb.jpg",
+    "diagram_path": "images/R_2PaNhHqGyjvnWqY-diagram.png",
+    "diagram_caption": "Graphic showing matrix of the identified six wicked challenges in providing sustainable healthcare",
+    "ref": "001"
+  },
+  {
     "response_id": "R_8jIJqkQwrEzNN2F",
     "recorded_date": "2026-08-21 11:45:04",
     "title": "Monitoring night-time safety in households with dementia using ambient sensing technologies: a rule-based decision algorithm",
