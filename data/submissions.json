@@ -192,5 +192,38 @@
     "diagram_path": "images/R_8z8yzpTJGmQx1j5-diagram.jpg",
     "diagram_caption": "Selected screens from the Healthy Habits app: goal setting, overview of steps data, detailed historical steps data, and information on why the habit 'steps' is important. The same views are available across 4 'healthy habits': Steps, Sleep, Sedentary Time, and Active Minutes.",
     "ref": "006"
+  },
+  {
+    "response_id": "R_2wEDksUSvKnuG1X",
+    "recorded_date": "2026-08-27 15:48:16",
+    "title": "Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults",
+    "source_type": "Academic paper",
+    "theme": "Healthy Ageing",
+    "subproject": "Head to Head",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, & Katrin Hänsel",
+    "helix_authors": [],
+    "project_date": "13 October 2026",
+    "publication_date_iso": "2026-10-13",
+    "date_range_note": "January - June 2026",
+    "corresponding_team_member": "Alex Dallman-Porter",
+    "contact_email": "a.dallman-porter@imperial.ac.uk",
+    "acknowledgements": "Tis study is supported by Optum. We would also like to thank the Imperial College Biodynamics Lab for allowing us the use of their equipment and for their generous help in carrying the testing and processing the data.",
+    "link": "",
+    "video_link": "https://vimeo.com/share/cfee8e98-1b98-4a2a-8345-ccc69a669c01?share=copy&fl=sv&fe=ci",
+    "keywords": [
+      "Healthy ageing",
+      "Frailty prevention",
+      "Wearables",
+      "Passive sensors",
+      "Care in the community"
+    ],
+    "short_description": "Researchers compared four types of sensor (radar, motion sensors, a back-worn accelerometer and a smartwatch) to find out which could most accurately and acceptably measure walking speed at home, as a way to spot early signs of frailty in older adults.",
+    "lay_summary": "Walking speed is sometimes called \"the sixth vital sign\" because it is closely linked to health in later life. A slowing gait can be an early sign of frailty, a state of reduced physical reserve that makes people more vulnerable to falls, illness and loss of independence. Spotting frailty early could allow people to take action before problems become serious, but current assessments happen mainly in clinics and often only after someone is already quite frail. Continuous monitoring at home might catch changes sooner, yet until now there has been no direct comparison of the different sensors that could do this job.\n\nThis study tested four sensors head to head: a small radar unit, a pair of passive infrared motion detectors (the kind used in home security systems), an accelerometer worn on the lower back, and a consumer smartwatch worn on the wrist. The work began with a workshop involving 14 older adults, who handled each device and gave their views on comfort, ease of setup and usefulness. The smartwatch was the clear favourite; participants valued its familiarity and extra features. A common concern across all sensors was whether they would capture enough data to be meaningful.\n\nThe sensors were then tested in two controlled settings. First, 14 older adults walked up and down an office corridor while all four sensors recorded at once, with a stopwatch providing the reference measurement. All sensors except the radar mounted sideways achieved acceptable accuracy, with errors below the 0.2 metres per second threshold considered clinically important. Second, 23 older adults repeated the exercise in a specialist gait laboratory equipped with a motion capture system (the gold standard for measuring movement). Early analysis suggests the radar may actually track moment-to-moment changes in speed more faithfully than the other sensors, which tend to produce a single average figure.\n\nThe next phase, an eight-week study with 50 older adults using all four sensors in their own homes, is due to begin in late 2026, subject to ethics approval. This will test how well the sensors perform in everyday life, where people walk in different directions, at different times, and without a set distance.\n\nThe findings so far show that several low-cost, unobtrusive sensors can measure walking speed accurately enough to be useful, and that older adults are willing to use them. The study also highlights that the way accuracy is judged matters: a stopwatch gives only an average, while radar captures the natural variation in how people walk, which may turn out to be more informative for detecting early frailty.",
+    "image_path": "images/R_2wEDksUSvKnuG1X.jpg",
+    "thumbnail_path": "images/R_2wEDksUSvKnuG1X-thumb.jpg",
+    "diagram_path": "images/R_2wEDksUSvKnuG1X-diagram.jpg",
+    "diagram_caption": "Infographic summarizing the 4 study stages: a) work sheet for acceptability scales of a sensor; b) notes of pros and cons of a sensor from a breakout group discussion; c) illustration of the walking assessment protocol; d) illustration of a floorplan with sensor set up; e)&f) visuals from PPIE workshop; g) visual from a corridor testing session; h)&i) visuals for gait lab set up; j) conceptual illustration of the device kit for real-world testing",
+    "ref": "007"
   }
 ]
