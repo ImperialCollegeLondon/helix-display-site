@@ -30,6 +30,38 @@
     "ref": "001"
   },
   {
+    "response_id": "R_8jIJqkQwrEzNN2F",
+    "recorded_date": "2026-08-21 11:45:04",
+    "title": "Monitoring night-time safety in households with dementia using ambient sensing technologies: a rule-based decision algorithm",
+    "source_type": "Academic paper",
+    "theme": "Dementia",
+    "subproject": "Minder",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "Alina-Irina Serban, Sophie Horrocks, Chloe Walsh, Matthew Harrison, Eyal Soreq, Amer Marzuki, Mark Woodbridge, Ramin Nilforooshan, Rafael A Calvo, David J Sharp",
+    "helix_authors": [],
+    "project_date": "25 December 2025",
+    "publication_date_iso": "2025-12-25",
+    "date_range_note": "",
+    "corresponding_team_member": "Matt Harrison",
+    "contact_email": "matthew.jc.harrison@imperial.ac.uk",
+    "acknowledgements": "",
+    "link": "https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/alz70863_110614",
+    "video_link": "",
+    "keywords": [
+      "Feasibility study",
+      "Dementia care",
+      "Community-based care",
+      "Patient safety"
+    ],
+    "short_description": "Researchers developed and tested a system that uses sensors in the home to detect when a person with dementia leaves the house or opens a door at night, so that family carers can be alerted to potential safety risks.",
+    "lay_summary": "Wandering at night is common among people living with dementia, affecting around 6 in 10 people as the condition progresses. It can put people at risk of falls, getting lost, or being outside in unsafe conditions, and it adds to the strain on family members and carers. Despite how often it happens, there are few reliable tools to help spot these risks early.\n\nA team led by the UK Dementia Research Institute's Care Research and Technology centre, with design expertise from the Helix Centre, developed a monitoring system to address this. The system uses sensors placed around the home: motion detectors, door sensors, and a mat placed under the mattress that tracks whether someone is in bed. An automated algorithm analyses the data from these sensors to identify patterns that might signal a safety concern, such as leaving the house during the night or leaving a door open.\n\nThe algorithm was tested in stages, including trials in a living lab (a test home set up for research), computer simulations, and real-world use. The main validation involved 94 households monitored over 365 nights, totalling nearly 300,000 hours of data. In 33 of those households, at least one night-time safety alert was triggered. Across all households, the system generated 200 alerts over 142 nights. When someone did go out at night, they were outside for an average of 2 hours and 40 minutes per event.\n\nOf the alerts, about 9 in 10 were confirmed as genuine night-time outings. Around 15% of those turned out to be routine activities rather than risky events, which is a useful reminder that not every alert means something is wrong.\n\nThis was a validation study, not a trial of whether the system improves outcomes for people with dementia or their carers. The authors note that the system has the potential to improve safety and reduce carer burden, but further research would be needed to test that in practice. The study also relied on sensor data rather than direct observation, so some events may have been missed or misclassified.",
+    "image_path": "images/R_8jIJqkQwrEzNN2F.jpg",
+    "thumbnail_path": "images/R_8jIJqkQwrEzNN2F-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "002"
+  },
+  {
     "response_id": "R_8K0Y6FROeNxf69U",
     "recorded_date": "2026-08-24 09:52:50",
     "title": "Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study",
