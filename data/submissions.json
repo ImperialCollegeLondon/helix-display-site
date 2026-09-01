@@ -225,5 +225,37 @@
     "diagram_path": "images/R_2wEDksUSvKnuG1X-diagram.jpg",
     "diagram_caption": "Infographic summarizing the 4 study stages: a) work sheet for acceptability scales of a sensor; b) notes of pros and cons of a sensor from a breakout group discussion; c) illustration of the walking assessment protocol; d) illustration of a floorplan with sensor set up; e)&f) visuals from PPIE workshop; g) visual from a corridor testing session; h)&i) visuals for gait lab set up; j) conceptual illustration of the device kit for real-world testing",
     "ref": "007"
+  },
+  {
+    "response_id": "R_24xztmGxa0hr3Xj",
+    "recorded_date": "2026-09-01 08:45:31",
+    "title": "Patient experiences of waiting for orthopaedic care and priorities for ‘waiting well’: a qualitative study in a London NHS trust",
+    "source_type": "Academic paper",
+    "theme": "Imperial College NHS Trust Improvement Work",
+    "subproject": "Waiting Well",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Jodie Chan, Sharon Poon, Anna Lawrence-Jones, Fiona O'Driscoll, Carol Waugh, Abiola Awojobi-Johnson, Leila Shepherd, Kate Grailey",
+    "helix_authors": [],
+    "project_date": "7 April 2025",
+    "publication_date_iso": "2025-04-07",
+    "date_range_note": "February - April 2024",
+    "corresponding_team_member": "Jodie Chan",
+    "contact_email": "j.chan@imperial.ac.uk",
+    "acknowledgements": "The research team would like to thank the Imperial College Healthcare NHS Trust Business Intelligence and Orthopaedics teams for their support in carrying out the study. We would also like to thank Mieko Wertheim for her support and guidance as a public partner.",
+    "link": "https://doi.org/10.1186/s13690‐025‐01578‐4",
+    "video_link": "",
+    "keywords": [
+      "Co-design",
+      "Public and Patient Involvement and Engagement (PPIE)",
+      "NHS service improvement",
+      "Designing for marginalised groups"
+    ],
+    "short_description": "Patients waiting for orthopaedic surgery in a London NHS trust described how long waits affected their pain, mobility, independence and mental wellbeing, and worked with researchers to design support ideas such as regular check-in messages and peer-written information.",
+    "lay_summary": "NHS waiting lists have grown sharply since the COVID-19 pandemic, and people living in more deprived areas tend to wait longer and be hit harder by the effects. This study set out to understand what it is like to wait for orthopaedic treatment (such as a hip or knee replacement) and what would help people live well while they wait.\n\nThe research team interviewed seven patients living in the most deprived areas of North West London who had waited, or were still waiting, more than 18 weeks for an orthopaedic procedure. Two public partners with their own experience of waiting helped shape the questions, analyse the findings and run a later workshop. A further six patients took part in that workshop, where they turned the interview findings into practical ideas for support.\n\nPatients described immediate effects of waiting: ongoing pain, difficulty with everyday tasks such as shopping or climbing stairs, greater reliance on family and friends, and anxiety about when treatment would come. When waits stretched on or appointments were cancelled at short notice, the effects deepened. Some people's conditions got worse, life plans such as weddings or holidays were put on hold, hope faded, and trust in the NHS fell. Those with caring responsibilities or less support at home were particularly affected.\n\nWhen asked what would help, patients focused less on lifestyle advice and more on being kept informed and feeling acknowledged. They wanted honest estimates of how long they would wait, regular updates so they did not feel forgotten, and a way to speak to someone in the orthopaedics service when they had questions.\n\nAt the workshop, patients developed four ideas: a check-in text, letter or phone call every few months to acknowledge the wait and point people to support; a letter written by past patients explaining how physiotherapy had helped them; a booklet of coping tips suggested by other patients; and training for staff to help them understand the wider impact of waiting.\n\nThis was a small, exploratory study at a single site, so the findings should be seen as a starting point. No Asian patients took part despite being invited, and some people dropped out because of pain or other commitments, which may have shaped the results. Even so, the themes were consistent across interviews, and the ideas generated offer a practical foundation for services looking to support patients better while they wait.",
+    "image_path": "images/R_24xztmGxa0hr3Xj.jpg",
+    "thumbnail_path": "images/R_24xztmGxa0hr3Xj-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "008"
   }
 ]
