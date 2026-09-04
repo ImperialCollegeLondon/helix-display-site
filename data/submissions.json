@@ -257,5 +257,38 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "008"
+  },
+  {
+    "response_id": "R_8aLdcqV7B3YbQaf",
+    "recorded_date": "2026-09-04 13:05:55",
+    "title": "UPBEAT Trial: a randomised feasibility evaluation of a digital system for UPper limB rEhabilitation After sTroke",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Gianpaolo Fusari, Sarah Coleman, Jane Davies, Jeremy Dearling, Joanne Findlay, Mark Goddard, Nicola Ivins, Fiona Jones, Fiona Leggat, Rachel Lowe, Clare McCrudden, Richard McKinlay, Ebenezar Ndachi Effiang, Louise Penny, Rebecca Playle, Davina Richardson, Muhammad Riaz, Leila Shepherd, Tongtong Shi, Tomasz Szymanski & Ara Darzi",
+    "helix_authors": [],
+    "project_date": "7 November 2025",
+    "publication_date_iso": "2025-11-07",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "The authors would like to thank all patients and clinicians for their participation in this research. The authors also acknowledge the contributions of the PPIE and Trial Steering Committee groups, as well as those of all therapy teams at ICHT, CLCH and HRCH.",
+    "link": "https://link.springer.com/article/10.1186/s40814-025-01727-0",
+    "video_link": "",
+    "keywords": [
+      "Clinical trial",
+      "Feasibility study",
+      "Stroke rehabilitation",
+      "Wearables",
+      "Community-based care"
+    ],
+    "short_description": "A feasibility trial found that OnTrack, a wearable digital system for arm rehabilitation after stroke, can be delivered within NHS stroke services, with strong patient engagement and high acceptability.",
+    "lay_summary": "Many people who survive a stroke struggle to regain use of their arm. Although rehabilitation can help, NHS services often cannot provide enough therapy to meet demand. OnTrack is a digital tool designed to help stroke survivors practise arm movements on their own, between formal therapy sessions. It uses a smartwatch to track arm activity and provides real-time feedback, alongside coaching from a therapist trained in self-management support. The system was developed with stroke survivors, carers and therapists.\n\nThis study tested whether OnTrack could be delivered in NHS stroke services and whether a larger trial would be practical. Thirty stroke survivors with arm weakness took part, recruited from one hospital and two community rehabilitation teams in London. Half received OnTrack alongside their usual care, and half received usual care alone. Participants were followed up at 6 and 12 weeks.\n\nThe trial met most of its targets. Eighty percent of participants completed the study, and those using OnTrack engaged with it on average 6.3 days per week, a high level of adherence. Participants rated the system as easy to use. Trends in the data suggested improvements in arm function and confidence in both groups, though the study was not designed to measure effectiveness. The cost of delivering OnTrack was estimated at around £1,500 per patient, and the methods for collecting health and cost data worked well.\n\nSome areas need improvement before a larger trial. Recruitment was slower than hoped, and the way therapists delivered the coaching was inconsistent, suggesting that training needs to be strengthened. The study also found that participants in the usual care group were more likely to drop out, which is a common challenge in rehabilitation trials.\n\nOverall, the findings support the case for a full-scale trial. Digital tools like OnTrack may offer a practical way to help stroke survivors get more rehabilitation practice, addressing a gap in current NHS services.",
+    "image_path": "images/R_8aLdcqV7B3YbQaf.jpg",
+    "thumbnail_path": "images/R_8aLdcqV7B3YbQaf-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "009"
   }
 ]
