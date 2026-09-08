@@ -290,5 +290,38 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "009"
+  },
+  {
+    "response_id": "R_2F0Le9bfwVyKFwJ",
+    "recorded_date": "2026-09-08 14:31:42",
+    "title": "What is the feasibility and patient acceptability of a digital system for arm and hand rehabilitation after stroke? A mixed-methods, single-arm feasibility study of the ‘OnTrack’ intervention for hospital and home use",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Gianpaolo Fusari, Ella Gibbs, Lily Hoskin, Anna Lawrence-­ Jones, Daniel Dickens, Roberto Fernandez Crespo, Melanie Leis, Jennifer Crow, Elizabeth Taylor, Fiona Jones, Ara Darzi",
+    "helix_authors": [],
+    "project_date": "28 September 2022",
+    "publication_date_iso": "2022-09-28",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "The authors would like to acknowledge the contributions of all the members of the PPI group; all participants involved; Peter Wilding, Meenakshi Nayar and Davina Richardson and therapy teams at ICHT; therapy teams at CLCH; Ruth Nicholson for her support in ethics applications and procedures; Steve McAteer and Eleni Daniels for their guidance on the BRC program; Dr Hendramoorthy Maheswaran for his help reviewing the manuscript.",
+    "link": "https://bmjopen.bmj.com/content/12/9/e062042",
+    "video_link": "",
+    "keywords": [
+      "Clinical trial",
+      "Feasibility study",
+      "Stroke rehabilitation",
+      "Software development",
+      "Wearables"
+    ],
+    "short_description": "This feasibility study tested OnTrack, a digital system combining a smartwatch and coaching to help people use their affected arm more after a stroke, and found it was acceptable to participants and ready for a larger trial.",
+    "lay_summary": "Arm weakness is one of the most common effects of stroke, affecting around 450,000 people in the UK. Recovery depends on repetitive activity, but many people struggle to know what to do, how much to do, and whether they are making progress. Once they leave hospital, stroke survivors often feel unsupported and unsure how to help themselves.\n\nOnTrack is a digital system designed to address this. It combines a smartwatch worn on the affected arm (which tracks how much the arm is moving), a smartphone app that shows progress and sends motivational messages, and regular one-to-one coaching sessions to help people set goals and build self-management skills. The aim is to give people the feedback and support they need to practise independently, alongside their usual NHS rehabilitation.\n\nThis study tested whether OnTrack was practical to deliver and acceptable to the people using it. Twenty-four adults who had had a stroke in the previous six months were recruited from NHS stroke services in North West London. Twelve completed the full 12-week programme. The study ran partly before and partly during the COVID-19 pandemic, which meant some participants used OnTrack at home with remote coaching rather than starting in hospital.\n\nParticipants wore the smartwatch on about six days out of seven and checked their activity data regularly. On average, they increased their arm activity by 63% over the 12 weeks. In interviews, they said the activity targets were motivating and the coaching was a valuable part of the experience. Therapists involved in recruitment felt the study procedures were manageable and that OnTrack could help people engage more with their recovery.\n\nThe study was not designed to prove that OnTrack improves arm function (that would need a larger randomised trial), but it showed that recruitment, retention and completion rates were acceptable, and it identified suitable outcome measures and sample sizes for a future trial. The authors note that the messaging part of the system received mixed feedback and needs further refinement, and that questions remain about how coaching could be delivered at scale. A patient and public involvement group contributed throughout, helping to refine the intervention and interpret the findings.",
+    "image_path": "images/R_2F0Le9bfwVyKFwJ.jpg",
+    "thumbnail_path": "images/R_2F0Le9bfwVyKFwJ-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "010"
   }
 ]
