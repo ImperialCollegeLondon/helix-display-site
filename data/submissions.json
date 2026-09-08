@@ -419,5 +419,36 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "013"
+  },
+  {
+    "response_id": "R_2Tyd2BEoJaUSHcZ",
+    "recorded_date": "2026-09-08 15:29:56",
+    "title": "Virtual reality for acute pain in outpatient hysteroscopy: a randomised controlled trial",
+    "source_type": "Academic paper",
+    "theme": "One-off Project",
+    "subproject": "",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "N Deo, KS Khan, J Mak, J Allotey, FJ Gonzalez Carreras, G Fusari, J Benn",
+    "helix_authors": [],
+    "project_date": "22 July 2020",
+    "publication_date_iso": "2020-07-22",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "We thank all the women who consented to participate in the trial as well as all nurses and gynaecologists who performed the procedure: their enthusiasm and support as co-researchers in this clinical project was indispensable. A special thanks for Jayshree Patel and Chris Astley, the lovely couple who helped co-design the study and gave a patient’s perspective along with technical expertise. We are grateful to Dr Sheila Popert, Medical Director at St Giles Hospice, for commissioning the video and requesting David Attenborough to lend his voice for the narration in the Video ‘Forest of Serenity’, which was the centre stone for the intervention. We are indebted to Anna Wojdecka, Visiting Lecturer, Healthcare & Design at the Royal College of Art, London, for providing design ideas and academic rigour in the conduct of this study.",
+    "link": "https://obgyn.onlinelibrary.wiley.com/doi/10.1111/1471-0528.16377",
+    "video_link": "",
+    "keywords": [
+      "User-centred design",
+      "Clinical trial",
+      "Accessibility"
+    ],
+    "short_description": "This randomised trial found that women who used a virtual reality headset during outpatient hysteroscopy experienced significantly less pain and anxiety than those receiving standard care, suggesting VR could be a useful addition to pain management in clinic-based gynaecological procedures.",
+    "lay_summary": "Outpatient hysteroscopy (a procedure to examine the inside of the womb using a small camera) is increasingly carried out in clinic rather than under general anaesthetic. While most women tolerate it well, some experience significant pain and anxiety. Current options for pain relief include local anaesthetic and simple painkillers, but there is no strong consensus on what works best.\n\nThis study, conducted as part of a Healthcare and Design Masters project with academic supervision from the Helix Centre, tested whether virtual reality could help. Forty women scheduled for outpatient hysteroscopy at a London hospital were randomly assigned to either standard care or to wear a VR headset during the procedure. The headset showed an eight-minute calming video called \"Forest of Serenity\", featuring a rainforest and lake scene narrated by Sir David Attenborough. Women could look around the virtual environment by moving their head.\n\nWomen in the VR group reported substantially lower pain and anxiety scores. Average pain was 38% lower (3.7 out of 10 compared with 6.0), worst pain was 28% lower, and anxiety was 39% lower. These differences remained after adjusting for factors such as whether women had given birth before or had gone through the menopause. All women in the VR group said they would be happy to have the procedure in the outpatient setting again, compared with 85% of those receiving standard care.\n\nInterviews with participants suggested that the VR worked by creating a sense of relaxation and distraction. Some women appreciated that the headset blocked their view of the clinical equipment. A small number found the headset uncomfortable or felt mildly nauseous, and one woman with a history of claustrophobia removed it, but most found it acceptable. Clinical staff reported that the intervention was feasible and helpful in the majority of cases.\n\nThe authors note several limitations. The study was small (40 women), and because participants knew whether they were using VR, there may have been some placebo effect. The video was filmed from a standing perspective rather than lying down, which limited how much of the virtual environment could be explored. For two women, the procedure lasted longer than the video, requiring it to be restarted.\n\nThe researchers conclude that VR is a promising, non-drug option for managing pain and anxiety during outpatient gynaecological procedures. Larger trials and economic evaluations are needed before it could be adopted routinely.",
+    "image_path": "",
+    "thumbnail_path": "",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "014"
   }
 ]
