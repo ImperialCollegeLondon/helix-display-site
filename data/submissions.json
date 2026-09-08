@@ -387,5 +387,37 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "012"
+  },
+  {
+    "response_id": "R_8kSNPEscYqQj0tP",
+    "recorded_date": "2026-09-08 15:15:51",
+    "title": "Use of commercially available wearable devices for physical rehabilitation in healthcare: a systematic review",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "Ahmed Latif, Hasaneen Fathy Al Janabi, Meera Joshi, Gianpaolo Fusari, Leila Shepherd, Ara Darzi, Daniel R Leff",
+    "helix_authors": [],
+    "project_date": "7 November 2024",
+    "publication_date_iso": "2024-11-07",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "The authors thank the medical librarians at St Mary’s Hospital, London, who contributed to the systematic review search strategy.",
+    "link": "https://bmjopen.bmj.com/content/14/11/e084086",
+    "video_link": "",
+    "keywords": [
+      "Wearables",
+      "Community-based care",
+      "Accessibility",
+      "Patient safety"
+    ],
+    "short_description": "This systematic review found that consumer-grade wearable devices such as Fitbits and Apple Watches can support physical rehabilitation after surgery or stroke, with some trials suggesting they may work as well as traditional physiotherapy for certain patients.",
+    "lay_summary": "Physiotherapy is essential for recovery after events such as surgery or stroke, but access is often limited by long waiting times and a shortage of staff. Wearable devices (smartwatches and fitness trackers that people can buy off the shelf) offer a possible way to support patients in managing their own rehabilitation at home. This review, led by Imperial College London with academic input from the Helix Centre, set out to examine whether these devices actually improve recovery, and to map which devices are being used and in which areas of medicine.\n\nThe researchers searched four major databases and identified 18 studies, covering 1,754 patients in total. Six were randomised controlled trials (the most reliable type of study) and 12 were smaller observational or feasibility studies. The studies spanned orthopaedics (mainly hip and knee replacements), stroke medicine, cancer care and general surgery. The most commonly used device was the Fitbit, followed by Apple Watch and iPhone combinations. Step count was the most frequent measure of physical activity.\n\nAll six randomised trials found that patients who received feedback from a wearable device were more physically active than those who did not. Two orthopaedic trials went further, showing that patients using a smartwatch-based rehabilitation app achieved similar outcomes to those receiving traditional face-to-face physiotherapy, with fewer clinic visits. The smaller, non-randomised studies consistently found that wearable-supported rehabilitation was feasible and acceptable to patients.\n\nThe authors note several limitations. Most studies were small, follow-up periods were short (the longest was 12 months), and some excluded patients who did not own a compatible smartphone, which could bias results towards people already comfortable with technology. There were no randomised trials in cancer care, and the stroke studies tended to include only patients with mild impairments, so findings may not apply to everyone. The review also highlights that economic evaluations are lacking: before wearables can be recommended widely, we need to know whether they save money as well as time.\n\nThe review concludes that consumer-grade wearables show promise as additions to, or in some cases alternatives to, traditional physiotherapy for people recovering from surgery or stroke. However, larger and better-designed trials, along with cost-effectiveness analyses, are needed before they can be adopted routinely in healthcare.",
+    "image_path": "",
+    "thumbnail_path": "",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "013"
   }
 ]
