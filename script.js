@@ -29,6 +29,28 @@ function isRealTheme(theme) {
 
 // Likewise, work that doesn't belong to a subproject is marked "N/A", which
 // is bookkeeping rather than a project name: the table shows "-" and no filter.
+const SHORT_MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+// "9 Jan 26" for the table, to keep the column narrow. The detail page still
+// shows the date in full. Built from the sortable ISO date rather than by
+// trimming the display text, so it doesn't depend on how the date was typed.
+function shortDate(item) {
+  const iso = (item.publication_date_iso || "").trim();
+  const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+  if (!match) {
+    // A date the build couldn't read is shown exactly as it was submitted,
+    // rather than guessed at or dropped.
+    return item.project_date || "-";
+  }
+
+  const [, year, month, day] = match;
+  return `${Number(day)} ${SHORT_MONTHS[Number(month) - 1]} ${year.slice(2)}`;
+}
+
 function isRealProject(project) {
   return Boolean(project) && !["n/a", "na", "none"].includes(project.trim().toLowerCase());
 }
@@ -105,7 +127,7 @@ function renderTable(allRows) {
       <td data-label="Project">${isRealProject(item.subproject)
         ? `<button type="button" class="filter-pill filter-pill--project" data-filter="project" data-value="${escapeHtml(item.subproject)}">${escapeHtml(item.subproject)}</button>`
         : "-"}</td>
-      <td data-label="Publication Date">${escapeHtml(item.project_date || "-")}</td>
+      <td data-label="Published">${escapeHtml(shortDate(item))}</td>
     </tr>
   `).join("");
 
