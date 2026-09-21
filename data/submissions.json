@@ -358,37 +358,6 @@
     "ref": "015"
   },
   {
-    "response_id": "R_2jQ5c1yLaGRyIox",
-    "recorded_date": "2026-09-21 17:09:23",
-    "title": "Feedback from wearable devices accelerates recovery after breast cancer surgery",
-    "source_type": "Academic paper",
-    "theme": "Rehabilitation",
-    "subproject": "OnTrack",
-    "led_or_contributed": "Helix Contributed",
-    "authors": "Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Ara Darzi, Daniel R. Leff",
-    "helix_authors": [],
-    "project_date": "27 March 2026",
-    "publication_date_iso": "2026-03-27",
-    "date_range_note": "",
-    "corresponding_team_member": "Gianpaolo Fusari",
-    "contact_email": "g.fusari@imperial.ac.uk",
-    "acknowledgements": "We thank the patients and staff at Imperial College Healthcare NHS Trust and Imperial College London, for their support. This study was funded by Imperial College London MedTechOne and the Wellcome Trust. Infrastructure support for this research was provided by the NIHR Imperial Biomedical Research Centre (BRC). We gratefully acknowledge their support, which made this work possible.",
-    "link": "https://www.sciencedirect.com/science/article/pii/S0748798326004038",
-    "video_link": "",
-    "keywords": [
-      "Clinical trial",
-      "Wearables",
-      "Community-based care"
-    ],
-    "short_description": "This study found that breast cancer patients who received personalised, clinician-guided feedback from a wearable device recovered arm movement faster after surgery than those with fixed goals or no feedback, suggesting wearables could help fill gaps in post-operative rehabilitation.",
-    "lay_summary": "Surgery to the armpit (axilla) is a common part of breast cancer treatment, but it often leaves people with shoulder stiffness, weakness or reduced arm movement. Structured physiotherapy can help, but access is inconsistent: many patients receive only a leaflet or brief advice rather than ongoing support. This study tested whether a smartwatch paired with a rehabilitation app could help people recover arm function more quickly after surgery.\n\nForty-nine women took part. Twenty wore an Apple Watch running OnTrack, an app originally developed at the Helix Centre for stroke rehabilitation and adapted here for breast cancer. The app tracks how much the arm moves, displays progress towards a daily goal, and sends motivational messages. Half of these participants were given a fixed target of 60 minutes of arm movement per day (basic feedback). The other half had their targets adjusted weekly by a clinician based on how they were progressing (dynamic feedback). A further 29 patients from an earlier study at the same hospital, who wore a passive movement sensor with no feedback, served as a comparison group.\n\nParticipants wore the watch for at least a week before surgery to establish their normal activity level, then continued wearing it for up to 16 weeks afterwards. Adherence was high: on average, people used the system on nearly 9 out of every 10 days, and usability scores were very positive.\n\nThe results showed clear differences between groups. By day 8 after surgery, patients receiving dynamic feedback had returned to their pre-surgery activity levels (on average, 103% of baseline), while those with basic feedback were at 80% and those with no feedback at 86%. The dynamic-feedback group also reached a stable recovery point earlier (day 4, compared with day 5 for basic feedback and day 7 for no feedback). When the researchers looked only at patients who had the less extensive sentinel lymph node biopsy (rather than full lymph node removal), the pattern held: dynamic feedback still outperformed no feedback.\n\nThe study has limitations. The sample was small, and the comparison group came from an earlier time period using a different device, which makes direct comparison harder. Most participants had early-stage disease treated with breast-conserving surgery, so the findings may not apply to those having mastectomy or more extensive lymph node removal. The researchers also note that the system measured overall arm movement rather than specific exercises, and that patient-reported outcomes (such as pain and function questionnaires) did not show a clear link with the activity data, possibly because the questionnaires were collected weeks after the main recovery differences appeared.\n\nThe authors conclude that wearable-guided rehabilitation with personalised, clinician-adjusted goals shows promise for accelerating recovery after breast cancer surgery. Larger randomised trials are now needed to confirm these findings and assess long-term benefits and cost-effectiveness.",
-    "image_path": "images/R_2jQ5c1yLaGRyIox.jpg",
-    "thumbnail_path": "images/R_2jQ5c1yLaGRyIox-thumb.jpg",
-    "diagram_path": "",
-    "diagram_caption": "",
-    "ref": "012"
-  },
-  {
     "response_id": "R_8nr2SdfDI6B0QFr",
     "recorded_date": "2026-09-21 17:13:04",
     "title": "Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults",
@@ -483,5 +452,36 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "013"
+  },
+  {
+    "response_id": "R_8PfTJnLY4RQG1hL",
+    "recorded_date": "2026-09-21 17:28:55",
+    "title": "Feedback from wearable devices accelerates recovery after breast cancer surgery",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Ara Darzi, Daniel R. Leff",
+    "helix_authors": [],
+    "project_date": "27 March 2026",
+    "publication_date_iso": "2026-03-27",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "We thank the patients and staff at Imperial College Healthcare NHS Trust and Imperial College London, for their support. This study was funded by Imperial College London MedTechOne and the Wellcome Trust. Infrastructure support for this research was provided by the NIHR Imperial Biomedical Research Centre (BRC). We gratefully acknowledge their support, which made this work possible.",
+    "link": "https://www.sciencedirect.com/science/article/pii/S0748798326004038",
+    "video_link": "",
+    "keywords": [
+      "Clinical trial",
+      "Wearables",
+      "Community-based care"
+    ],
+    "short_description": "This study found that breast cancer patients who received personalised, clinician-guided feedback from a wearable device recovered arm movement faster after surgery than those with fixed goals or no feedback, suggesting wearables could help fill gaps in post-operative rehabilitation.",
+    "lay_summary": "Surgery to the armpit (axilla) is a common part of breast cancer treatment, but it often leaves people with shoulder stiffness, weakness or reduced arm movement. Structured physiotherapy can help, but access is inconsistent: many patients receive only a leaflet or brief advice rather than ongoing support. This study tested whether a smartwatch paired with a rehabilitation app could help people recover arm function more quickly after surgery.\n\nForty-nine women took part. Twenty wore an Apple Watch running OnTrack, an app originally developed at the Helix Centre for stroke rehabilitation and adapted here for breast cancer. The app tracks how much the arm moves, displays progress towards a daily goal, and sends motivational messages. Half of these participants were given a fixed target of 60 minutes of arm movement per day (basic feedback). The other half had their targets adjusted weekly by a clinician based on how they were progressing (dynamic feedback). A further 29 patients from an earlier study at the same hospital, who wore a passive movement sensor with no feedback, served as a comparison group.\n\nParticipants wore the watch for at least a week before surgery to establish their normal activity level, then continued wearing it for up to 16 weeks afterwards. Adherence was high: on average, people used the system on nearly 9 out of every 10 days, and usability scores were very positive.\n\nThe results showed clear differences between groups. By day 8 after surgery, patients receiving dynamic feedback had returned to their pre-surgery activity levels (on average, 103% of baseline), while those with basic feedback were at 80% and those with no feedback at 86%. The dynamic-feedback group also reached a stable recovery point earlier (day 4, compared with day 5 for basic feedback and day 7 for no feedback). When the researchers looked only at patients who had the less extensive sentinel lymph node biopsy (rather than full lymph node removal), the pattern held: dynamic feedback still outperformed no feedback.\n\nThe study has limitations. The sample was small, and the comparison group came from an earlier time period using a different device, which makes direct comparison harder. Most participants had early-stage disease treated with breast-conserving surgery, so the findings may not apply to those having mastectomy or more extensive lymph node removal. The researchers also note that the system measured overall arm movement rather than specific exercises, and that patient-reported outcomes (such as pain and function questionnaires) did not show a clear link with the activity data, possibly because the questionnaires were collected weeks after the main recovery differences appeared.\n\nThe authors conclude that wearable-guided rehabilitation with personalised, clinician-adjusted goals shows promise for accelerating recovery after breast cancer surgery. Larger randomised trials are now needed to confirm these findings and assess long-term benefits and cost-effectiveness.",
+    "image_path": "images/R_8PfTJnLY4RQG1hL.jpg",
+    "thumbnail_path": "images/R_8PfTJnLY4RQG1hL-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "012"
   }
 ]
