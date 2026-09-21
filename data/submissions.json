@@ -452,8 +452,8 @@
     "ref": "014"
   },
   {
-    "response_id": "R_2MRn8khM5xvViVM",
-    "recorded_date": "2026-09-18 13:11:10",
+    "response_id": "R_8MJTLEC5XCSxDgh",
+    "recorded_date": "2026-09-21 17:03:05",
     "title": "Co-Design of a Digitally Enabled Habit-Formation Intervention for Community-Dwelling Older Adults with Pre-Frailty or Mild Frailty: A Mixed-Methods Feasibility Study",
     "source_type": "Academic paper",
     "theme": "Healthy Ageing",
@@ -478,10 +478,10 @@
     ],
     "short_description": "A feasibility study co-designed a digital tool with older adults to help them build healthy habits using a smartwatch and app, finding high engagement and early signs of improved physical activity and reduced frailty.",
     "lay_summary": "Frailty affects a growing number of older people and can lead to falls, hospital admissions and loss of independence. Exercise programmes can help reverse early frailty, but many people struggle to stick with them over time. This study asked whether a digital tool, designed with older adults themselves, could help people build lasting healthy habits.\n\nThirty people aged 65 and over (average age 73) took part. All were living at home and showed early signs of frailty or were at risk of it. The research team worked with participants across four rounds of design and testing to develop the \"Healthy Habits\" intervention. Participants wore a smartwatch, used smart scales and a sleep sensor, and received feedback through a tablet app. The programme focused on seven areas: daily steps, reducing sitting time, moderate exercise, social activity, time in nature, strength and balance exercises, and sleep. Participants were encouraged to pick one habit at a time and build it into their daily routine.\n\nRetention was high: 29 of 30 participants completed the six week study, and most chose to continue for longer (up to 54 weeks). Participants wore the smartwatch for around 80% of the day on average. Nearly 4 in 10 increased their daily step count by more than 10%, and among the small group who used the final version of the app (7 people), 5 increased their steps by more than 10% within six weeks. Around 7 in 10 participants reduced their total daily sitting time. Grip strength improved by 8% on average, and scores on one frailty measure (the Edmonton Frailty Scale) fell by 48%, both statistically significant changes. Most participants said they had changed their behaviour and felt they had benefited from taking part.\n\nThis was a small study without a comparison group, so the findings are preliminary. Participants were relatively well educated and comfortable with technology, which may limit how far the results apply to the wider population. The team also notes that the intervention changed during the study as it was refined with participant feedback, which affects how the results can be compared across groups.\n\nThe findings suggest that a co-designed, habit-based digital programme is feasible and acceptable to older adults, and may help improve activity levels and markers of frailty. A follow-on randomised controlled trial is now underway to test whether the approach works at a larger scale.",
-    "image_path": "images/R_2MRn8khM5xvViVM.jpg",
-    "thumbnail_path": "images/R_2MRn8khM5xvViVM-thumb.jpg",
-    "diagram_path": "",
-    "diagram_caption": "",
+    "image_path": "images/R_8MJTLEC5XCSxDgh.jpg",
+    "thumbnail_path": "images/R_8MJTLEC5XCSxDgh-thumb.jpg",
+    "diagram_path": "images/R_8MJTLEC5XCSxDgh-diagram.jpg",
+    "diagram_caption": "Devices installed into participants homes as part of the Healthy Habits system",
     "ref": "015"
   }
 ]
