@@ -27,8 +27,6 @@ function isRealTheme(theme) {
   return Boolean(theme) && theme.trim().toLowerCase() !== ONE_OFF_THEME;
 }
 
-// Likewise, work that doesn't belong to a subproject is marked "N/A", which
-// is bookkeeping rather than a project name: the table shows "-" and no filter.
 const SHORT_MONTHS = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -51,6 +49,20 @@ function shortDate(item) {
   return `${Number(day)} ${SHORT_MONTHS[Number(month) - 1]} ${year.slice(2)}`;
 }
 
+// A short date is kept on one line. Free-text dates the build couldn't parse
+// are left to wrap — they can be long ("March – September 2025"), and forcing
+// those onto a single line would stretch the column and squeeze the titles.
+function dateCell(item) {
+  const text = shortDate(item);
+  const isShort = Boolean((item.publication_date_iso || "").trim());
+
+  return isShort
+    ? `<span class="cell-date">${escapeHtml(text)}</span>`
+    : escapeHtml(text);
+}
+
+// Likewise, work that doesn't belong to a subproject is marked "N/A", which
+// is bookkeeping rather than a project name: the table shows "-" and no filter.
 function isRealProject(project) {
   return Boolean(project) && !["n/a", "na", "none"].includes(project.trim().toLowerCase());
 }
@@ -127,7 +139,7 @@ function renderTable(allRows) {
       <td data-label="Project">${isRealProject(item.subproject)
         ? `<button type="button" class="filter-pill filter-pill--project" data-filter="project" data-value="${escapeHtml(item.subproject)}">${escapeHtml(item.subproject)}</button>`
         : "-"}</td>
-      <td data-label="Published">${escapeHtml(shortDate(item))}</td>
+      <td data-label="Published">${dateCell(item)}</td>
     </tr>
   `).join("");
 

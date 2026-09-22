@@ -414,6 +414,14 @@ body.table-embed,
   background: var(--surface-alt);
 }
 
+/* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. The
+   header is kept on one line too, otherwise it sets a narrower column than the
+   dates below it need. */
+.cell-date,
+.m3-table th:last-child {
+  white-space: nowrap;
+}
+
 .cell-title {
   display: block;
 }
