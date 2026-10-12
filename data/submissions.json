@@ -483,5 +483,37 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "012"
+  },
+  {
+    "response_id": "R_2oFRdRNQFP92lJq",
+    "recorded_date": "2026-10-12 13:56:27",
+    "title": "Community makers: report on developing an online toolkit for supporting people with dementia to connect during the pandemic and beyond",
+    "source_type": "Academic paper",
+    "theme": "Dementia",
+    "subproject": "",
+    "led_or_contributed": "Helix Contributed",
+    "authors": "Shirley Evans; Matthew Harrison; Natasha Morgan; Cat Kilkenny; Thomas Morton",
+    "helix_authors": [],
+    "project_date": "7 March 2022",
+    "publication_date_iso": "2022-03-07",
+    "date_range_note": "",
+    "corresponding_team_member": "Matthew Harrison",
+    "contact_email": "matthew.jc.harrison@imperial.ac.uk",
+    "acknowledgements": "",
+    "link": "https://www.emerald.com/wwop/article-abstract/26/2/140/387413/Community-makers-report-on-developing-an-online?redirectedFrom=fulltext",
+    "video_link": "",
+    "keywords": [
+      "Service design",
+      "Design research",
+      "Dementia care",
+      "Designing for marginalised groups"
+    ],
+    "short_description": "Community Makers is an online toolkit and network that helps community groups support people affected by dementia to stay connected, developed during the COVID-19 pandemic by combining workshops with people with dementia and carers, learning from community organisations, and a rapid review of the research literature.",
+    "lay_summary": "When COVID-19 restrictions began in 2020, people with dementia and their carers faced sudden isolation. Many lost contact with friends, family and support services, and the routines that helped them cope were disrupted. Community groups that had previously met in person needed to find new ways to reach people, but not everyone had the technology, skills or confidence to get online.\n\nCommunity Makers was set up in April 2020 to help. It is a UK-wide network led by the Alzheimer's Society, the UK Dementia Research Institute Care Research and Technology Centre, and the Association for Dementia Studies at the University of Worcester. The Helix Centre contributed as a partner, drawing on its earlier work with the Minder programme, which uses technology to support people with dementia at home.\n\nTo understand what would help, the team ran online workshops with 15 people with dementia and 10 carers, held webinars with community organisations across the UK, and carried out a rapid review of the research literature. From this work, four principles emerged that seem to make support interventions successful, whatever their size or setting: relationships, purpose, technology and community.\n\nRelationships matter because people are more likely to try something new if they trust the person helping them. Purpose matters because someone unfamiliar with technology needs a clear reason to overcome their fears. Technology needs to suit the individual, both the device and the software, and people often need hands-on support to use it. Community matters because feeling part of a group motivates people to stay engaged.\n\nThe team found that many people benefited from online groups, but others remained digitally excluded because they lacked devices, internet access or confidence. The toolkit therefore includes ideas for reaching people who are not online, as well as guidance on setting up virtual groups. Three real-world examples show how the principles work in practice: a Liverpool-based organisation supporting the Chinese community, a charity helping people connect with nature, and a Herefordshire group that built new relationships entirely online before meeting face to face.",
+    "image_path": "images/R_2oFRdRNQFP92lJq.jpg",
+    "thumbnail_path": "images/R_2oFRdRNQFP92lJq-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "017"
   }
 ]
