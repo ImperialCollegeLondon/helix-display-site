@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Detail page — where to put the link to the paper</title>
+<style>
+  :root {
+    --helix-navy: #2b3a63;
+    --helix-teal: #52bbb5;
+    --helix-pink: #d0006f;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f5;
+    --border: #dddddd;
+    --text-primary: var(--helix-navy);
+    --text-secondary: #555555;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px 18px 60px;
+    background: #fafafa;
+    color: var(--text-primary);
+    font-family: "Circular", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .page-note, .option, .verdict { max-width: 760px; margin-left: auto; margin-right: auto; }
+
+  .page-note {
+    margin-bottom: 30px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--helix-teal);
+    background: #fff;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .page-note strong { color: var(--helix-navy); }
+
+  .option { margin-bottom: 40px; }
+
+  .option__label {
+    display: inline-block;
+    margin-bottom: 4px;
+    color: var(--helix-pink);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .option h2 { margin: 0 0 4px; font-size: 1.1rem; line-height: 1.3; }
+
+  .option__meta {
+    margin: 0 0 14px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .mock {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 26px 24px;
+  }
+
+  /* ---- the real detail-page styles, copied ---- */
+  .entry-title {
+    margin: 0 0 14px;
+    color: var(--helix-navy);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1.3;
+  }
+
+  .entry-authors {
+    margin: 0 0 10px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .entry-publisher {
+    margin: 0 0 10px;
+    color: var(--helix-navy);
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .entry-publisher a { color: var(--helix-pink); font-weight: 700; }
+
+  .entry-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .filter-pill { color: var(--helix-pink); text-decoration: none; }
+  .sep { color: #bbbcbc; }
+
+  .entry-keywords { margin: 0 0 22px; }
+
+  .keyword-chip {
+    display: inline-block;
+    margin: 0 8px 8px 0;
+    padding: 6px 9px;
+    background: rgba(82, 187, 181, 0.16);
+    color: var(--helix-navy);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .entry-lede {
+    margin: 0 0 8px;
+    padding-bottom: 4px;
+    color: var(--helix-navy);
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  /* ---- the four treatments ---- */
+
+  /* A: a plain magenta link on its own line */
+  .link-plain {
+    margin: 0 0 16px;
+    font-size: 0.95rem;
+  }
+  .link-plain a {
+    color: var(--helix-pink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  /* B: an outlined button, square corners and the brand drop shadow */
+  .link-button {
+    display: inline-block;
+    margin: 4px 0 18px;
+    padding: 10px 16px;
+    border: 1px solid var(--helix-navy);
+    background: var(--surface);
+    color: var(--helix-navy);
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* C: a solid magenta button */
+  .link-button--solid {
+    border-color: var(--helix-pink);
+    background: var(--helix-pink);
+    color: #fff;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  /* D: folded into the publisher line */
+  .inline-read { font-weight: 700; }
+  .inline-read a { color: var(--helix-pink); }
+
+  .verdict {
+    padding: 18px 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+  .verdict h2 { margin: 0 0 10px; font-size: 1.02rem; }
+  .verdict p { margin: 0 0 10px; font-size: 0.87rem; line-height: 1.6; color: var(--text-secondary); }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict b { color: var(--helix-navy); }
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  <strong>Four ways to put the link to the paper in the header.</strong>
+  Real content from entry 012. Everything else on the page is unchanged, and in
+  all four the link <em>also</em> stays in the footer list, now at the top of it
+  — which is already built and pushed. These are only about the header.
+  The Circular typeface isn't loaded in this preview, so weights look slightly
+  different from the live site.
+</div>
+
+<!-- A -->
+<section class="option">
+  <span class="option__label">Option A</span>
+  <h2>A link on its own line, under the meta line</h2>
+  <p class="option__meta">Quietest. Matches how every other link on the page behaves.</p>
+  <div class="mock">
+    <h1 class="entry-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</h1>
+    <p class="entry-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Daniel R. Leff</p>
+    <p class="entry-publisher">Academic paper <span class="sep">·</span> <a href="#">European Journal of Surgical Oncology</a></p>
+    <p class="entry-meta"><a class="filter-pill" href="#">OnTrack</a><span class="sep">·</span><a class="filter-pill" href="#">Rehabilitation</a><span class="sep">·</span>27 March 2026</p>
+    <p class="link-plain"><a href="#">Read the full paper →</a></p>
+    <div class="entry-keywords">
+      <a class="keyword-chip" href="#">Wearables</a><a class="keyword-chip" href="#">Surgical recovery</a><a class="keyword-chip" href="#">Rehabilitation</a>
+    </div>
+    <p class="entry-lede">Patients recovering from breast cancer surgery regained arm movement faster when they could see feedback from a wearable device.</p>
+  </div>
+</section>
+
+<!-- B -->
+<section class="option">
+  <span class="option__label">Option B</span>
+  <h2>An outlined button</h2>
+  <p class="option__meta">Clearly an action without shouting. Square corners, navy outline.</p>
+  <div class="mock">
+    <h1 class="entry-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</h1>
+    <p class="entry-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Daniel R. Leff</p>
+    <p class="entry-publisher">Academic paper <span class="sep">·</span> <a href="#">European Journal of Surgical Oncology</a></p>
+    <p class="entry-meta"><a class="filter-pill" href="#">OnTrack</a><span class="sep">·</span><a class="filter-pill" href="#">Rehabilitation</a><span class="sep">·</span>27 March 2026</p>
+    <a class="link-button" href="#">Read the full paper</a>
+    <div class="entry-keywords">
+      <a class="keyword-chip" href="#">Wearables</a><a class="keyword-chip" href="#">Surgical recovery</a><a class="keyword-chip" href="#">Rehabilitation</a>
+    </div>
+    <p class="entry-lede">Patients recovering from breast cancer surgery regained arm movement faster when they could see feedback from a wearable device.</p>
+  </div>
+</section>
+
+<!-- C -->
+<section class="option">
+  <span class="option__label">Option C</span>
+  <h2>A solid magenta button</h2>
+  <p class="option__meta">Loudest. Uses the brand's hard drop shadow.</p>
+  <div class="mock">
+    <h1 class="entry-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</h1>
+    <p class="entry-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Daniel R. Leff</p>
+    <p class="entry-publisher">Academic paper <span class="sep">·</span> <a href="#">European Journal of Surgical Oncology</a></p>
+    <p class="entry-meta"><a class="filter-pill" href="#">OnTrack</a><span class="sep">·</span><a class="filter-pill" href="#">Rehabilitation</a><span class="sep">·</span>27 March 2026</p>
+    <a class="link-button link-button--solid" href="#">Read the full paper</a>
+    <div class="entry-keywords">
+      <a class="keyword-chip" href="#">Wearables</a><a class="keyword-chip" href="#">Surgical recovery</a><a class="keyword-chip" href="#">Rehabilitation</a>
+    </div>
+    <p class="entry-lede">Patients recovering from breast cancer surgery regained arm movement faster when they could see feedback from a wearable device.</p>
+  </div>
+</section>
+
+<!-- D -->
+<section class="option">
+  <span class="option__label">Option D</span>
+  <h2>Folded into the publisher line</h2>
+  <p class="option__meta">No new line at all. The publisher line becomes the place where the work is published <em>and</em> read.</p>
+  <div class="mock">
+    <h1 class="entry-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</h1>
+    <p class="entry-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari, Leila Shepherd, Daniel R. Leff</p>
+    <p class="entry-publisher inline-read">Academic paper <span class="sep">·</span> <a href="#">European Journal of Surgical Oncology</a> <span class="sep">·</span> <a href="#">Read the full paper →</a></p>
+    <p class="entry-meta"><a class="filter-pill" href="#">OnTrack</a><span class="sep">·</span><a class="filter-pill" href="#">Rehabilitation</a><span class="sep">·</span>27 March 2026</p>
+    <div class="entry-keywords">
+      <a class="keyword-chip" href="#">Wearables</a><a class="keyword-chip" href="#">Surgical recovery</a><a class="keyword-chip" href="#">Rehabilitation</a>
+    </div>
+    <p class="entry-lede">Patients recovering from breast cancer surgery regained arm movement faster when they could see feedback from a wearable device.</p>
+  </div>
+</section>
+
+<div class="verdict">
+  <h2>Things to weigh up</h2>
+  <p><b>This page is a summary of something else.</b> A good number of readers arrive wanting the original, so the link earns prominence more than most elements here — which argues against Option A.</p>
+  <p><b>The page has no other buttons.</b> Everything clickable is a magenta link. B and C introduce a new component, which is fine if it's the one thing you want people to do, but C especially competes with the title for attention.</p>
+  <p><b>Not every entry has a link.</b> Blog posts, reports and some conference work have no URL, and roughly a quarter of current entries would show nothing. A missing button leaves a more obvious hole than a missing line of text, so B and C need the surrounding spacing to collapse cleanly.</p>
+  <p><b>D costs nothing in space</b> but makes a line that's already doing two jobs do a third, and puts two magenta links side by side where one goes to the journal's homepage and the other to the paper — easy to confuse.</p>
+  <p><b>If you want a recommendation:</b> B. It reads as the page's main action, survives a missing link tidily, and doesn't outshout the title the way C does.</p>
+</div>
+
+</body>
+</html>
