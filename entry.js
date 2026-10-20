@@ -273,6 +273,15 @@ function renderEntry(entry) {
   if (details) {
     details.replaceChildren();
 
+    // The link to the work itself leads: it's what most readers come for.
+    const paperHref = publicUrl(entry.link);
+
+    if (paperHref) {
+      addDetailRow(details, "Full paper / work", dd => {
+        renderAnchor(dd, paperHref, entry.link, { external: true });
+      });
+    }
+
     if (entry.corresponding_team_member) {
       addDetailRow(details, "Corresponding team member", dd => {
         dd.textContent = entry.corresponding_team_member;
@@ -282,14 +291,6 @@ function renderEntry(entry) {
     if (entry.contact_email) {
       addDetailRow(details, "Contact", dd => {
         renderAnchor(dd, `mailto:${entry.contact_email}`, entry.contact_email);
-      });
-    }
-
-    const paperHref = publicUrl(entry.link);
-
-    if (paperHref) {
-      addDetailRow(details, "Full paper / work", dd => {
-        renderAnchor(dd, paperHref, entry.link, { external: true });
       });
     }
 
