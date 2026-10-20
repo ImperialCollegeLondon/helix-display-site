@@ -414,6 +414,20 @@ body.table-embed,
   background: var(--surface-alt);
 }
 
+/* Publisher column: the journal or publisher leads, with the kind of output
+   beneath it in the same quieter style as the authors under a title. */
+.pub-name {
+  display: block;
+}
+
+.pub-type {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
 /* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. The
    header is kept on one line too, otherwise it sets a narrower column than the
    dates below it need. */

@@ -234,6 +234,19 @@ function renderEntry(entry) {
       });
     }
 
+    // Who published it, linked to the journal where a link was given. The
+    // link is on the name rather than shown as a bare URL, which would be
+    // long and unreadable next to the other rows.
+    if (entry.publisher) {
+      addDetailRow(details, "Published in", dd => {
+        if (entry.journal_link && isPublicUrl(entry.journal_link)) {
+          renderAnchor(dd, entry.journal_link, entry.publisher, { external: true });
+        } else {
+          dd.textContent = entry.publisher;
+        }
+      });
+    }
+
     // Optional, and checked the same way as the paper link: anything that
     // isn't a plain http(s) address is ignored rather than made clickable.
     if (entry.video_link && isPublicUrl(entry.video_link)) {

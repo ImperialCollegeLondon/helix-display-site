@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Publication table — column options</title>
+<style>
+  :root {
+    --helix-navy: #2b3a63;
+    --helix-teal: #52bbb5;
+    --helix-pink: #d0006f;
+    --helix-gray: #bbbcbc;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f5;
+    --surface-grey: #ececec;
+    --row-divider: #e6e6e6;
+    --border: #dddddd;
+    --text-primary: var(--helix-navy);
+    --text-secondary: #555555;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px 18px 60px;
+    background: #fafafa;
+    color: var(--text-primary);
+    font-family: "Circular", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .page-note {
+    max-width: 1120px;
+    margin: 0 auto 30px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--helix-teal);
+    background: #fff;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .page-note strong { color: var(--helix-navy); }
+
+  .option {
+    max-width: 1120px;
+    margin: 0 auto 44px;
+  }
+
+  .option__label {
+    display: inline-block;
+    margin-bottom: 4px;
+    color: var(--helix-pink);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .option h2 {
+    margin: 0 0 4px;
+    font-size: 1.18rem;
+    line-height: 1.3;
+  }
+
+  .option__meta {
+    margin: 0 0 14px;
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  thead { background: var(--surface-grey); }
+
+  th, td {
+    padding: 12px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    border-bottom: 1px solid var(--border);
+    color: var(--helix-navy);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  td {
+    border-bottom: 1px solid var(--row-divider);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  tbody tr:last-child td { border-bottom: 0; }
+
+  .cell-thumb { padding-right: 0; }
+
+  .thumb {
+    display: block;
+    width: 100%;
+    max-width: 68px;
+    aspect-ratio: 1 / 1;
+    background: var(--surface-alt);
+  }
+
+  .cell-title {
+    display: block;
+    font-weight: 400;
+  }
+
+  .cell-authors {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 4px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .pill {
+    color: var(--helix-pink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    font-size: 0.9rem;
+  }
+
+  .cell-date { white-space: nowrap; }
+
+  /* The combined "Published in" cell: publisher leads, type sits beneath it
+     in the same way authors sit beneath a title. */
+  .pub-name { display: block; }
+
+  .pub-type {
+    display: block;
+    margin-top: 3px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+
+  .type-text { color: var(--text-secondary); }
+
+  .verdict {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 18px 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+
+  .verdict h2 { margin: 0 0 10px; font-size: 1.05rem; }
+  .verdict p { margin: 0 0 10px; font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict b { color: var(--helix-navy); }
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  <strong>Four ways to show publication type and publisher.</strong>
+  Real titles, authors, themes, projects and dates from the live data.
+  <strong>Publisher values are illustrative</strong> — that question is new, so no
+  submission has answered it yet; these are inferred from each entry's link.
+  Thumbnails are shown as plain squares, and the Circular typeface isn't loaded
+  in this preview, so spacing will be slightly tighter on the real site.
+  Each table fills whatever width it's given — open this file in a browser at
+  full width to judge them as they'd really appear.
+</div>
+
+<!-- ============================ OPTION 1 ============================ -->
+<section class="option">
+  <span class="option__label">Option 1</span>
+  <h2>Two new columns, Project kept</h2>
+  <p class="option__meta">Seven columns. Type and Publisher are separate and each could be filterable.</p>
+
+  <div class="table-card">
+    <table>
+      <colgroup>
+        <col style="width:8%"><col style="width:27%"><col style="width:12%"><col style="width:12%">
+        <col style="width:11%"><col style="width:16%"><col style="width:9%">
+      </colgroup>
+      <thead>
+        <tr><th></th><th>Title</th><th>Theme</th><th>Project</th><th>Type</th><th>Publisher</th><th>Published</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults</span><span class="cell-authors">Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, &amp; Katrin Hänsel</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td><a class="pill">Head to Head</a></td>
+          <td class="type-text">Conference poster</td>
+          <td>AAIC 2026</td>
+          <td class="cell-date">13 Oct 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing for healthy ageing: Lessons learned from engaging pre-frail older adults in the development of digital self-monitoring health technologies</span><span class="cell-authors">Alex Dallman-Porter, Tori Simpson, Andrew Watt, Tricia Tay, Souradip Mookerjee, Shuang Wu, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td><a class="pill">Healthy Habits App</a></td>
+          <td class="type-text">Academic paper</td>
+          <td>Research Square</td>
+          <td class="cell-date">24 Aug 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Rehabilitation</a></td>
+          <td><a class="pill">OnTrack</a></td>
+          <td class="type-text">Academic paper</td>
+          <td>European Journal of Surgical Oncology</td>
+          <td class="cell-date">27 Mar 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><a class="pill">Dementia</a></td>
+          <td><a class="pill">InSleep46</a></td>
+          <td class="type-text">Public report</td>
+          <td>Helix Centre</td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================ OPTION 2 ============================ -->
+<section class="option">
+  <span class="option__label">Option 2</span>
+  <h2>One new column, Project kept</h2>
+  <p class="option__meta">Six columns. Publisher leads, type sits beneath it — the same pattern as authors under a title.</p>
+
+  <div class="table-card">
+    <table>
+      <colgroup>
+        <col style="width:8%"><col style="width:31%"><col style="width:13%"><col style="width:13%">
+        <col style="width:20%"><col style="width:10%">
+      </colgroup>
+      <thead>
+        <tr><th></th><th>Title</th><th>Theme</th><th>Project</th><th>Published in</th><th>Published</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults</span><span class="cell-authors">Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, &amp; Katrin Hänsel</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td><a class="pill">Head to Head</a></td>
+          <td><span class="pub-name">AAIC 2026</span><span class="pub-type">Conference poster</span></td>
+          <td class="cell-date">13 Oct 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing for healthy ageing: Lessons learned from engaging pre-frail older adults in the development of digital self-monitoring health technologies</span><span class="cell-authors">Alex Dallman-Porter, Tori Simpson, Andrew Watt, Tricia Tay, Souradip Mookerjee, Shuang Wu, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td><a class="pill">Healthy Habits App</a></td>
+          <td><span class="pub-name">Research Square</span><span class="pub-type">Academic paper</span></td>
+          <td class="cell-date">24 Aug 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Rehabilitation</a></td>
+          <td><a class="pill">OnTrack</a></td>
+          <td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type">Academic paper</span></td>
+          <td class="cell-date">27 Mar 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><a class="pill">Dementia</a></td>
+          <td><a class="pill">InSleep46</a></td>
+          <td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span></td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================ OPTION 3 ============================ -->
+<section class="option">
+  <span class="option__label">Option 3</span>
+  <h2>Two new columns, Project removed</h2>
+  <p class="option__meta">Six columns. Same as Option 1 but Project is dropped, giving Title and Publisher room to breathe.</p>
+
+  <div class="table-card">
+    <table>
+      <colgroup>
+        <col style="width:8%"><col style="width:34%"><col style="width:14%">
+        <col style="width:13%"><col style="width:20%"><col style="width:10%">
+      </colgroup>
+      <thead>
+        <tr><th></th><th>Title</th><th>Theme</th><th>Type</th><th>Publisher</th><th>Published</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults</span><span class="cell-authors">Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, &amp; Katrin Hänsel</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td class="type-text">Conference poster</td>
+          <td>AAIC 2026</td>
+          <td class="cell-date">13 Oct 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing for healthy ageing: Lessons learned from engaging pre-frail older adults in the development of digital self-monitoring health technologies</span><span class="cell-authors">Alex Dallman-Porter, Tori Simpson, Andrew Watt, Tricia Tay, Souradip Mookerjee, Shuang Wu, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td class="type-text">Academic paper</td>
+          <td>Research Square</td>
+          <td class="cell-date">24 Aug 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Rehabilitation</a></td>
+          <td class="type-text">Academic paper</td>
+          <td>European Journal of Surgical Oncology</td>
+          <td class="cell-date">27 Mar 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><a class="pill">Dementia</a></td>
+          <td class="type-text">Public report</td>
+          <td>Helix Centre</td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================ OPTION 4 ============================ -->
+<section class="option">
+  <span class="option__label">Option 4</span>
+  <h2>One new column, Project removed</h2>
+  <p class="option__meta">Five columns — the same count as today. The roomiest of the four.</p>
+
+  <div class="table-card">
+    <table>
+      <colgroup>
+        <col style="width:8%"><col style="width:40%"><col style="width:15%">
+        <col style="width:23%"><col style="width:11%">
+      </colgroup>
+      <thead>
+        <tr><th></th><th>Title</th><th>Theme</th><th>Published in</th><th>Published</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults</span><span class="cell-authors">Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, &amp; Katrin Hänsel</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td><span class="pub-name">AAIC 2026</span><span class="pub-type">Conference poster</span></td>
+          <td class="cell-date">13 Oct 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing for healthy ageing: Lessons learned from engaging pre-frail older adults in the development of digital self-monitoring health technologies</span><span class="cell-authors">Alex Dallman-Porter, Tori Simpson, Andrew Watt, Tricia Tay, Souradip Mookerjee, Shuang Wu, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Healthy Ageing</a></td>
+          <td><span class="pub-name">Research Square</span><span class="pub-type">Academic paper</span></td>
+          <td class="cell-date">24 Aug 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri, Richard M. Kwasnicki, Gianpaolo Fusari…</span></td>
+          <td><a class="pill">Rehabilitation</a></td>
+          <td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type">Academic paper</span></td>
+          <td class="cell-date">27 Mar 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><a class="pill">Dementia</a></td>
+          <td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span></td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="verdict">
+  <h2>Things to weigh up</h2>
+  <p><b>Journal names are long.</b> "European Journal of Surgical Oncology" is the realistic case, not the exception. In Option 1 it wraps to three lines and drags the row height up; the combined column in Options 2 and 4 gives it more room.</p>
+  <p><b>Type has very few values.</b> Academic paper, public report, white paper, blog post, conference poster. A whole column repeating "Academic paper" down the page earns its width less than the publisher does — which is the argument for pairing them.</p>
+  <p><b>Removing Project costs a filter.</b> Project is currently a clickable filter and one of the main ways to find related work. It still appears on every detail page, and can still be filtered by link, but it stops being browsable from the table.</p>
+  <p><b>Theme and Project overlap a lot.</b> Across the current entries, most projects belong to one theme, so the two columns often say related things. If something has to go to make room, Project is the more expendable of the two — but only if theme filtering is enough for how people actually search.</p>
+</div>
+
+</body>
+</html>

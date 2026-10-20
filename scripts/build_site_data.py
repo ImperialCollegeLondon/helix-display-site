@@ -46,6 +46,8 @@ FIELD_LABEL_PATTERNS = {
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
     "video_link": "if there is a video",
+    "publisher": "who is publishing this piece of work",
+    "journal_link": "link to journal",
     "diagram_caption": "if you uploaded a diagram",
     # The corresponding team member's name and email are handled separately in
     # resolve_columns — they are two rows of one question and share its wording.
@@ -506,6 +508,8 @@ def convert_row(row, columns, multi_maps):
     acknowledgements = col("acknowledgements")
     link = col("link")
     video_link = col("video_link")
+    publisher = col("publisher")
+    journal_link = col("journal_link")
     corresponding_team_member = col("corresponding_team_member")
     contact_email = col("contact_email")
     project_date_raw = col("project_date")
@@ -572,6 +576,8 @@ def convert_row(row, columns, multi_maps):
         "acknowledgements": acknowledgements,
         "link": link,
         "video_link": video_link,
+        "publisher": publisher,
+        "journal_link": journal_link,
         "keywords": keywords,
         "short_description": short_description,
         "lay_summary": lay_summary,

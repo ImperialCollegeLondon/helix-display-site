@@ -41,7 +41,7 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 ## What readers see
 
-**The table** lists a square thumbnail, then Title (with the authors beneath, trimmed to two lines), Theme, Project and Published, newest publication first. Dates are abbreviated in the table ("9 Jan 26") to keep the column narrow; the detail page shows them in full ("9 January 2026"). A date the build couldn't read is shown in the table exactly as it was submitted. The thumbnail is a centre crop of the header image, generated during the build at 240px and displayed at 72px — entries with no image show an empty square so the titles stay aligned. On a phone the thumbnail sits above the title in each card. Up to 15 entries are shown per page; beyond that a pager appears at the bottom, and searching or filtering starts again at page one. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
+**The table** lists a square thumbnail, then Title (with the authors beneath, trimmed to two lines), Publisher, Theme, Project and Published, newest publication first. The Publisher column shows the journal or publisher with the kind of output ("Academic paper", "Conference poster") beneath it in smaller grey text; if only one of the two was given, only that is shown. Dates are abbreviated in the table ("9 Jan 26") to keep the column narrow; the detail page shows them in full ("9 January 2026"). A date the build couldn't read is shown in the table exactly as it was submitted. The thumbnail is a centre crop of the header image, generated during the build at 240px and displayed at 72px — entries with no image show an empty square so the titles stay aligned. On a phone the thumbnail sits above the title in each card. Up to 15 entries are shown per page; beyond that a pager appears at the bottom, and searching or filtering starts again at page one. The search box matches title, authors, project, theme, source type, Helix involvement, summary text and keywords. Theme and project appear as magenta links; clicking one filters the table, and filters combine with each other and with the search box. Active filters appear as removable chips above the table.
 
 **A detail page** shows the image (if any), title, the full author list, a meta line with project, theme, source type and date, keyword chips, the short lede, the full summary, then contact details, acknowledgements and Helix involvement, and a pink "All publication summaries" link at the bottom.
 
@@ -86,6 +86,8 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Acknowledgements…" (optional) | At the bottom of the detail page; the row is hidden if left blank |
 | "Keywords (select up to 5)" | Keyword chips |
 | "If available, please insert a link…" | Full paper / work |
+| "Who is publishing this piece of work?…" | Publisher column in the table, and "Published in" on the detail page |
+| "Link to journal" (optional) | Makes the publisher name on the detail page a link |
 | "If there is a video to accompany this work…" (optional) | "Video" link at the bottom of the detail page |
 | "Corresponding team member for publication / project" (one question, Name and Email rows) | Contact details |
 | "Please upload a photo…" | Header image |

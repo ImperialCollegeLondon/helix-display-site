@@ -61,6 +61,27 @@ function dateCell(item) {
     : escapeHtml(text);
 }
 
+// The publisher leads, with the kind of output beneath it — the same shape as
+// authors under a title. Either part may be missing: a blog post often has no
+// publisher, and the type is only absent on very old entries.
+function publisherCell(item) {
+  const publisher = (item.publisher || "").trim();
+  const type = (item.source_type || "").trim();
+
+  if (!publisher && !type) {
+    return "-";
+  }
+
+  const name = publisher
+    ? `<span class="pub-name">${escapeHtml(publisher)}</span>`
+    : "";
+  const kind = type
+    ? `<span class="pub-type">${escapeHtml(type)}</span>`
+    : "";
+
+  return name + kind;
+}
+
 // Likewise, work that doesn't belong to a subproject is marked "N/A", which
 // is bookkeeping rather than a project name: the table shows "-" and no filter.
 function isRealProject(project) {
@@ -106,7 +127,7 @@ function renderTable(allRows) {
   if (!allRows.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="loading-cell">No submissions found.</td>
+        <td colspan="6" class="loading-cell">No submissions found.</td>
       </tr>
     `;
     renderPager(0, 0);
@@ -133,6 +154,7 @@ function renderTable(allRows) {
           ? `<span class="cell-authors">${escapeHtml(authorsText(item))}</span>`
           : ""}
       </td>
+      <td data-label="Publisher">${publisherCell(item)}</td>
       <td data-label="Theme">${isRealTheme(item.theme)
         ? `<button type="button" class="filter-pill filter-pill--theme" data-filter="theme" data-value="${escapeHtml(item.theme)}">${escapeHtml(item.theme)}</button>`
         : "-"}</td>
@@ -277,6 +299,7 @@ function getFilteredRows() {
         item.subproject,
         item.led_or_contributed,
         item.source_type,
+        item.publisher,
         item.short_description,
         item.lay_summary,
         Array.isArray(item.helix_authors) ? item.helix_authors.join(" ") : "",
@@ -403,7 +426,7 @@ async function loadSubmissions() {
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="5" class="loading-cell">Could not load submissions.</td>
+          <td colspan="6" class="loading-cell">Could not load submissions.</td>
         </tr>
       `;
     }
