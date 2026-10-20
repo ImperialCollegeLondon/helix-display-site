@@ -7,12 +7,32 @@ function getQueryParam(name) {
   return params.get(name);
 }
 
-function isPublicUrl(value) {
+// Turns a submitted value into a safe outgoing link, or "" if it isn't one.
+//
+// Two things to guard against. A relative value ("BMJ Open") resolves against
+// this site, producing a link to a page of ours that doesn't exist, so only
+// absolute addresses are accepted. But people reasonably type "bmjopen.bmj.com"
+// without the scheme, so a bare domain is accepted and https:// added.
+function publicUrl(value) {
+  const text = String(value ?? "").trim();
+
+  if (!text || /\s/.test(text)) {
+    return "";
+  }
+
+  const hasScheme = /^[a-z][a-z0-9+.-]*:/i.test(text);
+  const looksLikeDomain = /^[^\s/@]+\.[a-z]{2,}(?:[/:?#]|$)/i.test(text);
+  const candidate = hasScheme ? text : (looksLikeDomain ? `https://${text}` : "");
+
+  if (!candidate) {
+    return "";
+  }
+
   try {
-    const url = new URL(value, window.location.href);
-    return url.protocol === "http:" || url.protocol === "https:";
+    const url = new URL(candidate);
+    return (url.protocol === "http:" || url.protocol === "https:") ? url.href : "";
   } catch {
-    return false;
+    return "";
   }
 }
 
@@ -126,7 +146,9 @@ function renderEntry(entry) {
       return pill;
     });
 
-    [entry.source_type, entry.project_date, entry.date_range_note]
+    // Source type is no longer here — it has moved up to the publisher line
+    // under the authors, so it isn't repeated.
+    [entry.project_date, entry.date_range_note]
       .filter(Boolean)
       .forEach(value => {
         const text = document.createElement("span");
@@ -162,6 +184,41 @@ function renderEntry(entry) {
     authors.textContent = text;
     authors.hidden = !text;
   }
+  // What it is and where it was published, directly under the authors: small
+  // and bold, with the journal linked when a link was given. Either part can
+  // be missing, and the line disappears if both are.
+  const publisherLine = document.getElementById("entry-publisher");
+
+  if (publisherLine) {
+    publisherLine.replaceChildren();
+
+    const type = (entry.source_type || "").trim();
+    const publisher = (entry.publisher || "").trim();
+    const journalHref = publicUrl(entry.journal_link);
+
+    if (type) {
+      publisherLine.appendChild(document.createTextNode(type));
+    }
+
+    if (publisher) {
+      if (type) {
+        const separator = document.createElement("span");
+        separator.className = "entry-meta__separator";
+        separator.setAttribute("aria-hidden", "true");
+        separator.textContent = " · ";
+        publisherLine.appendChild(separator);
+      }
+
+      if (journalHref) {
+        renderAnchor(publisherLine, journalHref, publisher, { external: true });
+      } else {
+        publisherLine.appendChild(document.createTextNode(publisher));
+      }
+    }
+
+    publisherLine.hidden = !(type || publisher);
+  }
+
   setText("short-description-content", entry.short_description || "No short description provided.");
   setText("lay-summary-content", entry.lay_summary || "No lay summary provided.");
 
@@ -228,30 +285,24 @@ function renderEntry(entry) {
       });
     }
 
-    if (entry.link && isPublicUrl(entry.link)) {
+    const paperHref = publicUrl(entry.link);
+
+    if (paperHref) {
       addDetailRow(details, "Full paper / work", dd => {
-        renderAnchor(dd, entry.link, entry.link, { external: true });
+        renderAnchor(dd, paperHref, entry.link, { external: true });
       });
     }
 
-    // Who published it, linked to the journal where a link was given. The
-    // link is on the name rather than shown as a bare URL, which would be
-    // long and unreadable next to the other rows.
-    if (entry.publisher) {
-      addDetailRow(details, "Published in", dd => {
-        if (entry.journal_link && isPublicUrl(entry.journal_link)) {
-          renderAnchor(dd, entry.journal_link, entry.publisher, { external: true });
-        } else {
-          dd.textContent = entry.publisher;
-        }
-      });
-    }
+    // The publisher isn't listed here — it has its own line under the title,
+    // where readers look for it, rather than being buried at the bottom.
 
     // Optional, and checked the same way as the paper link: anything that
     // isn't a plain http(s) address is ignored rather than made clickable.
-    if (entry.video_link && isPublicUrl(entry.video_link)) {
+    const videoHref = publicUrl(entry.video_link);
+
+    if (videoHref) {
       addDetailRow(details, "Video", dd => {
-        renderAnchor(dd, entry.video_link, entry.video_link, { external: true });
+        renderAnchor(dd, videoHref, entry.video_link, { external: true });
       });
     }
 

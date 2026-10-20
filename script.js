@@ -61,20 +61,61 @@ function dateCell(item) {
     : escapeHtml(text);
 }
 
+// Turns a submitted value into a safe outgoing link, or "" if it isn't one.
+//
+// Two things to guard against. A relative value ("BMJ Open") resolves against
+// this site, producing a link to a page of ours that doesn't exist, so only
+// absolute addresses are accepted. But people reasonably type "bmjopen.bmj.com"
+// without the scheme, so a bare domain is accepted and https:// added.
+function publicUrl(value) {
+  const text = String(value ?? "").trim();
+
+  if (!text || /\s/.test(text)) {
+    return "";
+  }
+
+  const hasScheme = /^[a-z][a-z0-9+.-]*:/i.test(text);
+  const looksLikeDomain = /^[^\s/@]+\.[a-z]{2,}(?:[/:?#]|$)/i.test(text);
+  const candidate = hasScheme ? text : (looksLikeDomain ? `https://${text}` : "");
+
+  if (!candidate) {
+    return "";
+  }
+
+  try {
+    const url = new URL(candidate);
+    return (url.protocol === "http:" || url.protocol === "https:") ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
 // The publisher leads, with the kind of output beneath it — the same shape as
 // authors under a title. Either part may be missing: a blog post often has no
 // publisher, and the type is only absent on very old entries.
+//
+// The name links out to the journal when one was given; the type never does.
 function publisherCell(item) {
   const publisher = (item.publisher || "").trim();
   const type = (item.source_type || "").trim();
+  const journal = (item.journal_link || "").trim();
 
   if (!publisher && !type) {
     return "-";
   }
 
-  const name = publisher
-    ? `<span class="pub-name">${escapeHtml(publisher)}</span>`
-    : "";
+  let name = "";
+
+  const journalHref = publicUrl(journal);
+
+  if (publisher && journalHref) {
+    // The whole row opens the summary, so this link has to stop the click
+    // from reaching the row — see the handler below.
+    name = `<a class="pub-name pub-link" href="${escapeHtml(journalHref)}" target="_blank" rel="noopener noreferrer">${escapeHtml(publisher)}</a>`;
+  } else if (publisher) {
+    name = `<span class="pub-name">${escapeHtml(publisher)}</span>`;
+  }
+
   const kind = type
     ? `<span class="pub-type">${escapeHtml(type)}</span>`
     : "";
@@ -174,6 +215,21 @@ function renderTable(allRows) {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         navigateToEntry(row.getAttribute("data-id"), row.getAttribute("data-ref"));
+      }
+    });
+  });
+
+  // The journal link sits inside a clickable row, so a click on it must not
+  // also open the summary. Keyboard users tab to it directly and Enter should
+  // follow the link rather than bubble up to the row.
+  document.querySelectorAll(".pub-link").forEach(link => {
+    link.addEventListener("click", event => {
+      event.stopPropagation();
+    });
+
+    link.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.stopPropagation();
       }
     });
   });

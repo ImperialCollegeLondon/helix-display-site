@@ -420,6 +420,24 @@ body.table-embed,
   display: block;
 }
 
+/* Magenta and underlined, matching the theme and project links. */
+a.pub-name {
+  color: var(--helix-pink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a.pub-name:hover,
+a.pub-name:focus {
+  color: var(--helix-navy);
+}
+
+a.pub-name:focus-visible {
+  outline: 2px solid rgba(43, 58, 99, 0.45);
+  outline-offset: 2px;
+}
+
 .pub-type {
   display: block;
   margin-top: 3px;
@@ -643,6 +661,30 @@ body.table-embed,
 
 .entry-authors[hidden] {
   display: none;
+}
+
+/* What it is and where it was published, under the authors. Small but bold,
+   so it reads as a label for the work rather than more author text. */
+.entry-publisher {
+  margin: 0 0 10px;
+  color: var(--helix-navy);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.entry-publisher[hidden] {
+  display: none;
+}
+
+.entry-publisher a {
+  color: var(--helix-pink);
+  font-weight: 700;
+}
+
+.entry-publisher a:hover,
+.entry-publisher a:focus {
+  color: var(--helix-navy);
 }
 
 .entry-meta {
