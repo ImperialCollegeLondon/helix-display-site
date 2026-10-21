@@ -18,7 +18,7 @@
     "link": "https://blogs.imperial.ac.uk/ighi/2025/09/05/designing-healthcare-for-people-and-planet/",
     "video_link": "",
     "publisher": "Institute of Global Health Innovation",
-    "journal_link": "",
+    "journal_link": "https://blogs.imperial.ac.uk/ighi/",
     "keywords": [
       "Design research",
       "NHS service improvement"
@@ -50,7 +50,7 @@
     "link": "https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/alz70863_110614",
     "video_link": "",
     "publisher": "Alzheimer's & Dementia",
-    "journal_link": "",
+    "journal_link": "https://alz-journals.onlinelibrary.wiley.com/journal/15525279",
     "keywords": [
       "Feasibility study",
       "Dementia care",
@@ -84,7 +84,7 @@
     "link": "https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/alz70856_105509",
     "video_link": "",
     "publisher": "Alzheimer's & Dementia",
-    "journal_link": "",
+    "journal_link": "https://alz-journals.onlinelibrary.wiley.com/journal/15525279",
     "keywords": [
       "Service design",
       "Dementia care",
@@ -153,7 +153,7 @@
     "link": "https://aging.jmir.org/2025/1/e74307",
     "video_link": "",
     "publisher": "JMIR Aging",
-    "journal_link": "",
+    "journal_link": "https://aging.jmir.org/",
     "keywords": [
       "Co-design",
       "Design research",
@@ -188,7 +188,7 @@
     "link": "https://www.researchsquare.com/article/rs-10548546/v1",
     "video_link": "",
     "publisher": "BMC Digital Health",
-    "journal_link": "",
+    "journal_link": "https://link.springer.com/journal/44247",
     "keywords": [
       "Co-design",
       "UX/UI design",
@@ -224,7 +224,7 @@
     "link": "https://link.springer.com/article/10.1186/s40814-025-01727-0",
     "video_link": "",
     "publisher": "BMC Pilot and Feasibility Studies",
-    "journal_link": "",
+    "journal_link": "https://link.springer.com/journal/40814",
     "keywords": [
       "Clinical trial",
       "Feasibility study",
@@ -259,7 +259,7 @@
     "link": "https://bmjopen.bmj.com/content/12/9/e062042",
     "video_link": "",
     "publisher": "BMJ Open",
-    "journal_link": "",
+    "journal_link": "https://bmjopen.bmj.com/",
     "keywords": [
       "Clinical trial",
       "Feasibility study",
@@ -294,7 +294,7 @@
     "link": "https://bmjopen.bmj.com/content/13/8/e062119",
     "video_link": "",
     "publisher": "BMJ Open",
-    "journal_link": "",
+    "journal_link": "https://bmjopen.bmj.com/",
     "keywords": [
       "Behavioural science",
       "Clinical trial",
@@ -329,7 +329,7 @@
     "link": "https://obgyn.onlinelibrary.wiley.com/doi/10.1111/1471-0528.16377",
     "video_link": "",
     "publisher": "BJOG: An International Journal of Obstetrics & Gynaecology",
-    "journal_link": "",
+    "journal_link": "https://obgyn.onlinelibrary.wiley.com/journal/14710528",
     "keywords": [
       "User-centred design",
       "Clinical trial",
@@ -362,7 +362,7 @@
     "link": "https://bmjopen.bmj.com/content/14/11/e084086",
     "video_link": "",
     "publisher": "BMJ Open",
-    "journal_link": "",
+    "journal_link": "https://bmjopen.bmj.com/",
     "keywords": [
       "Wearables",
       "Community-based care",
@@ -376,41 +376,6 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "013"
-  },
-  {
-    "response_id": "R_8PlXQ9EyYDVQeqd",
-    "recorded_date": "2026-10-21 11:44:52",
-    "title": "Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults",
-    "source_type": "Academic paper",
-    "theme": "Healthy Ageing",
-    "subproject": "Head to Head",
-    "led_or_contributed": "Led by Helix",
-    "authors": "Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, & Katrin Hänsel",
-    "helix_authors": [],
-    "project_date": "13 October 2026",
-    "publication_date_iso": "2026-10-13",
-    "date_range_note": "January - June 2026",
-    "corresponding_team_member": "Alex Dallman-Porter",
-    "contact_email": "a.dallman-porter@imperial.ac.uk",
-    "acknowledgements": "This study is supported by Optum. We would also like to thank the Imperial College Biodynamics Lab for allowing us the use of their equipment and for their generous help in carrying the testing and processing the data.",
-    "link": "",
-    "video_link": "https://vimeo.com/share/cfee8e98-1b98-4a2a-8345-ccc69a669c01?share=copy&fl=sv&fe=ci",
-    "publisher": "ACM conference on Pervasive and Ubiquitous Computing",
-    "journal_link": "",
-    "keywords": [
-      "Healthy ageing",
-      "Frailty prevention",
-      "Wearables",
-      "Passive sensors",
-      "Care in the community"
-    ],
-    "short_description": "Researchers compared four types of sensor (radar, motion sensors, a back-worn accelerometer and a smartwatch) to find out which could most accurately and acceptably measure walking speed at home, as a way to spot early signs of frailty in older adults.",
-    "lay_summary": "Walking speed is sometimes called \"the sixth vital sign\" because it is closely linked to health in later life. A slowing gait can be an early sign of frailty, a state of reduced physical reserve that makes people more vulnerable to falls, illness and loss of independence. Spotting frailty early could allow people to take action before problems become serious, but current assessments happen mainly in clinics and often only after someone is already quite frail. Continuous monitoring at home might catch changes sooner, yet until now there has been no direct comparison of the different sensors that could do this job.\n\nThis study tested four sensors head to head: a small radar unit, a pair of passive infrared motion detectors (the kind used in home security systems), an accelerometer worn on the lower back, and a consumer smartwatch worn on the wrist. The work began with a workshop involving 14 older adults, who handled each device and gave their views on comfort, ease of setup and usefulness. The smartwatch was the clear favourite; participants valued its familiarity and extra features. A common concern across all sensors was whether they would capture enough data to be meaningful.\n\nThe sensors were then tested in two controlled settings. First, 14 older adults walked up and down an office corridor while all four sensors recorded at once, with a stopwatch providing the reference measurement. All sensors except the radar mounted sideways achieved acceptable accuracy, with errors below the 0.2 metres per second threshold considered clinically important. Second, 23 older adults repeated the exercise in a specialist gait laboratory equipped with a motion capture system (the gold standard for measuring movement). Early analysis suggests the radar may actually track moment-to-moment changes in speed more faithfully than the other sensors, which tend to produce a single average figure.\n\nThe next phase, an eight-week study with 50 older adults using all four sensors in their own homes, is due to begin in late 2026, subject to ethics approval. This will test how well the sensors perform in everyday life, where people walk in different directions, at different times, and without a set distance.\n\nThe findings so far show that several low-cost, unobtrusive sensors can measure walking speed accurately enough to be useful, and that older adults are willing to use them. The study also highlights that the way accuracy is judged matters: a stopwatch gives only an average, while radar captures the natural variation in how people walk, which may turn out to be more informative for detecting early frailty.",
-    "image_path": "images/R_8PlXQ9EyYDVQeqd.jpg",
-    "thumbnail_path": "images/R_8PlXQ9EyYDVQeqd-thumb.jpg",
-    "diagram_path": "images/R_8PlXQ9EyYDVQeqd-diagram.jpg",
-    "diagram_caption": "Infographic summarizing the 4 study stages: a) work sheet for acceptability scales of a sensor; b) notes of pros and cons of a sensor from a breakout group discussion; c) illustration of the walking assessment protocol; d) illustration of a floorplan with sensor set up; e)&f) visuals from PPIE workshop; g) visual from a corridor testing session; h)&i) visuals for gait lab set up; j) conceptual illustration of the device kit for real-world testing",
-    "ref": "007"
   },
   {
     "response_id": "R_2r2mT1UG9fdFE1D",
@@ -431,7 +396,7 @@
     "link": "https://link.springer.com/article/10.1186/s13690-025-01578-4",
     "video_link": "",
     "publisher": "BMC Archives of Public Health",
-    "journal_link": "",
+    "journal_link": "https://link.springer.com/journal/13690",
     "keywords": [
       "Co-design",
       "Public and Patient Involvement and Engagement (PPIE)",
@@ -465,7 +430,7 @@
     "link": "https://preprints.jmir.org/preprint/99262",
     "video_link": "",
     "publisher": "JMIR mHealth and uHealth",
-    "journal_link": "",
+    "journal_link": "https://mhealth.jmir.org/",
     "keywords": [
       "Co-design",
       "Feasibility study",
@@ -500,7 +465,7 @@
     "link": "https://www.sciencedirect.com/science/article/pii/S0748798326004038",
     "video_link": "",
     "publisher": "European Journal of Surgical Oncology",
-    "journal_link": "",
+    "journal_link": "https://www.sciencedirect.com/journal/european-journal-of-surgical-oncology",
     "keywords": [
       "Clinical trial",
       "Wearables",
@@ -533,7 +498,7 @@
     "link": "https://www.emerald.com/wwop/article-abstract/26/2/140/387413/Community-makers-report-on-developing-an-online?redirectedFrom=fulltext",
     "video_link": "",
     "publisher": "Emerald Publishing",
-    "journal_link": "",
+    "journal_link": "https://www.emerald.com/",
     "keywords": [
       "Service design",
       "Design research",
@@ -547,5 +512,40 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "017"
+  },
+  {
+    "response_id": "R_8e3Dv0G9uWlaNBD",
+    "recorded_date": "2026-10-21 13:17:19",
+    "title": "Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches for Frailty Detection in Older Adults",
+    "source_type": "Academic paper",
+    "theme": "Healthy Ageing",
+    "subproject": "Head to Head",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath, & Katrin Hänsel",
+    "helix_authors": [],
+    "project_date": "13 October 2026",
+    "publication_date_iso": "2026-10-13",
+    "date_range_note": "January - June 2026",
+    "corresponding_team_member": "Alex Dallman-Porter",
+    "contact_email": "a.dallman-porter@imperial.ac.uk",
+    "acknowledgements": "This study is supported by Optum. We would also like to thank the Imperial College Biodynamics Lab for allowing us the use of their equipment and for their generous help in carrying the testing and processing the data.",
+    "link": "",
+    "video_link": "https://vimeo.com/share/cfee8e98-1b98-4a2a-8345-ccc69a669c01?share=copy&fl=sv&fe=ci",
+    "publisher": "ACM UbiComp",
+    "journal_link": "https://www.ubicomp.org/ubicomp-iswc-2026/",
+    "keywords": [
+      "Healthy ageing",
+      "Frailty prevention",
+      "Wearables",
+      "Passive sensors",
+      "Care in the community"
+    ],
+    "short_description": "Researchers compared four types of sensor (radar, motion sensors, a back-worn accelerometer and a smartwatch) to find out which could most accurately and acceptably measure walking speed at home, as a way to spot early signs of frailty in older adults.",
+    "lay_summary": "Walking speed is sometimes called \"the sixth vital sign\" because it is closely linked to health in later life. A slowing gait can be an early sign of frailty, a state of reduced physical reserve that makes people more vulnerable to falls, illness and loss of independence. Spotting frailty early could allow people to take action before problems become serious, but current assessments happen mainly in clinics and often only after someone is already quite frail. Continuous monitoring at home might catch changes sooner, yet until now there has been no direct comparison of the different sensors that could do this job.\n\nThis study tested four sensors head to head: a small radar unit, a pair of passive infrared motion detectors (the kind used in home security systems), an accelerometer worn on the lower back, and a consumer smartwatch worn on the wrist. The work began with a workshop involving 14 older adults, who handled each device and gave their views on comfort, ease of setup and usefulness. The smartwatch was the clear favourite; participants valued its familiarity and extra features. A common concern across all sensors was whether they would capture enough data to be meaningful.\n\nThe sensors were then tested in two controlled settings. First, 14 older adults walked up and down an office corridor while all four sensors recorded at once, with a stopwatch providing the reference measurement. All sensors except the radar mounted sideways achieved acceptable accuracy, with errors below the 0.2 metres per second threshold considered clinically important. Second, 23 older adults repeated the exercise in a specialist gait laboratory equipped with a motion capture system (the gold standard for measuring movement). Early analysis suggests the radar may actually track moment-to-moment changes in speed more faithfully than the other sensors, which tend to produce a single average figure.\n\nThe next phase, an eight-week study with 50 older adults using all four sensors in their own homes, is due to begin in late 2026, subject to ethics approval. This will test how well the sensors perform in everyday life, where people walk in different directions, at different times, and without a set distance.\n\nThe findings so far show that several low-cost, unobtrusive sensors can measure walking speed accurately enough to be useful, and that older adults are willing to use them. The study also highlights that the way accuracy is judged matters: a stopwatch gives only an average, while radar captures the natural variation in how people walk, which may turn out to be more informative for detecting early frailty.",
+    "image_path": "images/R_8e3Dv0G9uWlaNBD.jpg",
+    "thumbnail_path": "images/R_8e3Dv0G9uWlaNBD-thumb.jpg",
+    "diagram_path": "images/R_8e3Dv0G9uWlaNBD-diagram.jpg",
+    "diagram_caption": "Infographic summarizing the 4 study stages: a) work sheet for acceptability scales of a sensor; b) notes of pros and cons of a sensor from a breakout group discussion; c) illustration of the walking assessment protocol; d) illustration of a floorplan with sensor set up; e)&f) visuals from PPIE workshop; g) visual from a corridor testing session; h)&i) visuals for gait lab set up; j) conceptual illustration of the device kit for real-world testing",
+    "ref": "007"
   }
 ]
