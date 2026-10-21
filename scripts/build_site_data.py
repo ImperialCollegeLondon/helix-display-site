@@ -47,7 +47,6 @@ FIELD_LABEL_PATTERNS = {
     "link": "insert a link to the full paper",
     "video_link": "if there is a video",
     "publisher": "who is publishing this piece of work",
-    "journal_link": "link to journal",
     "diagram_caption": "if you uploaded a diagram",
     # The corresponding team member's name and email are handled separately in
     # resolve_columns — they are two rows of one question and share its wording.
@@ -271,6 +270,16 @@ def resolve_columns(header_row, label_row):
                 columns["diagram_name"] = field
             elif field.endswith("_Type"):
                 columns["diagram_type"] = field
+            continue
+
+        # The link to where the work was published. This question has been
+        # called "Link to journal" and "Link to publisher", and not every
+        # output is in a journal, so it is matched on the opening "link to"
+        # rather than on the noun that follows. The question asking for the
+        # paper itself starts "If available, please insert a link to…", so a
+        # startswith check can't confuse the two.
+        if norm.startswith("link to"):
+            columns.setdefault("journal_link", field)
             continue
 
         # Name and email are two rows of a single question, so both columns
