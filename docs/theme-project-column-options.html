@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Combining the Theme and Project columns</title>
+<style>
+  :root {
+    --helix-navy: #2b3a63;
+    --helix-teal: #52bbb5;
+    --helix-pink: #d0006f;
+    --helix-gray: #bbbcbc;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f5;
+    --surface-grey: #ececec;
+    --row-divider: #e6e6e6;
+    --border: #dddddd;
+    --text-primary: var(--helix-navy);
+    --text-secondary: #555555;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px 18px 60px;
+    background: #fafafa;
+    color: var(--text-primary);
+    font-family: "Circular", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .page-note, .option, .verdict { max-width: 1100px; margin-left: auto; margin-right: auto; }
+
+  .page-note {
+    margin-bottom: 30px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--helix-teal);
+    background: #fff;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .page-note strong { color: var(--helix-navy); }
+
+  .option { margin-bottom: 42px; }
+
+  .option__label {
+    display: inline-block;
+    margin-bottom: 4px;
+    color: var(--helix-pink);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .option h2 { margin: 0 0 4px; font-size: 1.12rem; line-height: 1.3; }
+
+  .option__meta {
+    margin: 0 0 14px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .table-card { background: var(--surface); border: 1px solid var(--border); overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  thead { background: var(--surface-grey); }
+
+  th, td { padding: 12px 10px; text-align: left; vertical-align: top; }
+
+  th {
+    border-bottom: 1px solid var(--border);
+    color: var(--helix-navy);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  td { border-bottom: 1px solid var(--row-divider); font-size: 0.92rem; line-height: 1.45; }
+  tbody tr:last-child td { border-bottom: 0; }
+
+  .cell-thumb { padding-right: 0; }
+  .thumb { display: block; width: 100%; max-width: 64px; aspect-ratio: 1/1; background: var(--surface-alt); }
+
+  .cell-title { display: block; }
+  .cell-authors {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    margin-top: 4px; color: var(--text-secondary); font-size: 0.79rem; line-height: 1.4;
+  }
+
+  .pub-name { display: block; }
+  .pub-type { display: block; margin-top: 3px; color: var(--text-secondary); font-size: 0.82rem; }
+  .cell-date { white-space: nowrap; }
+
+  a.link {
+    color: var(--helix-pink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .sep { color: var(--helix-gray); }
+  .muted { color: var(--text-secondary); }
+
+  /* --- A: stacked, theme leading --- */
+  .stack-theme { display: block; }
+  .stack-project { display: block; margin-top: 3px; font-size: 0.82rem; }
+
+  /* --- C: breadcrumb --- */
+  .crumb { color: var(--helix-gray); padding: 0 3px; }
+
+  /* --- D: chips --- */
+  .chip {
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .chip--theme { background: rgba(82, 187, 181, 0.18); color: var(--helix-navy); }
+  .chip--project { background: rgba(43, 58, 99, 0.09); color: var(--helix-navy); }
+
+  .verdict { padding: 18px 20px; background: #fff; border: 1px solid var(--border); }
+  .verdict h2 { margin: 0 0 10px; font-size: 1.02rem; }
+  .verdict p { margin: 0 0 10px; font-size: 0.87rem; line-height: 1.6; color: var(--text-secondary); }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict b { color: var(--helix-navy); }
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  <strong>Four ways to combine Theme and Project into one column.</strong>
+  Real entries from the live data, chosen to cover the awkward cases:
+  a long theme name ("Imperial College NHS Trust Improvement Work"), a theme with
+  no project, and a "One-off Project" entry which has neither.
+  Both parts stay clickable filters in every option. Publisher is shown for context.
+  The Circular typeface isn't loaded in this preview, so spacing differs slightly
+  from the live site.
+</div>
+
+<!-- =============== A =============== -->
+<section class="option">
+  <span class="option__label">Option A</span>
+  <h2>Stacked — theme leading, project beneath</h2>
+  <p class="option__meta">Matches the Publisher column exactly, and the authors-under-title pattern. Theme is the broader grouping, so it leads.</p>
+  <div class="table-card">
+    <table>
+      <colgroup><col style="width:7%"><col style="width:36%"><col style="width:20%"><col style="width:22%"><col style="width:11%"></colgroup>
+      <thead><tr><th></th><th>Title</th><th>Publisher</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Monitoring night-time safety in households with dementia using ambient sensing technologies</span><span class="cell-authors">Alina-Irina Serban, Sophie Horrocks, Chloe Walsh, Matthew Harrison…</span></td>
+          <td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="link stack-theme" href="#">Dementia</a><a class="link stack-project" href="#">Minder</a></td>
+          <td class="cell-date">25 Dec 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Patient experiences of waiting for orthopaedic care and priorities for 'waiting well'</span><span class="cell-authors">Jodie Chan, Sharon Poon, Anna Lawrence-Jones, Fiona O'Driscoll…</span></td>
+          <td><span class="pub-name">Archives of Public Health</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="link stack-theme" href="#">Imperial College NHS Trust Improvement Work</a><a class="link stack-project" href="#">Waiting Well</a></td>
+          <td class="cell-date">7 Apr 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span></td>
+          <td><a class="link stack-theme" href="#">Dementia</a></td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing healthcare for people and planet</span><span class="cell-authors">Sophie Horrocks &amp; Tori Simpson</span></td>
+          <td><span class="pub-name">IGHI Blog</span><span class="pub-type">Blog post</span></td>
+          <td class="muted">-</td>
+          <td class="cell-date">5 Sep 25</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =============== B =============== -->
+<section class="option">
+  <span class="option__label">Option B</span>
+  <h2>Inline, separated by a dot</h2>
+  <p class="option__meta">Both on one line, same size, same weight. Uses the dot separator already on the detail page.</p>
+  <div class="table-card">
+    <table>
+      <colgroup><col style="width:7%"><col style="width:36%"><col style="width:20%"><col style="width:22%"><col style="width:11%"></colgroup>
+      <thead><tr><th></th><th>Title</th><th>Publisher</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Monitoring night-time safety in households with dementia using ambient sensing technologies</span><span class="cell-authors">Alina-Irina Serban, Sophie Horrocks, Chloe Walsh, Matthew Harrison…</span></td>
+          <td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="link" href="#">Dementia</a> <span class="sep">·</span> <a class="link" href="#">Minder</a></td>
+          <td class="cell-date">25 Dec 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Patient experiences of waiting for orthopaedic care and priorities for 'waiting well'</span><span class="cell-authors">Jodie Chan, Sharon Poon, Anna Lawrence-Jones, Fiona O'Driscoll…</span></td>
+          <td><span class="pub-name">Archives of Public Health</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="link" href="#">Imperial College NHS Trust Improvement Work</a> <span class="sep">·</span> <a class="link" href="#">Waiting Well</a></td>
+          <td class="cell-date">7 Apr 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span></td>
+          <td><a class="link" href="#">Dementia</a></td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing healthcare for people and planet</span><span class="cell-authors">Sophie Horrocks &amp; Tori Simpson</span></td>
+          <td><span class="pub-name">IGHI Blog</span><span class="pub-type">Blog post</span></td>
+          <td class="muted">-</td>
+          <td class="cell-date">5 Sep 25</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =============== C =============== -->
+<section class="option">
+  <span class="option__label">Option C</span>
+  <h2>Breadcrumb — theme › project</h2>
+  <p class="option__meta">Shows that a project sits <em>inside</em> a theme, which is how they actually relate. Project in the quieter grey.</p>
+  <div class="table-card">
+    <table>
+      <colgroup><col style="width:7%"><col style="width:36%"><col style="width:20%"><col style="width:22%"><col style="width:11%"></colgroup>
+      <thead><tr><th></th><th>Title</th><th>Publisher</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Monitoring night-time safety in households with dementia using ambient sensing technologies</span><span class="cell-authors">Alina-Irina Serban, Sophie Horrocks, Chloe Walsh, Matthew Harrison…</span></td>
+          <td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="link" href="#">Dementia</a><span class="crumb">›</span><a class="link" href="#">Minder</a></td>
+          <td class="cell-date">25 Dec 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Patient experiences of waiting for orthopaedic care and priorities for 'waiting well'</span><span class="cell-authors">Jodie Chan, Sharon Poon, Anna Lawrence-Jones, Fiona O'Driscoll…</span></td>
+          <td><span class="pub-name">Archives of Public Health</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="link" href="#">Imperial College NHS Trust Improvement Work</a><span class="crumb">›</span><a class="link" href="#">Waiting Well</a></td>
+          <td class="cell-date">7 Apr 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span></td>
+          <td><a class="link" href="#">Dementia</a></td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing healthcare for people and planet</span><span class="cell-authors">Sophie Horrocks &amp; Tori Simpson</span></td>
+          <td><span class="pub-name">IGHI Blog</span><span class="pub-type">Blog post</span></td>
+          <td class="muted">-</td>
+          <td class="cell-date">5 Sep 25</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =============== D =============== -->
+<section class="option">
+  <span class="option__label">Option D</span>
+  <h2>Two chips</h2>
+  <p class="option__meta">Theme in teal, project in navy tint. Reads as tags rather than links — the keyword chips on detail pages already look like this.</p>
+  <div class="table-card">
+    <table>
+      <colgroup><col style="width:7%"><col style="width:36%"><col style="width:20%"><col style="width:22%"><col style="width:11%"></colgroup>
+      <thead><tr><th></th><th>Title</th><th>Publisher</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Monitoring night-time safety in households with dementia using ambient sensing technologies</span><span class="cell-authors">Alina-Irina Serban, Sophie Horrocks, Chloe Walsh, Matthew Harrison…</span></td>
+          <td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="chip chip--theme" href="#">Dementia</a><a class="chip chip--project" href="#">Minder</a></td>
+          <td class="cell-date">25 Dec 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Patient experiences of waiting for orthopaedic care and priorities for 'waiting well'</span><span class="cell-authors">Jodie Chan, Sharon Poon, Anna Lawrence-Jones, Fiona O'Driscoll…</span></td>
+          <td><span class="pub-name">Archives of Public Health</span><span class="pub-type">Academic paper</span></td>
+          <td><a class="chip chip--theme" href="#">Imperial College NHS Trust Improvement Work</a><a class="chip chip--project" href="#">Waiting Well</a></td>
+          <td class="cell-date">7 Apr 25</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span><span class="cell-authors">Helix Centre</span></td>
+          <td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span></td>
+          <td><a class="chip chip--theme" href="#">Dementia</a></td>
+          <td class="cell-date">7 Jan 26</td>
+        </tr>
+        <tr>
+          <td class="cell-thumb"><span class="thumb"></span></td>
+          <td><span class="cell-title">Designing healthcare for people and planet</span><span class="cell-authors">Sophie Horrocks &amp; Tori Simpson</span></td>
+          <td><span class="pub-name">IGHI Blog</span><span class="pub-type">Blog post</span></td>
+          <td class="muted">-</td>
+          <td class="cell-date">5 Sep 25</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="verdict">
+  <h2>Things to weigh up</h2>
+  <p><b>You get a column back.</b> Six columns become five, and the width goes to the Title and Publisher, both of which are currently cramped. That's the main prize.</p>
+  <p><b>"Imperial College NHS Trust Improvement Work" is the test case.</b> It's 43 characters and will wrap in any of these. A and C handle it best because the project sits on its own line underneath anyway; B and D push it around most.</p>
+  <p><b>Four of your seventeen entries have no project</b>, and three have no theme either. Every option degrades cleanly — one line instead of two, or a dash — but A and C look most deliberate when only the theme is there.</p>
+  <p><b>Chips (D) may be a step too far.</b> Keyword chips on detail pages already use that exact treatment, so using it here for a different kind of thing risks reading as "these are keywords". It's also the heaviest visually, in a table you've previously wanted lighter.</p>
+  <p><b>C says something the others don't:</b> that a project lives inside a theme. If that hierarchy is real and useful to readers, it's free information. If people think of them as two independent labels, the chevron overstates it.</p>
+  <p><b>If you want a recommendation:</b> A. It reuses the pattern you've already got twice on this page, handles the long theme name and the missing-project case most gracefully, and keeps both filters obvious without adding visual weight.</p>
+</div>
+
+</body>
+</html>
