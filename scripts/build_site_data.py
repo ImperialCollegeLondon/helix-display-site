@@ -53,6 +53,13 @@ FIELD_LABEL_PATTERNS = {
     # resolve_columns — they are two rows of one question and share its wording.
 }
 
+# Newer questions, with no QID fallback. Listed so the run log can say when
+# one stops being found, instead of the field quietly going blank.
+OPTIONAL_FIELDS = [
+    "publisher", "journal_link", "video_link",
+    "diagram_id", "diagram_caption", "date_range_note", "subproject",
+]
+
 # Multi-select questions: every "<prefix> - <choice>" column becomes a list item.
 MULTI_SELECT_PATTERNS = {
     "keywords": "keywords",
@@ -316,6 +323,15 @@ def resolve_columns(header_row, label_row):
     log(f"Resolved columns: {columns}")
     if missing:
         log(f"WARNING: could not resolve columns for: {missing}")
+
+    # Fields added after the survey went live have no QID fallback, so a
+    # wording change would leave them silently blank rather than failing —
+    # which has happened twice before. Name them explicitly in the log.
+    optional_missing = [key for key in OPTIONAL_FIELDS if key not in columns]
+    if optional_missing:
+        log(f"WARNING: optional fields not found in the survey: {optional_missing} "
+            f"(they will be blank — check the question wording against "
+            f"FIELD_LABEL_PATTERNS if you expected them)")
 
     for key, mapping in multi_maps.items():
         log(f"Detected {len(mapping)} {key} options: {list(mapping.values())}")

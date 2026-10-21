@@ -282,6 +282,16 @@ function renderEntry(entry) {
       });
     }
 
+    // Optional, and checked the same way as the paper link: anything that
+    // isn't a plain http(s) address is ignored rather than made clickable.
+    const videoHref = publicUrl(entry.video_link);
+
+    if (videoHref) {
+      addDetailRow(details, "Video", dd => {
+        renderAnchor(dd, videoHref, entry.video_link, { external: true });
+      });
+    }
+
     if (entry.corresponding_team_member) {
       addDetailRow(details, "Corresponding team member", dd => {
         dd.textContent = entry.corresponding_team_member;
@@ -296,16 +306,6 @@ function renderEntry(entry) {
 
     // The publisher isn't listed here — it has its own line under the title,
     // where readers look for it, rather than being buried at the bottom.
-
-    // Optional, and checked the same way as the paper link: anything that
-    // isn't a plain http(s) address is ignored rather than made clickable.
-    const videoHref = publicUrl(entry.video_link);
-
-    if (videoHref) {
-      addDetailRow(details, "Video", dd => {
-        renderAnchor(dd, videoHref, entry.video_link, { external: true });
-      });
-    }
 
     if (entry.acknowledgements) {
       addDetailRow(details, "Acknowledgements", dd => {
