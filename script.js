@@ -123,6 +123,35 @@ function publisherCell(item) {
   return name + kind;
 }
 
+function filterPill(type, value) {
+  return `<button type="button" class="filter-pill filter-pill--${type}" data-filter="${type}" data-value="${escapeHtml(value)}">${escapeHtml(value)}</button>`;
+}
+
+// Theme and project in one column, read as a breadcrumb: a project sits inside
+// a theme, so "Dementia › Minder". Both halves stay separate filters. Either
+// can be missing — a lot of work has no subproject, and one-off work has no
+// theme — in which case only the part that exists is shown, with no stray
+// chevron, and a dash if there's neither.
+function themeProjectCell(item) {
+  const parts = [];
+
+  if (isRealTheme(item.theme)) {
+    parts.push(filterPill("theme", item.theme));
+  }
+
+  if (isRealProject(item.subproject)) {
+    parts.push(filterPill("project", item.subproject));
+  }
+
+  if (!parts.length) {
+    return "-";
+  }
+
+  // Decoration, not content: a screen reader should hear the two filters, not
+  // a chevron between them.
+  return parts.join('<span class="crumb" aria-hidden="true">\u203a</span>');
+}
+
 // Likewise, work that doesn't belong to a subproject is marked "N/A", which
 // is bookkeeping rather than a project name: the table shows "-" and no filter.
 function isRealProject(project) {
@@ -168,7 +197,7 @@ function renderTable(allRows) {
   if (!allRows.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="6" class="loading-cell">No submissions found.</td>
+        <td colspan="5" class="loading-cell">No submissions found.</td>
       </tr>
     `;
     renderPager(0, 0);
@@ -196,12 +225,7 @@ function renderTable(allRows) {
           : ""}
       </td>
       <td data-label="Publisher">${publisherCell(item)}</td>
-      <td data-label="Theme">${isRealTheme(item.theme)
-        ? `<button type="button" class="filter-pill filter-pill--theme" data-filter="theme" data-value="${escapeHtml(item.theme)}">${escapeHtml(item.theme)}</button>`
-        : "-"}</td>
-      <td data-label="Project">${isRealProject(item.subproject)
-        ? `<button type="button" class="filter-pill filter-pill--project" data-filter="project" data-value="${escapeHtml(item.subproject)}">${escapeHtml(item.subproject)}</button>`
-        : "-"}</td>
+      <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
       <td data-label="Published">${dateCell(item)}</td>
     </tr>
   `).join("");
@@ -482,7 +506,7 @@ async function loadSubmissions() {
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="6" class="loading-cell">Could not load submissions.</td>
+          <td colspan="5" class="loading-cell">Could not load submissions.</td>
         </tr>
       `;
     }
