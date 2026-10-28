@@ -100,7 +100,7 @@ Only responses marked finished, with a title or summary, are shown.
 
 **Preprints are hidden.** A submission whose type is "Preprint" is left out of the site entirely — it isn't listed, isn't searchable and has no detail page. The response stays in Qualtrics untouched, so when the work is published, changing the type brings it onto the site at the next run with nothing to re-enter. The run log names each one it hides.
 
-The check is in `HIDDEN_SOURCE_TYPES` in `scripts/build_site_data.py`; add a type there to hide it too. Hidden entries are filtered before images are downloaded and before short references are assigned, so a preprint doesn't use up a number or leave an orphaned image — it gets its number when it is published.
+The check is in `HIDDEN_SOURCE_TYPES` in `scripts/build_site_data.py`; add a type there to hide it too. No images are downloaded for a hidden entry, but it **does keep its short reference** while it is off the site, and comes back with the same number when it is published — see below.
 
 **Editing the survey is safe.** Because the export uses `useLabels`, adding/renaming/reordering options for themes, projects, authors or keywords flows through automatically. There is nothing to change in the code.
 
@@ -120,9 +120,11 @@ Dates submitted before the picker existed were free text, so the script also und
 
 Every submission gets a permanent number (`001`, `002`, …) stored in `data/refs.json`. The file is only ever added to, so numbers are never reused or renumbered and `#001` keeps pointing at the same paper. It is committed by the workflow — do not edit it by hand.
 
-**What the number is tied to.** The register is keyed on the link to the paper, falling back to the title where no link was given. It is *not* keyed on the Qualtrics response ID, because editing a response in Qualtrics doesn't update it in place: Qualtrics creates a new response with a new ID and retires the original. Keyed on the response ID, every correction produced a new number and broke every link to the entry.
+**What the number is tied to.** The register is keyed on the work, not the response: on the **link** to it *and* on its **title**. Both are recorded, and a match on either one keeps the number. It is *not* keyed on the Qualtrics response ID, because editing a response in Qualtrics doesn't update it in place: Qualtrics creates a new response with a new ID and retires the original. Keyed on the response ID, every correction produced a new number and broke every link to the entry.
 
-So: editing the summary, date, authors, keywords, contact or image all keep the number. Changing the link — or, for an entry with no link, the title — is read as a different piece of work and starts a new entry with a new number. Links are compared ignoring `http`/`https`, a leading `www.`, a trailing slash and anything after a `#`.
+So: editing the summary, date, authors, keywords, contact or image all keep the number. Changing the link keeps it too, as long as the title is unchanged — which is what carries a **preprint's number across to the published version**, when its link moves from the preprint host to the journal. Correcting a title keeps the number as long as the link is unchanged. Only changing both at once starts a new entry.
+
+Links are compared ignoring `http`/`https`, a leading `www.`, a trailing slash and anything after a `#`. An existing key is never repointed, so a number already in circulation cannot move.
 
 **Starting the numbering over.** Only safe before anything is published and any `#001` links are circulating. Replace the contents of `data/refs.json` with `{}` and commit; the next run numbers the current entries from `001` in order of submission. After launch this would repoint every shared link and must not be done.
 

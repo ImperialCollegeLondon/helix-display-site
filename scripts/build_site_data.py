@@ -416,13 +416,9 @@ def get_real_rows(rows, columns):
         if not title and not lay_summary:
             continue
 
-        # Checked here rather than after the row is converted, so no image is
-        # downloaded for an entry that won't be shown and no short reference
-        # is used up. It gets a reference when it is published for real.
         if is_hidden_type(source_type):
             hidden += 1
             log(f"Hiding {response_id} — type is {source_type!r}")
-            continue
 
         real_rows.append(row)
 
@@ -593,9 +589,13 @@ def convert_row(row, columns, multi_maps):
     original_filename = col("image_name")
     content_type = col("image_type")
 
+    # Hidden entries still go through the build so they keep their short
+    # reference, but there is no point downloading images that nothing shows.
+    hidden = is_hidden_type(source_type)
+
     image_path = ""
     thumbnail_path = ""
-    if file_id:
+    if file_id and not hidden:
         log(f"Downloading image for {response_id}")
         image_path = download_image(response_id, file_id, original_filename, content_type)
         if image_path:
@@ -604,7 +604,7 @@ def convert_row(row, columns, multi_maps):
     # The optional diagram, shown under the summary with its caption.
     diagram_id = col("diagram_id")
     diagram_path = ""
-    if diagram_id:
+    if diagram_id and not hidden:
         log(f"Downloading diagram for {response_id}")
         diagram_path = download_image(
             response_id, diagram_id, col("diagram_name"), col("diagram_type"),
@@ -612,6 +612,7 @@ def convert_row(row, columns, multi_maps):
         )
 
     return {
+        "hidden": hidden,
         "response_id": response_id,
         "recorded_date": recorded_date,
         "title": title or "Untitled",
@@ -679,7 +680,7 @@ def check_not_wiping_everything(new_count):
             f"(deleted in Qualtrics or no longer complete).")
 
 
-def identity_key(submission):
+def identity_keys(submission):
     """A stable identity for a submission, independent of its response ID.
 
     Editing a response in Qualtrics does not update it in place: Qualtrics
@@ -687,11 +688,14 @@ def identity_key(submission):
     register on the response ID therefore meant that correcting a typo gave the
     entry a new number and broke every link to it.
 
-    The paper doesn't change when the summary is corrected, so the register is
-    keyed on the link to the paper, falling back to the title where no link was
-    given. Editing a summary, a date, an author list or an image all keep the
-    number. Changing the link (or, with no link, the title) is the one edit
-    that starts a new entry.
+    So the register is keyed on the work rather than the response: on the link
+    to it, and on its title. Both keys are recorded, and a match on *either*
+    keeps the number. That matters when a preprint is later published — its
+    link changes from the preprint host to the journal, and the title carries
+    the number across. It works the other way too: a corrected title keeps the
+    number as long as the link is unchanged.
+
+    Only changing both at once starts a new entry.
     """
     link = (submission.get("link") or "").strip().lower()
     if link:
@@ -703,16 +707,23 @@ def identity_key(submission):
                 link = link[len(prefix):]
         if link.startswith("www."):
             link = link[4:]
-        if link:
-            return f"link:{link}"
 
-    return f"title:{' '.join((submission.get('title') or '').lower().split())}"
+    keys = []
+
+    if link:
+        keys.append(f"link:{link}")
+
+    title = " ".join((submission.get("title") or "").lower().split())
+    if title:
+        keys.append(f"title:{title}")
+
+    return keys
 
 
 def assign_refs(submissions):
     """Give every submission a permanent short reference (001, 002, ...).
 
-    The register in data/refs.json maps an identity key (see identity_key) to a
+    The register in data/refs.json maps identity keys (see identity_keys) to a
     reference and is only ever appended to, so a paper keeps its number forever
     and numbers are never reused, even if a response is deleted or re-edited.
     """
@@ -725,11 +736,22 @@ def assign_refs(submissions):
     next_number = max((int(value) for value in refs.values()), default=0) + 1
 
     for submission in sorted(submissions, key=lambda s: s.get("recorded_date", "")):
-        key = identity_key(submission)
-        if key not in refs:
-            refs[key] = f"{next_number:03d}"
+        keys = identity_keys(submission)
+
+        # The link is the stronger identifier, so it is consulted first; the
+        # title is the fallback that survives a change of link.
+        ref = next((refs[key] for key in keys if key in refs), None)
+
+        if ref is None:
+            ref = f"{next_number:03d}"
             next_number += 1
-        submission["ref"] = refs[key]
+
+        # Record every key against the number, so either one can find it later.
+        # An existing key is never repointed — that would move someone's link.
+        for key in keys:
+            refs.setdefault(key, ref)
+
+        submission["ref"] = ref
 
     with open(REFS_JSON, "w", encoding="utf-8") as f:
         json.dump(refs, f, indent=2, sort_keys=True)
@@ -768,13 +790,26 @@ def main():
             response_id = row.get("ResponseId", "UNKNOWN")
             log(f"Error processing {response_id}: {repr(e)}")
 
-    check_not_wiping_everything(len(submissions))
+    # References are assigned before anything is hidden, so a preprint holds on
+    # to its number while it is off the site and comes back with the same one.
     assign_refs(submissions)
 
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(submissions, f, indent=2, ensure_ascii=False)
+    hidden = [s for s in submissions if s.get("hidden")]
+    visible = [s for s in submissions if not s.get("hidden")]
 
-    log(f"Wrote {len(submissions)} submissions to {OUTPUT_JSON}")
+    for submission in visible:
+        submission.pop("hidden", None)
+
+    if hidden:
+        log(f"{len(hidden)} submission(s) hidden from the site, holding "
+            f"reference(s): {', '.join(sorted(s.get('ref', '?') for s in hidden))}")
+
+    check_not_wiping_everything(len(visible))
+
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+        json.dump(visible, f, indent=2, ensure_ascii=False)
+
+    log(f"Wrote {len(visible)} submissions to {OUTPUT_JSON}")
 
 
 if __name__ == "__main__":
