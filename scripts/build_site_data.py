@@ -382,14 +382,30 @@ def parse_csv_export(content):
     return rows, columns, multi_maps
 
 
+# Kinds of output that are accepted through the form but not published on the
+# site. Preprints are hidden because the work hasn't been peer reviewed yet;
+# the submission is kept in Qualtrics, so changing the type once it is
+# published brings the entry onto the site at the next run with nothing to
+# re-enter. Matched on the normalised type text, so "Preprint" and
+# "Pre-print" both count.
+HIDDEN_SOURCE_TYPES = {"preprint"}
+
+
+def is_hidden_type(value):
+    normalised = " ".join((value or "").strip().lower().replace("-", "").split())
+    return normalised in HIDDEN_SOURCE_TYPES
+
+
 def get_real_rows(rows, columns):
     real_rows = []
+    hidden = 0
 
     for row in rows:
         response_id = row.get("ResponseId", "").strip()
         finished = row.get("Finished", "").strip().lower()
         title = row.get(columns.get("title", ""), "").strip()
         lay_summary = row.get(columns.get("lay_summary", ""), "").strip()
+        source_type = row.get(columns.get("source_type", ""), "").strip()
 
         if not response_id.startswith("R_"):
             continue
@@ -400,7 +416,19 @@ def get_real_rows(rows, columns):
         if not title and not lay_summary:
             continue
 
+        # Checked here rather than after the row is converted, so no image is
+        # downloaded for an entry that won't be shown and no short reference
+        # is used up. It gets a reference when it is published for real.
+        if is_hidden_type(source_type):
+            hidden += 1
+            log(f"Hiding {response_id} — type is {source_type!r}")
+            continue
+
         real_rows.append(row)
+
+    if hidden:
+        log(f"{hidden} submission(s) hidden from the site by type "
+            f"({', '.join(sorted(HIDDEN_SOURCE_TYPES))})")
 
     return real_rows
 def extract_multi_select(row, choice_map):
