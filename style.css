@@ -436,6 +436,11 @@ body.table-embed,
   line-height: 1.4;
 }
 
+/* The dot between the kind of output and the date, on that second line. */
+.pub-type .sep {
+  color: var(--helix-gray);
+}
+
 /* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. The
    header is kept on one line too, otherwise it sets a narrower column than the
    dates below it need. */

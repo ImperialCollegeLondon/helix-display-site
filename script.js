@@ -49,16 +49,10 @@ function shortDate(item) {
   return `${Number(day)} ${SHORT_MONTHS[Number(month) - 1]} ${year.slice(2)}`;
 }
 
-// A short date is kept on one line. Free-text dates the build couldn't parse
-// are left to wrap — they can be long ("March – September 2025"), and forcing
-// those onto a single line would stretch the column and squeeze the titles.
-function dateCell(item) {
+// The date as it should read in the table, or "" if there isn't one.
+function dateText(item) {
   const text = shortDate(item);
-  const isShort = Boolean((item.publication_date_iso || "").trim());
-
-  return isShort
-    ? `<span class="cell-date">${escapeHtml(text)}</span>`
-    : escapeHtml(text);
+  return text === "-" ? "" : text;
 }
 
 // Turns a submitted value into a safe outgoing link, or "" if it isn't one.
@@ -96,22 +90,36 @@ function publicUrl(value) {
 //
 // Neither part is a link. The only link worth following from here is the work
 // itself, on its detail page; sending people to a journal homepage was noise.
-function publisherCell(item) {
+function publishedCell(item) {
   const publisher = (item.publisher || "").trim();
   const type = (item.source_type || "").trim();
+  const date = dateText(item);
 
-  if (!publisher && !type) {
+  if (!publisher && !type && !date) {
     return "-";
   }
 
   const name = publisher
     ? `<span class="pub-name">${escapeHtml(publisher)}</span>`
     : "";
-  const kind = type
-    ? `<span class="pub-type">${escapeHtml(type)}</span>`
+
+  // The kind of output and the date share the quieter second line. The date
+  // is wrapped so it can't break across two lines on its own.
+  const details = [];
+
+  if (type) {
+    details.push(escapeHtml(type));
+  }
+
+  if (date) {
+    details.push(`<span class="cell-date">${escapeHtml(date)}</span>`);
+  }
+
+  const beneath = details.length
+    ? `<span class="pub-type">${details.join('<span class="sep"> · </span>')}</span>`
     : "";
 
-  return name + kind;
+  return name + beneath;
 }
 
 function filterPill(type, value) {
@@ -188,7 +196,7 @@ function renderTable(allRows) {
   if (!allRows.length) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="loading-cell">No submissions found.</td>
+        <td colspan="4" class="loading-cell">No submissions found.</td>
       </tr>
     `;
     renderPager(0, 0);
@@ -216,8 +224,7 @@ function renderTable(allRows) {
           : ""}
       </td>
       <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
-      <td data-label="Publisher">${publisherCell(item)}</td>
-      <td data-label="Published">${dateCell(item)}</td>
+      <td data-label="Published">${publishedCell(item)}</td>
     </tr>
   `).join("");
 
@@ -482,7 +489,7 @@ async function loadSubmissions() {
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="5" class="loading-cell">Could not load submissions.</td>
+          <td colspan="4" class="loading-cell">Could not load submissions.</td>
         </tr>
       `;
     }
