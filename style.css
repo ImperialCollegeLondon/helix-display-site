@@ -1027,14 +1027,24 @@ a.filter-pill:focus {
     border-bottom: 0;
   }
 
-  /* Each row reads as a small card: title, authors, then two quiet lines —
-     theme and project, then publisher, type and date. No labels: on a phone
-     they took a third of the width to say things the values already say, and
-     pushed every value into a narrow strip that wrapped. No thumbnail either;
-     at the size it had to be, a photo read as a grey smudge. */
+  /* Each row reads as a small card: the photo beside the title, then authors,
+     then theme and project, then publisher, type and date. No column labels:
+     on a phone they took a third of the width to say things the values
+     already say, and pushed every value into a strip that wrapped.
+
+     The card is a two-column grid so the photo can sit next to the title
+     while everything below still runs the card's full width. */
+  .m3-table tr {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 12px 16px 14px;
+  }
+
   .m3-table td {
     display: block;
-    padding: 0 16px;
+    width: auto;
+    padding: 0;
     border-bottom: 0;
   }
 
@@ -1043,12 +1053,34 @@ a.filter-pill:focus {
     display: none;
   }
 
-  .m3-table tr {
-    padding: 12px 0 14px;
+  .m3-table td.cell-thumb {
+    display: flex;
+    align-items: stretch;
+    grid-column: 1;
+    grid-row: 1;
   }
 
-  .m3-table td.cell-thumb {
-    display: none;
+  .m3-table td[data-label="Title"] {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .m3-table td[data-label="Theme & project"],
+  .m3-table td[data-label="Published"] {
+    grid-column: 1 / -1;
+  }
+
+  /* The photo stretches to the height of the title beside it, so it is never
+     deeper than the title it belongs to, and stays square. Capped at 56px so
+     a long title doesn't hand it a whole block of the card. */
+  .m3-table .thumb {
+    align-self: stretch;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    max-height: 56px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
   }
 
   /* On a phone the two of them share a line again — there is no column to
