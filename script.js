@@ -224,8 +224,8 @@ function renderTable(allRows) {
           ? `<span class="cell-authors">${escapeHtml(authorsText(item))}</span>`
           : ""}
       </td>
-      <td data-label="Publisher">${publisherCell(item)}</td>
       <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
+      <td data-label="Publisher">${publisherCell(item)}</td>
       <td data-label="Published">${dateCell(item)}</td>
     </tr>
   `).join("");
