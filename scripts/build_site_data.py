@@ -55,7 +55,7 @@ FIELD_LABEL_PATTERNS = {
 # Newer questions, with no QID fallback. Listed so the run log can say when
 # one stops being found, instead of the field quietly going blank.
 OPTIONAL_FIELDS = [
-    "publisher", "journal_link", "video_link",
+    "publisher", "video_link",
     "diagram_id", "diagram_caption", "date_range_note", "subproject",
 ]
 
@@ -270,16 +270,6 @@ def resolve_columns(header_row, label_row):
                 columns["diagram_name"] = field
             elif field.endswith("_Type"):
                 columns["diagram_type"] = field
-            continue
-
-        # The link to where the work was published. This question has been
-        # called "Link to journal" and "Link to publisher", and not every
-        # output is in a journal, so it is matched on the opening "link to"
-        # rather than on the noun that follows. The question asking for the
-        # paper itself starts "If available, please insert a link to…", so a
-        # startswith check can't confuse the two.
-        if norm.startswith("link to"):
-            columns.setdefault("journal_link", field)
             continue
 
         # Name and email are two rows of a single question, so both columns
@@ -558,7 +548,6 @@ def convert_row(row, columns, multi_maps):
     link = col("link")
     video_link = col("video_link")
     publisher = col("publisher")
-    journal_link = col("journal_link")
     corresponding_team_member = col("corresponding_team_member")
     contact_email = col("contact_email")
     project_date_raw = col("project_date")
@@ -631,7 +620,6 @@ def convert_row(row, columns, multi_maps):
         "link": link,
         "video_link": video_link,
         "publisher": publisher,
-        "journal_link": journal_link,
         "keywords": keywords,
         "short_description": short_description,
         "lay_summary": lay_summary,

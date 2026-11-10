@@ -89,7 +89,6 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Keywords (select up to 5)" | Keyword chips |
 | "If available, please insert a link…" | Full paper / work |
 | "Who is publishing this piece of work?…" | Publisher column in the table, and "Published in" on the detail page |
-| "Link to publisher" / "Link to journal" (optional) | **Not displayed.** Still collected and stored, but nothing on the site links to a publisher homepage |
 | "If there is a video to accompany this work…" (optional) | "Video" link at the bottom of the detail page |
 | "Corresponding team member for publication / project" (one question, Name and Email rows) | Contact details |
 | "Please upload a photo…" | Header image |
