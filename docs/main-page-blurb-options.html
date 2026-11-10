@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Main page — intro blurb options</title>
+<style>
+  :root {
+    --helix-navy: #2b3a63;
+    --helix-teal: #52bbb5;
+    --helix-pink: #d0006f;
+    --helix-gray: #bbbcbc;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f5;
+    --surface-grey: #ececec;
+    --surface-soft: #fafafa;
+    --row-divider: #e6e6e6;
+    --border: #dddddd;
+    --border-strong: #b9b9b9;
+    --text-primary: var(--helix-navy);
+    --text-secondary: #555555;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px 16px 60px;
+    background: #f2f2f4;
+    color: var(--text-primary);
+    font-family: "Circular", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .page-note, .block, .verdict { max-width: 900px; margin-left: auto; margin-right: auto; }
+
+  .page-note {
+    margin-bottom: 26px;
+    padding: 13px 15px;
+    border-left: 4px solid var(--helix-teal);
+    background: #fff;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .page-note strong { color: var(--helix-navy); }
+
+  .block { margin-bottom: 32px; }
+
+  .block__label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--helix-pink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .block h2.block__title { margin: 0 0 4px; font-size: 1.05rem; line-height: 1.3; }
+
+  .block__meta {
+    margin: 0 0 12px;
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  .frame { background: var(--surface); border: 1px solid var(--border); }
+
+  /* ---------- the intro blurb, in its variants ---------- */
+  .intro { padding: 20px 20px 4px; }
+
+  .intro p { margin: 0; color: var(--text-secondary); font-size: 0.97rem; line-height: 1.65; }
+  .intro p + p { margin-top: 9px; }
+  .intro a { color: var(--helix-pink); font-weight: 700; }
+  .intro b { color: var(--helix-navy); }
+
+  .intro--boxed {
+    margin: 20px 20px 0;
+    padding: 15px 17px;
+    border-left: 4px solid var(--helix-teal);
+    background: var(--surface-soft);
+  }
+
+  .intro__title { margin: 0 0 6px; color: var(--helix-navy); font-size: 1.15rem; font-weight: 700; }
+
+  /* ---------- the table header, for context ---------- */
+  .table-card__header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .m3-input {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 13px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-primary);
+    font: inherit;
+  }
+
+  .table-actions { flex: 0 1 380px; min-width: 220px; margin-left: auto; }
+
+  .hint { margin: 6px 0 0; color: var(--text-secondary); font-size: 0.82rem; line-height: 1.5; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: var(--surface-grey); }
+  th, td { padding: 13px 14px; text-align: left; vertical-align: top; font-size: 0.9rem; }
+  th { color: var(--helix-navy); font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid var(--border); }
+  td { border-bottom: 1px solid var(--row-divider); line-height: 1.45; }
+  tbody tr:last-child td { border-bottom: 0; }
+  .thumb { display: block; width: 58px; height: 58px; background: var(--surface-alt); }
+  .cell-title { display: block; font-weight: 400; }
+  .cell-authors { display: block; margin-top: 4px; color: var(--text-secondary); font-size: 0.79rem; }
+  .pill { color: var(--helix-pink); text-decoration: underline; text-underline-offset: 0.16em; }
+  .crumb { color: var(--helix-gray); padding-left: 4px; }
+  .pub-name { display: block; }
+  .pub-type { display: block; margin-top: 3px; color: var(--text-secondary); font-size: 0.84rem; }
+
+  .verdict { padding: 16px 18px; background: #fff; border: 1px solid var(--border); }
+  .verdict h2 { margin: 0 0 9px; font-size: 1rem; }
+  .verdict p { margin: 0 0 9px; font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict b { color: var(--helix-navy); }
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  <strong>Four ways to introduce the page.</strong> Each sits above the search box
+  and the table, shown here with a couple of real rows for context. The wording
+  is a first draft in every case — worth rewriting in your own voice, but the
+  shape and the length are the things to judge.
+  Remember this is embedded under the "Publications" heading on helixcentre.com,
+  so the blurb doesn't need to say what the page is called.
+</div>
+
+<!-- ============ A ============ -->
+<section class="block">
+  <span class="block__label">Option A</span>
+  <h2 class="block__title">One sentence</h2>
+  <p class="block__meta">The lightest touch. Says what the summaries are and that they can be filtered, nothing more.</p>
+  <div class="frame">
+    <div class="intro">
+      <p>Plain-English summaries of research and projects from the Helix Centre. Use the search box, or select a theme, project or type of publication to filter the list.</p>
+    </div>
+    <div class="table-card__header">
+      <div class="table-actions"><input class="m3-input" type="search" placeholder="Search summaries" /></div>
+    </div>
+    <table>
+      <thead><tr><th></th><th>Title</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi…</span></td>
+          <td><a class="pill" href="#">Rehabilitation</a><span class="crumb">›</span><br><a class="pill" href="#">OnTrack</a></td>
+          <td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type"><a class="pill" href="#">Academic paper</a></span><span class="pub-type">27 Mar 26</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ B ============ -->
+<section class="block">
+  <span class="block__label">Option B</span>
+  <h2 class="block__title">Two sentences — what it is, then how to use it</h2>
+  <p class="block__meta">Separates the purpose from the instructions, so neither gets lost in the other.</p>
+  <div class="frame">
+    <div class="intro">
+      <p>We write plain-English summaries of our research and projects, so that anyone can read about the work without needing a subscription or a background in the field.</p>
+      <p>Search by title, author or keyword, or click any <b>theme</b>, <b>project</b> or <b>type of publication</b> in the table to filter the list. Filters combine, and you can share a filtered view just by copying the link.</p>
+    </div>
+    <div class="table-card__header">
+      <div class="table-actions"><input class="m3-input" type="search" placeholder="Search summaries" /></div>
+    </div>
+    <table>
+      <thead><tr><th></th><th>Title</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi…</span></td>
+          <td><a class="pill" href="#">Rehabilitation</a><span class="crumb">›</span><br><a class="pill" href="#">OnTrack</a></td>
+          <td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type"><a class="pill" href="#">Academic paper</a></span><span class="pub-type">27 Mar 26</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ C ============ -->
+<section class="block">
+  <span class="block__label">Option C</span>
+  <h2 class="block__title">A boxed note, in the house style</h2>
+  <p class="block__meta">Uses the teal-edged box already used elsewhere on the site, so it reads as guidance rather than body copy.</p>
+  <div class="frame">
+    <div class="intro intro--boxed">
+      <p class="intro__title">Accessible summaries of our work</p>
+      <p>Every entry is a plain-English summary of a paper, report or project, written by the team behind it.</p>
+      <p>Click any <b>theme</b>, <b>project</b> or <b>type of publication</b> to filter the list, or search by title, author or keyword.</p>
+    </div>
+    <div class="table-card__header">
+      <div class="table-actions"><input class="m3-input" type="search" placeholder="Search summaries" /></div>
+    </div>
+    <table>
+      <thead><tr><th></th><th>Title</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi…</span></td>
+          <td><a class="pill" href="#">Rehabilitation</a><span class="crumb">›</span><br><a class="pill" href="#">OnTrack</a></td>
+          <td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type"><a class="pill" href="#">Academic paper</a></span><span class="pub-type">27 Mar 26</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ D ============ -->
+<section class="block">
+  <span class="block__label">Option D</span>
+  <h2 class="block__title">One line, plus a hint under the search box</h2>
+  <p class="block__meta">Puts the filtering tip where filtering actually happens, rather than in a paragraph people skip.</p>
+  <div class="frame">
+    <div class="intro">
+      <p>Plain-English summaries of research and projects from the Helix Centre.</p>
+    </div>
+    <div class="table-card__header">
+      <div class="table-actions">
+        <input class="m3-input" type="search" placeholder="Search summaries" />
+        <p class="hint">Or click a theme, project or publication type in the table to filter.</p>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th></th><th>Title</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="thumb"></span></td>
+          <td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span><span class="cell-authors">Ahmed Latif, Noer Al Janabi, Meera Joshi…</span></td>
+          <td><a class="pill" href="#">Rehabilitation</a><span class="crumb">›</span><br><a class="pill" href="#">OnTrack</a></td>
+          <td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type"><a class="pill" href="#">Academic paper</a></span><span class="pub-type">27 Mar 26</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="verdict">
+  <h2>Things to weigh up</h2>
+  <p><b>Nobody reads an intro to a table.</b> People scan straight to the rows. That argues for the shortest version that still does the job, and for putting the filtering tip near the thing it describes — which is Option D's reasoning.</p>
+  <p><b>But filtering isn't discoverable.</b> The themes and projects look like links, so some people will click them, but nothing says filters combine or that a filtered view can be shared. If you want that used, it has to be said somewhere — which is Option B's reasoning.</p>
+  <p><b>The blurb adds height to the embed.</b> The iframe grows to fit, so a three-line intro pushes the first row further down the helixcentre.com page on every visit. Option A costs one or two lines; Option C costs five or six.</p>
+  <p><b>Worth deciding separately:</b> whether this is also where you tell Helix staff how to submit. There's a form link in the site config that nothing currently points at. It could be a quiet line at the bottom of the intro, or left off the public page entirely.</p>
+  <p><b>If you want a recommendation:</b> A or D. A if you want one tidy sentence; D if you'd rather the filtering tip sat next to the search box where it's most likely to be read. B is the one to pick only if filtering is a feature you actively want people using rather than merely discovering.</p>
+</div>
+
+</body>
+</html>
