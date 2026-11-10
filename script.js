@@ -143,13 +143,16 @@ function themeProjectCell(item) {
     return "-";
   }
 
-  // Each on its own line, the project indented under its theme. The chevron is
+  // Each on its own line, both starting at the same left edge. The chevron
+  // trails the theme on the first line, pointing down into the project. It is
   // decoration, not content: a screen reader should hear the two filters, not
   // a punctuation mark between them.
+  const chevron = '<span class="crumb" aria-hidden="true">\u203a</span>';
+
   return parts
-    .map((pill, index) => index === 0
-      ? `<span class="tp-part">${pill}</span>`
-      : `<span class="tp-part tp-part--child"><span class="crumb" aria-hidden="true">\u203a</span>${pill}</span>`)
+    .map((pill, index) => index === 0 && parts.length > 1
+      ? `<span class="tp-part">${pill}${chevron}</span>`
+      : `<span class="tp-part">${pill}</span>`)
     .join("");
 }
 

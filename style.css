@@ -421,7 +421,7 @@ body.table-embed,
   display: block;
 }
 
-.tp-part--child {
+.tp-part + .tp-part {
   margin-top: 3px;
 }
 
@@ -442,11 +442,10 @@ body.table-embed,
   width: 23%;
 }
 
-/* The chevron between a theme and its project. Light grey so it separates the
-   two filters without competing with them, and with a little room either side
-   so the two links don't run together. */
+/* The chevron trailing a theme, pointing down to its project on the next
+   line. Light grey so it doesn't compete with the two links it joins. */
 .crumb {
-  padding: 0 4px;
+  padding: 0 0 0 4px;
   color: var(--helix-gray);
 }
 
@@ -1028,24 +1027,14 @@ a.filter-pill:focus {
     border-bottom: 0;
   }
 
-  /* Each row reads as a small card: the photo beside the title, then authors,
-     then two quiet lines — theme and project, then publisher, type and date.
-     No labels: on a phone they took a third of the width to say things the
-     values already said, and pushed every value into a strip that wrapped.
-
-     The card is a two-column grid so the photo can sit next to the title
-     while the lines beneath it still run the full width. */
-  .m3-table tr {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 12px;
-    padding: 12px 16px 14px;
-  }
-
+  /* Each row reads as a small card: title, authors, then two quiet lines —
+     theme and project, then publisher, type and date. No labels: on a phone
+     they took a third of the width to say things the values already say, and
+     pushed every value into a narrow strip that wrapped. No thumbnail either;
+     at the size it had to be, a photo read as a grey smudge. */
   .m3-table td {
     display: block;
-    width: auto;
-    padding: 0;
+    padding: 0 16px;
     border-bottom: 0;
   }
 
@@ -1054,35 +1043,12 @@ a.filter-pill:focus {
     display: none;
   }
 
+  .m3-table tr {
+    padding: 12px 0 14px;
+  }
+
   .m3-table td.cell-thumb {
-    display: flex;
-    align-items: stretch;
-    grid-column: 1;
-    grid-row: 1;
-    align-self: stretch;
-  }
-
-  .m3-table td[data-label="Title"] {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .m3-table td[data-label="Theme & project"],
-  .m3-table td[data-label="Published"] {
-    grid-column: 1 / -1;
-  }
-
-  /* The photo stretches to the height of the title beside it, so it is never
-     deeper than the title it belongs to, and stays square. Capped at 56px so
-     a long title doesn't hand it a whole block of the card. */
-  .m3-table .thumb {
-    align-self: stretch;
-    width: auto;
-    height: auto;
-    min-height: 0;
-    max-height: 56px;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+    display: none;
   }
 
   /* On a phone the two of them share a line again — there is no column to
@@ -1091,8 +1057,11 @@ a.filter-pill:focus {
     display: inline;
   }
 
-  .tp-part--child {
-    margin-top: 0;
+  /* Widths are a desktop-table idea; the cards are full width. */
+  .m3-table td[data-label="Title"],
+  .m3-table td[data-label="Theme & project"],
+  .m3-table td[data-label="Published"] {
+    width: auto;
   }
 
   /* The two meta lines. */
@@ -1103,21 +1072,16 @@ a.filter-pill:focus {
     line-height: 1.5;
   }
 
-  /* Publisher, type and date run together on one line here, rather than
-     stacking as they do in the desktop column. */
+  /* Publisher, type and date each keep their own line here too, as they do in
+     the desktop column — no separators needed when the line breaks do the
+     work. */
   .m3-table td[data-label="Published"] .pub-name,
   .m3-table td[data-label="Published"] .pub-type {
-    display: inline;
-    margin-top: 0;
     font-size: inherit;
   }
 
-  /* Only ever *between* two parts. Written as "something + .pub-type" so that
-     a blog post with no publisher doesn't open with a stray dot. */
-  .m3-table td[data-label="Published"] .pub-name + .pub-type::before,
-  .m3-table td[data-label="Published"] .pub-type + .pub-type::before {
-    content: " · ";
-    color: var(--helix-gray);
+  .m3-table td[data-label="Title"] {
+    padding-bottom: 0;
   }
 
   .m3-table td[data-label="Title"] .cell-title {
