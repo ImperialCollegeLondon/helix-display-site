@@ -759,6 +759,37 @@ a.filter-pill:focus {
   color: var(--helix-gray);
 }
 
+/* The link to the work, as the page's one action. Outlined rather than solid
+   so it doesn't compete with the title, and square-cornered like everything
+   else here. */
+.entry-action {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 11px 17px;
+  border: 1px solid var(--helix-navy);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--helix-navy);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.entry-action:hover,
+.entry-action:focus {
+  background: var(--helix-navy);
+  color: var(--surface);
+}
+
+.entry-action:focus-visible {
+  outline: 3px solid rgba(82, 187, 181, 0.35);
+  outline-offset: 2px;
+}
+
+.entry-action[hidden] {
+  display: none;
+}
+
 .entry-keywords {
   margin: 0 0 22px;
 }
@@ -856,10 +887,14 @@ a.filter-pill:focus {
   display: none;
 }
 
+/* Navy and a size up from the body text around them. These label the few
+   facts readers come back for — contact, funding, who led the work — and in
+   grey at 0.84rem they read as fine print. Deliberately still smaller than
+   "Summary", which heads a section people actually read. */
 .entry-details dt {
-  margin-top: 14px;
-  color: var(--text-secondary);
-  font-size: 0.84rem;
+  margin-top: 18px;
+  color: var(--helix-navy);
+  font-size: 0.95rem;
   font-weight: 700;
 }
 

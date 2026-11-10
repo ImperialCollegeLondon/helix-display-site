@@ -244,6 +244,24 @@ function renderEntry(entry) {
     }
   }
 
+  // The link to the work itself, at the top where it is visible without
+  // scrolling. This page is a summary of something else, so a good number of
+  // readers arrive wanting the original. It also still appears in the list at
+  // the bottom. Hidden when no link was submitted — the question is optional.
+  const action = document.getElementById("entry-action");
+
+  if (action) {
+    const href = publicUrl(entry.link);
+
+    if (href) {
+      action.href = href;
+      action.hidden = false;
+    } else {
+      action.removeAttribute("href");
+      action.hidden = true;
+    }
+  }
+
   const keywordsContainer = document.getElementById("entry-keywords");
 
   if (keywordsContainer) {
