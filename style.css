@@ -985,49 +985,57 @@ a.filter-pill:focus {
     border-bottom: 0;
   }
 
+  /* Each row reads as a small card: title, authors, then two quiet lines —
+     theme and project, then publisher, type and date. No labels: on a phone
+     they took a third of the width to say things the values already say, and
+     pushed every value into a narrow strip that wrapped. No thumbnail either;
+     at the size it had to be, a photo read as a grey smudge. */
   .m3-table td {
-    display: grid;
-    grid-template-columns: minmax(96px, 32%) minmax(0, 1fr);
-    gap: 10px;
-    padding: 7px 16px;
+    display: block;
+    padding: 0 16px;
     border-bottom: 0;
   }
 
   .m3-table td::before {
-    content: attr(data-label);
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    font-weight: 700;
-  }
-
-  /* Each row reads as a small card: the title leads, full width and without a
-     label, then the remaining fields as label/value pairs beneath it. */
-  .m3-table tr {
-    padding: 6px 0 12px;
-  }
-
-  /* In the stacked card layout the thumbnail sits above the title, with no
-     "Image" label — the picture doesn't need announcing. */
-  .m3-table td.cell-thumb {
-    display: block;
-    width: auto;
-    padding: 12px 16px 0;
-  }
-
-  .m3-table td.cell-thumb::before {
     content: "";
     display: none;
+  }
+
+  .m3-table tr {
+    padding: 12px 0 14px;
+  }
+
+  .m3-table td.cell-thumb {
+    display: none;
+  }
+
+  /* The two meta lines. */
+  .m3-table td[data-label="Theme & project"],
+  .m3-table td[data-label="Published"] {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* Publisher, type and date run together on one line here, rather than
+     stacking as they do in the desktop column. */
+  .m3-table td[data-label="Published"] .pub-name,
+  .m3-table td[data-label="Published"] .pub-type {
+    display: inline;
+    margin-top: 0;
+    font-size: inherit;
+  }
+
+  /* Only ever *between* two parts. Written as "something + .pub-type" so that
+     a blog post with no publisher doesn't open with a stray dot. */
+  .m3-table td[data-label="Published"] .pub-name + .pub-type::before,
+  .m3-table td[data-label="Published"] .pub-type + .pub-type::before {
+    content: " · ";
+    color: var(--helix-gray);
   }
 
   .m3-table td[data-label="Title"] {
-    display: block;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
-  .m3-table td[data-label="Title"]::before {
-    content: "";
-    display: none;
+    padding-bottom: 0;
   }
 
   .m3-table td[data-label="Title"] .cell-title {
