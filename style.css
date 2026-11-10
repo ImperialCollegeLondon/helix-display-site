@@ -1036,7 +1036,10 @@ a.filter-pill:focus {
      while everything below still runs the card's full width. */
   .m3-table tr {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    /* A fixed first column, not "auto". The photo is square and matches the
+       title's height, so an auto column would be a different width on every
+       card and the titles would start at a different place each time. */
+    grid-template-columns: 56px minmax(0, 1fr);
     column-gap: 12px;
     padding: 12px 16px 14px;
   }
@@ -1080,9 +1083,12 @@ a.filter-pill:focus {
     grid-row: 1;
   }
 
+  /* Everything textual shares the title's left edge, rather than some of it
+     starting under the photo. One edge down the card reads as deliberate;
+     two reads as a mistake. */
   .m3-table td[data-label="Theme & project"],
   .m3-table td[data-label="Published"] {
-    grid-column: 1 / -1;
+    grid-column: 2;
   }
 
   /* The photo stretches to the height of the title beside it, so it is never
@@ -1093,6 +1099,7 @@ a.filter-pill:focus {
     width: auto;
     height: auto;
     min-height: 0;
+    max-width: 56px;
     max-height: 56px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
