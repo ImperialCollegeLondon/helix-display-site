@@ -54,8 +54,8 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
     var base = allowedOrigin + "/helix-display-site/";
 
     // Deep links: #001 (short reference), #entry=<response id>, and any
-    // combination of #theme= #project= #keyword=, which open the filtered table.
-    var filterKeys = ["theme", "project", "keyword"];
+    // combination of #theme= #project= #type= #keyword=, which open the filtered table.
+    var filterKeys = ["theme", "project", "type", "keyword"];
 
     function filterParams(params) {
       var filters = new URLSearchParams();

@@ -14,7 +14,7 @@ Readers can filter the table by **theme**, **project** and **keyword**. The old 
 
 Two changes:
 
-1. **Reading the URL on load.** The hash is now parsed as a query string, so any combination of `#theme=` `#project=` `#keyword=` opens the table filtered accordingly — for example `#theme=Dementia&project=Minder`. Previously only `#keyword=` was recognised, and it opened a different page.
+1. **Reading the URL on load.** The hash is now parsed as a query string, so any combination of `#theme=` `#project=` `#type=` `#keyword=` opens the table filtered accordingly — for example `#theme=Dementia&project=Minder`. Previously only `#keyword=` was recognised, and it opened a different page.
 
 2. **Writing the URL as the reader filters.** The embed now sends the full set of active filters (`data.filters`), so the address bar keeps matching what's on screen and a filtered view can be copied and shared. The old `data.keyword` branch is kept so nothing breaks during the changeover.
 
@@ -44,8 +44,8 @@ The changed lines are marked `CHANGED` / `NEW`.
     var base = allowedOrigin + "/helix-display-site/";
 
     // Deep links: #001 (short reference), #entry=<response id>, and any
-    // combination of #theme= #project= #keyword=, which open the filtered table.
-    var filterKeys = ["theme", "project", "keyword"];              // NEW
+    // combination of #theme= #project= #type= #keyword=, which open the filtered table.
+    var filterKeys = ["theme", "project", "type", "keyword"];      // NEW
 
     function filterParams(params) {                                // NEW
       var filters = new URLSearchParams();                         // NEW

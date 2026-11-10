@@ -5,13 +5,15 @@ let allSubmissions = [];
 const activeFilters = {
   keyword: null,
   theme: null,
-  project: null
+  project: null,
+  type: null
 };
 
 const FILTER_LABELS = {
   keyword: "Keyword",
   theme: "Theme",
-  project: "Project"
+  project: "Project",
+  type: "Type"
 };
 
 // Longer lists are split into pages so the embed doesn't grow indefinitely.
@@ -107,7 +109,7 @@ function publishedCell(item) {
   // date. No separators — the line breaks do that work, and a dot at the end
   // of a wrapped line reads as a typo.
   const kind = type
-    ? `<span class="pub-type">${escapeHtml(type)}</span>`
+    ? `<span class="pub-type">${filterPill("type", type)}</span>`
     : "";
 
   const when = date
@@ -141,9 +143,14 @@ function themeProjectCell(item) {
     return "-";
   }
 
-  // Decoration, not content: a screen reader should hear the two filters, not
-  // a chevron between them.
-  return parts.join('<span class="crumb" aria-hidden="true">\u203a</span>');
+  // Each on its own line, the project indented under its theme. The chevron is
+  // decoration, not content: a screen reader should hear the two filters, not
+  // a punctuation mark between them.
+  return parts
+    .map((pill, index) => index === 0
+      ? `<span class="tp-part">${pill}</span>`
+      : `<span class="tp-part tp-part--child"><span class="crumb" aria-hidden="true">\u203a</span>${pill}</span>`)
+    .join("");
 }
 
 // Likewise, work that doesn't belong to a subproject is marked "N/A", which
@@ -377,6 +384,10 @@ function getFilteredRows() {
 
   if (activeFilters.project) {
     rows = rows.filter(item => item.subproject === activeFilters.project);
+  }
+
+  if (activeFilters.type) {
+    rows = rows.filter(item => item.source_type === activeFilters.type);
   }
 
   const query = document.getElementById("search-input")?.value.trim().toLowerCase();

@@ -414,6 +414,34 @@ body.table-embed,
   background: var(--surface-alt);
 }
 
+/* Theme and project each get their own line, the project indented beneath its
+   theme. Stacking rather than running them together keeps this column narrow,
+   which leaves more width for the title and authors. */
+.tp-part {
+  display: block;
+}
+
+.tp-part--child {
+  margin-top: 3px;
+}
+
+/* Column widths. Without these the browser gives the title whatever is left
+   after the others have taken what they want, which is never enough. */
+.m3-table th:nth-child(2),
+.m3-table td[data-label="Title"] {
+  width: 50%;
+}
+
+.m3-table th:nth-child(3),
+.m3-table td[data-label="Theme & project"] {
+  width: 17%;
+}
+
+.m3-table th:nth-child(4),
+.m3-table td[data-label="Published"] {
+  width: 23%;
+}
+
 /* The chevron between a theme and its project. Light grey so it separates the
    two filters without competing with them, and with a little room either side
    so the two links don't run together. */
@@ -434,6 +462,13 @@ body.table-embed,
   color: var(--text-secondary);
   font-size: 0.85rem;
   line-height: 1.4;
+}
+
+/* The type is a filter too, but a coarse one — there are only a handful of
+   values — so it stays at the quieter size of the line it sits on. */
+.pub-type .filter-pill {
+  font-size: inherit;
+  line-height: inherit;
 }
 
 /* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. The
@@ -525,14 +560,22 @@ body.table-embed,
   color: var(--helix-navy);
 }
 
+/* The active-type chip, in the same light family as the other two. */
+.filter-chip--type {
+  background: #e4e4ea;
+  color: var(--helix-navy);
+}
+
 .filter-chip--theme .filter-chip__remove,
-.filter-chip--project .filter-chip__remove {
+.filter-chip--project .filter-chip__remove,
+.filter-chip--type .filter-chip__remove {
   background: rgba(43, 58, 99, 0.14);
   color: var(--helix-navy);
 }
 
 .filter-chip--theme .filter-chip__remove:hover,
-.filter-chip--project .filter-chip__remove:hover {
+.filter-chip--project .filter-chip__remove:hover,
+.filter-chip--type .filter-chip__remove:hover {
   background: rgba(43, 58, 99, 0.24);
 }
 
@@ -1007,6 +1050,23 @@ a.filter-pill:focus {
 
   .m3-table td.cell-thumb {
     display: none;
+  }
+
+  /* On a phone the two of them share a line again — there is no column to
+     keep narrow here, and two lines of their own would undo the saving. */
+  .tp-part {
+    display: inline;
+  }
+
+  .tp-part--child {
+    margin-top: 0;
+  }
+
+  /* Widths are a desktop-table idea; the cards are full width. */
+  .m3-table td[data-label="Title"],
+  .m3-table td[data-label="Theme & project"],
+  .m3-table td[data-label="Published"] {
+    width: auto;
   }
 
   /* The two meta lines. */
