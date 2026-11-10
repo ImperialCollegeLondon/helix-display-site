@@ -119,10 +119,26 @@
 
   .thumb { display: block; background: var(--surface-alt); flex: 0 0 auto; }
 
-  /* 2: thumbnail beside the text */
+  /* 2: thumbnail beside the text.
+     The image sits in a flex row with the title alone, and stretches to that
+     row's height — so it is never taller than the title next to it. It stays
+     square (aspect-ratio), and is capped at 56px so a long title doesn't give
+     it a whole block of the row. */
   .split { display: flex; gap: 12px; align-items: flex-start; }
-  .split .thumb { width: 56px; height: 56px; }
   .split__body { min-width: 0; flex: 1; }
+
+  .split__head { display: flex; gap: 12px; align-items: flex-start; }
+
+  .split__head .thumb {
+    align-self: stretch;
+    width: auto;
+    height: auto;
+    max-height: 56px;
+    aspect-ratio: 1 / 1;
+    background: var(--surface-alt);
+  }
+
+  .split__head .title { flex: 1; min-width: 0; }
 
   /* 3 and the baseline: label / value grid */
   .grid { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 6px 10px; margin-top: 10px; }
@@ -169,6 +185,7 @@
 
 <div class="page-note">
   <strong>Five shorter mobile rows — no title is ever cut.</strong>
+  In Option 2 the photo is also never taller than the title beside it.
   Each frame is 360px wide, roughly an iPhone, and shows the same two entries so
   the heights are directly comparable. The first frame is what the site does
   today, for reference. All of them use the merged <em>Published</em> column
@@ -238,23 +255,34 @@
   <section class="option">
     <span class="option__label">Option 2</span>
     <h2>Small photo beside the title</h2>
-    <p class="option__meta">Keeps the picture, at 56px and alongside the text rather than stacked above it. Authors dropped — they're on the detail page.</p>
+    <p class="option__meta">The photo sits next to the title and matches its height, so it is never deeper than the title it belongs to. Square, capped at 56px. Authors kept, trimmed to one line.</p>
     <div class="phone">
-      <div class="row split">
-        <span class="thumb"></span>
-        <div class="split__body">
+      <div class="row">
+        <div class="split__head">
+          <span class="thumb"></span>
           <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
-          <p class="meta"><span class="pub">Alzheimer's &amp; Dementia</span><span class="sep">·</span><span class="date">9 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
         </div>
+        <p class="authors">Josh King-Robson, Eyal Soreq, Molly R E Cartlidge, Matthew Harrison…</p>
+        <p class="meta"><span class="pub">Alzheimer's &amp; Dementia</span><span class="sep">·</span>Academic paper<span class="sep">·</span><span class="date">9 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
       </div>
-      <div class="row split">
-        <span class="thumb"></span>
-        <div class="split__body">
+      <div class="row">
+        <div class="split__head">
+          <span class="thumb"></span>
           <p class="title">InSleep46: Designing future dementia care through sleep data</p>
-          <p class="meta"><span class="pub">Helix Centre</span><span class="sep">·</span><span class="date">7 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
         </div>
+        <p class="authors">Sophie Horrocks, Ríona McArdle, Marie Poole, Josh King-Robson…</p>
+        <p class="meta"><span class="pub">Helix Centre</span><span class="sep">·</span>Public report<span class="sep">·</span><span class="date">7 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
+      </div>
+      <div class="row">
+        <div class="split__head">
+          <span class="thumb"></span>
+          <p class="title">Head-to-Head</p>
+        </div>
+        <p class="authors">Shuang Wu, Alex Dallman-Porter, Souradip Mookerjee, Shruthi K. Hiremath…</p>
+        <p class="meta"><span class="pub">ACM UbiComp</span><span class="sep">·</span>Academic paper<span class="sep">·</span><span class="date">13 Oct 26</span><br><a href="#">Healthy Ageing</a><span class="crumb">›</span><a href="#">Head to Head</a></p>
       </div>
     </div>
+    <p class="option__meta" style="margin-top:10px;min-height:0">Three title lengths, to show the rule: four lines caps the photo at 56px, two lines shrinks it to match, one line shrinks it further still.</p>
   </section>
 
   <!-- ============ 3 ============ -->

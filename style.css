@@ -436,11 +436,6 @@ body.table-embed,
   line-height: 1.4;
 }
 
-/* The dot between the kind of output and the date, on that second line. */
-.pub-type .sep {
-  color: var(--helix-gray);
-}
-
 /* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. The
    header is kept on one line too, otherwise it sets a narrower column than the
    dates below it need. */
@@ -455,11 +450,11 @@ body.table-embed,
 
 /* Author lists can be long. Show at most two lines and let the browser add
    an ellipsis, so a paper with thirty authors doesn't dominate the row. */
+/* The list is shortened in script.js, between names rather than mid-word, so
+   there's no line clamp here — a clamp would put the ellipsis back in the
+   middle of someone's name. */
 .cell-authors {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
   margin-top: 4px;
   color: var(--text-secondary);
   font-size: 0.85rem;

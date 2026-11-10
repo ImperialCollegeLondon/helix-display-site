@@ -103,23 +103,18 @@ function publishedCell(item) {
     ? `<span class="pub-name">${escapeHtml(publisher)}</span>`
     : "";
 
-  // The kind of output and the date share the quieter second line. The date
-  // is wrapped so it can't break across two lines on its own.
-  const details = [];
-
-  if (type) {
-    details.push(escapeHtml(type));
-  }
-
-  if (date) {
-    details.push(`<span class="cell-date">${escapeHtml(date)}</span>`);
-  }
-
-  const beneath = details.length
-    ? `<span class="pub-type">${details.join('<span class="sep"> · </span>')}</span>`
+  // Each part gets its own line: publisher, then the kind of output, then the
+  // date. No separators — the line breaks do that work, and a dot at the end
+  // of a wrapped line reads as a typo.
+  const kind = type
+    ? `<span class="pub-type">${escapeHtml(type)}</span>`
     : "";
 
-  return name + beneath;
+  const when = date
+    ? `<span class="pub-type cell-date">${escapeHtml(date)}</span>`
+    : "";
+
+  return name + kind + when;
 }
 
 function filterPill(type, value) {
@@ -180,6 +175,40 @@ function authorsText(item) {
   return Array.isArray(item.helix_authors) ? item.helix_authors.join(", ") : "";
 }
 
+// Roughly two lines' worth of characters in the table's author column. Used as
+// a budget rather than a hard cut — see below.
+const AUTHORS_BUDGET = 90;
+
+// A long author list has to be shortened somewhere, and cutting on width
+// alone lands mid-name ("Nur Amalina Che Bak…"), which reads as a mistake and
+// can misname someone. So the list is trimmed between names instead: whole
+// names are added while they fit the budget, and the rest become an ellipsis.
+// At least one name is always kept, however long it is.
+function authorsSummary(item) {
+  const text = authorsText(item).trim();
+
+  if (text.length <= AUTHORS_BUDGET) {
+    return text;
+  }
+
+  const names = text.split(",").map(name => name.trim()).filter(Boolean);
+  const kept = [];
+  let used = 0;
+
+  for (const name of names) {
+    const extra = kept.length ? name.length + 2 : name.length;
+
+    if (kept.length && used + extra > AUTHORS_BUDGET) {
+      break;
+    }
+
+    kept.push(name);
+    used += extra;
+  }
+
+  return kept.length < names.length ? `${kept.join(", ")}…` : kept.join(", ");
+}
+
 function navigateToEntry(id, ref) {
   window.location.href = ref
     ? `entry.html?ref=${encodeURIComponent(ref)}`
@@ -220,7 +249,7 @@ function renderTable(allRows) {
       <td data-label="Title">
         <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
         ${authorsText(item)
-          ? `<span class="cell-authors">${escapeHtml(authorsText(item))}</span>`
+          ? `<span class="cell-authors">${escapeHtml(authorsSummary(item))}</span>`
           : ""}
       </td>
       <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
