@@ -11,7 +11,6 @@
     --helix-gray: #bbbcbc;
     --surface: #ffffff;
     --surface-alt: #f5f5f5;
-    --surface-grey: #ececec;
     --row-divider: #e6e6e6;
     --border: #dddddd;
     --text-primary: var(--helix-navy);
@@ -28,7 +27,7 @@
 
   .page-note {
     margin: 0 auto 24px;
-    max-width: 1180px;
+    max-width: 1220px;
     padding: 13px 15px;
     border-left: 4px solid var(--helix-teal);
     background: #fff;
@@ -43,7 +42,8 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    max-width: 1180px;
+    align-items: flex-start;
+    max-width: 1220px;
     margin: 0 auto;
   }
 
@@ -59,6 +59,8 @@
     text-transform: uppercase;
   }
 
+  .option--now .option__label { color: var(--text-secondary); }
+
   .option h2 { margin: 0 0 3px; font-size: 1rem; line-height: 1.3; }
 
   .option__meta {
@@ -66,10 +68,10 @@
     color: var(--text-secondary);
     font-size: 0.78rem;
     line-height: 1.5;
-    min-height: 3.4em;
+    min-height: 4.5em;
   }
 
-  /* A phone-width frame so the rows are judged at the size they'll be used. */
+  /* A phone-width frame, so the rows are judged at the size they'll be used. */
   .phone {
     width: 360px;
     background: var(--surface);
@@ -80,20 +82,14 @@
   .row { padding: 14px 16px; border-bottom: 1px solid var(--row-divider); }
   .row:last-child { border-bottom: 0; }
 
-  /* Two lines maximum, then an ellipsis. */
+  /* Titles are never cut. */
   .title {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
     margin: 0;
     color: var(--helix-navy);
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.35;
   }
-
-  .title--full { display: block; }
 
   .authors {
     display: -webkit-box;
@@ -106,10 +102,12 @@
     line-height: 1.4;
   }
 
+  .authors--two { -webkit-line-clamp: 2; }
+
   .meta {
     margin: 8px 0 0;
     font-size: 0.8rem;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--text-secondary);
   }
 
@@ -117,46 +115,45 @@
   .sep { color: var(--helix-gray); padding: 0 3px; }
   .crumb { color: var(--helix-gray); padding: 0 3px; }
   .date { white-space: nowrap; }
+  .pub { color: var(--text-primary); font-weight: 700; }
 
-  .thumb {
-    display: block;
-    background: var(--surface-alt);
-    flex: 0 0 auto;
-  }
+  .thumb { display: block; background: var(--surface-alt); flex: 0 0 auto; }
 
-  /* --- 2: thumbnail beside the text --- */
+  /* 2: thumbnail beside the text */
   .split { display: flex; gap: 12px; align-items: flex-start; }
   .split .thumb { width: 56px; height: 56px; }
   .split__body { min-width: 0; flex: 1; }
 
-  /* --- 3: aligned label/value grid --- */
+  /* 3 and the baseline: label / value grid */
   .grid { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 6px 10px; margin-top: 10px; }
   .grid dt { color: var(--text-secondary); font-size: 0.74rem; font-weight: 700; line-height: 1.5; }
   .grid dd { margin: 0; font-size: 0.82rem; line-height: 1.5; }
   .grid dd a { color: var(--helix-pink); text-decoration: underline; text-underline-offset: 0.16em; }
   .grid .stacked { display: block; }
-  .grid .stacked + .stacked { margin-top: 2px; }
   .grid .quiet { color: var(--text-secondary); }
 
-  /* --- 4: banner on top --- */
+  /* The baseline's broken alignment, reproduced on purpose. */
+  .grid--broken .hang { display: block; margin-left: -94px; }
+
+  /* 4: banner on top */
   .banner { width: 100%; aspect-ratio: 16 / 7; background: var(--surface-alt); display: block; }
 
-  /* --- 5: chips --- */
-  .chips { margin-top: 8px; }
+  /* 5: chips */
+  .chips { margin-top: 9px; }
   .chip {
     display: inline-block;
     margin: 0 5px 5px 0;
-    padding: 3px 7px;
+    padding: 4px 8px;
     background: rgba(82, 187, 181, 0.18);
     color: var(--helix-navy);
-    font-size: 0.73rem;
+    font-size: 0.74rem;
     font-weight: 700;
     text-decoration: none;
   }
   .chip--project { background: rgba(43, 58, 99, 0.08); }
 
   .verdict {
-    max-width: 1180px;
+    max-width: 1220px;
     margin: 28px auto 0;
     padding: 16px 18px;
     background: #fff;
@@ -171,36 +168,68 @@
 <body>
 
 <div class="page-note">
-  <strong>Five ways to shorten the mobile row.</strong> Each frame is 360px wide —
-  roughly an iPhone — and shows the same three entries from the live data, so the
-  heights are directly comparable. Titles are cut to two lines everywhere except
-  Option 3, which keeps the current label layout for comparison.
-  The Circular typeface isn't loaded in this preview, so text is a little wider
-  than on the real site.
+  <strong>Five shorter mobile rows — no title is ever cut.</strong>
+  Each frame is 360px wide, roughly an iPhone, and shows the same two entries so
+  the heights are directly comparable. The first frame is what the site does
+  today, for reference. All of them use the merged <em>Published</em> column
+  (publisher, then type and date).
+  Since the title is untouchable, the savings come from the labels, the authors
+  and the photo. The Circular typeface isn't loaded here, so text runs slightly
+  wider than on the real site.
 </div>
 
 <div class="rail">
 
+  <!-- ============ BASELINE ============ -->
+  <section class="option option--now">
+    <span class="option__label">Today</span>
+    <h2>What it does now</h2>
+    <p class="option__meta">Labels in their own column, a 64px photo, two lines of authors. The type and the chevron hang out to the left of the values — the misalignment you spotted.</p>
+    <div class="phone">
+      <div class="row">
+        <span class="thumb" style="width:64px;height:64px;margin-bottom:10px"></span>
+        <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
+        <p class="authors authors--two">Josh King-Robson, Eyal Soreq, Molly R E Cartlidge, Matthew Harrison, Heidi Murray-Smith, Lina Aimola…</p>
+        <dl class="grid grid--broken">
+          <dt>Published</dt>
+          <dd><span class="stacked"><a href="#">Alzheimer's &amp; Dementia</a></span><span class="stacked quiet hang">Academic paper</span></dd>
+          <dt>Theme &amp; project</dt>
+          <dd><span class="stacked"><a href="#">Dementia</a></span><span class="stacked hang"><span class="crumb">›</span><a href="#">InSleep46</a></span></dd>
+          <dt>Published</dt>
+          <dd>9 Jan 26</dd>
+        </dl>
+      </div>
+      <div class="row">
+        <span class="thumb" style="width:64px;height:64px;margin-bottom:10px"></span>
+        <p class="title">InSleep46: Designing future dementia care through sleep data</p>
+        <p class="authors authors--two">Sophie Horrocks, Ríona McArdle, Marie Poole, Josh King-Robson, Jonathan Schott, David Sharp…</p>
+        <dl class="grid grid--broken">
+          <dt>Published</dt>
+          <dd><span class="stacked">Helix Centre</span><span class="stacked quiet hang">Public report</span></dd>
+          <dt>Theme &amp; project</dt>
+          <dd><span class="stacked"><a href="#">Dementia</a></span><span class="stacked hang"><span class="crumb">›</span><a href="#">InSleep46</a></span></dd>
+          <dt>Published</dt>
+          <dd>7 Jan 26</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 1 ============ -->
   <section class="option">
     <span class="option__label">Option 1</span>
-    <h2>No photo, one meta line</h2>
-    <p class="option__meta">Shortest by a long way. Everything except title and authors collapses onto a single wrapping line.</p>
+    <h2>No labels, no photo</h2>
+    <p class="option__meta">Title in full, one line of authors, then everything else on a single wrapping line. The shortest of the five.</p>
     <div class="phone">
       <div class="row">
-        <p class="title">Feedback from wearable devices accelerates recovery after breast cancer surgery</p>
-        <p class="authors">Ahmed Latif, Noer Al Janabi, Meera Joshi, Nur Amalina Che Bakri…</p>
-        <p class="meta"><a href="#">Rehabilitation</a><span class="crumb">›</span><a href="#">OnTrack</a><span class="sep">·</span>European Journal of Surgical Oncology<span class="sep">·</span><span class="date">27 Mar 26</span></p>
-      </div>
-      <div class="row">
         <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
-        <p class="authors">Josh King-Robson, Eyal Soreq, Molly R E Cartlidge, Matthew Harrison…</p>
-        <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span>Alzheimer's &amp; Dementia<span class="sep">·</span><span class="date">9 Jan 26</span></p>
+        <p class="authors">Josh King-Robson, Eyal Soreq, Molly R E Cartlidge…</p>
+        <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span><span class="pub">Alzheimer's &amp; Dementia</span><span class="sep">·</span>Academic paper<span class="sep">·</span><span class="date">9 Jan 26</span></p>
       </div>
       <div class="row">
         <p class="title">InSleep46: Designing future dementia care through sleep data</p>
-        <p class="authors">Sophie Horrocks, Ríona McArdle, Marie Poole, Josh King-Robson…</p>
-        <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span>Helix Centre<span class="sep">·</span><span class="date">7 Jan 26</span></p>
+        <p class="authors">Sophie Horrocks, Ríona McArdle, Marie Poole…</p>
+        <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span><span class="pub">Helix Centre</span><span class="sep">·</span>Public report<span class="sep">·</span><span class="date">7 Jan 26</span></p>
       </div>
     </div>
   </section>
@@ -208,31 +237,21 @@
   <!-- ============ 2 ============ -->
   <section class="option">
     <span class="option__label">Option 2</span>
-    <h2>Small photo beside the text</h2>
-    <p class="option__meta">Keeps the picture but at 56px, inline with the title rather than above it. Barely taller than Option 1.</p>
+    <h2>Small photo beside the title</h2>
+    <p class="option__meta">Keeps the picture, at 56px and alongside the text rather than stacked above it. Authors dropped — they're on the detail page.</p>
     <div class="phone">
       <div class="row split">
         <span class="thumb"></span>
         <div class="split__body">
-          <p class="title">Feedback from wearable devices accelerates recovery after breast cancer surgery</p>
-          <p class="meta"><a href="#">Rehabilitation</a><span class="crumb">›</span><a href="#">OnTrack</a><span class="sep">·</span><span class="date">27 Mar 26</span></p>
-          <p class="authors">European Journal of Surgical Oncology</p>
-        </div>
-      </div>
-      <div class="row split">
-        <span class="thumb"></span>
-        <div class="split__body">
           <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
-          <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span><span class="date">9 Jan 26</span></p>
-          <p class="authors">Alzheimer's &amp; Dementia</p>
+          <p class="meta"><span class="pub">Alzheimer's &amp; Dementia</span><span class="sep">·</span><span class="date">9 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
         </div>
       </div>
       <div class="row split">
         <span class="thumb"></span>
         <div class="split__body">
           <p class="title">InSleep46: Designing future dementia care through sleep data</p>
-          <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span><span class="date">7 Jan 26</span></p>
-          <p class="authors">Helix Centre</p>
+          <p class="meta"><span class="pub">Helix Centre</span><span class="sep">·</span><span class="date">7 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
         </div>
       </div>
     </div>
@@ -241,33 +260,29 @@
   <!-- ============ 3 ============ -->
   <section class="option">
     <span class="option__label">Option 3</span>
-    <h2>Current layout, properly aligned</h2>
-    <p class="option__meta">The smallest change: keeps labels and the photo, but the type and the chevron now line up with the value column instead of hanging in the gutter.</p>
+    <h2>Keep the labels, fix the alignment</h2>
+    <p class="option__meta">The smallest possible change: labels and photo stay, but the type and the chevron now line up under their values instead of hanging in the gutter.</p>
     <div class="phone">
       <div class="row">
         <span class="thumb" style="width:64px;height:64px;margin-bottom:10px"></span>
-        <p class="title title--full">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
-        <p class="authors">Josh King-Robson, Eyal Soreq, Molly R E Cartlidge, Matthew Harrison…</p>
+        <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
+        <p class="authors">Josh King-Robson, Eyal Soreq, Molly R E Cartlidge…</p>
         <dl class="grid">
-          <dt>Publisher</dt>
-          <dd><span class="stacked">Alzheimer's &amp; Dementia</span><span class="stacked quiet">Academic paper</span></dd>
-          <dt>Theme &amp; project</dt>
-          <dd><span class="stacked"><a href="#">Dementia</a></span><span class="stacked"><span class="crumb">›</span><a href="#">InSleep46</a></span></dd>
           <dt>Published</dt>
-          <dd>9 Jan 26</dd>
+          <dd><span class="stacked"><span class="pub">Alzheimer's &amp; Dementia</span></span><span class="stacked quiet">Academic paper<span class="sep">·</span>9 Jan 26</span></dd>
+          <dt>Theme &amp; project</dt>
+          <dd><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></dd>
         </dl>
       </div>
       <div class="row">
         <span class="thumb" style="width:64px;height:64px;margin-bottom:10px"></span>
-        <p class="title title--full">InSleep46: Designing future dementia care through sleep data</p>
-        <p class="authors">Sophie Horrocks, Ríona McArdle, Marie Poole, Josh King-Robson…</p>
+        <p class="title">InSleep46: Designing future dementia care through sleep data</p>
+        <p class="authors">Sophie Horrocks, Ríona McArdle, Marie Poole…</p>
         <dl class="grid">
-          <dt>Publisher</dt>
-          <dd><span class="stacked">Helix Centre</span><span class="stacked quiet">Public report</span></dd>
-          <dt>Theme &amp; project</dt>
-          <dd><span class="stacked"><a href="#">Dementia</a></span><span class="stacked"><span class="crumb">›</span><a href="#">InSleep46</a></span></dd>
           <dt>Published</dt>
-          <dd>7 Jan 26</dd>
+          <dd><span class="stacked"><span class="pub">Helix Centre</span></span><span class="stacked quiet">Public report<span class="sep">·</span>7 Jan 26</span></dd>
+          <dt>Theme &amp; project</dt>
+          <dd><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></dd>
         </dl>
       </div>
     </div>
@@ -277,20 +292,20 @@
   <section class="option">
     <span class="option__label">Option 4</span>
     <h2>Photo as a wide banner</h2>
-    <p class="option__meta">The most visual. The thumbnail becomes a full-width strip, so the picture is actually legible rather than a 64px square.</p>
+    <p class="option__meta">The most visual. The thumbnail becomes a full-width strip, so the picture is actually legible instead of a small grey square.</p>
     <div class="phone">
       <div class="row" style="padding:0 0 14px">
         <span class="banner"></span>
         <div style="padding:12px 16px 0">
-          <p class="title">Feedback from wearable devices accelerates recovery after breast cancer surgery</p>
-          <p class="meta"><a href="#">Rehabilitation</a><span class="crumb">›</span><a href="#">OnTrack</a><span class="sep">·</span>European Journal of Surgical Oncology<span class="sep">·</span><span class="date">27 Mar 26</span></p>
+          <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
+          <p class="meta"><span class="pub">Alzheimer's &amp; Dementia</span><span class="sep">·</span>Academic paper<span class="sep">·</span><span class="date">9 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
         </div>
       </div>
       <div class="row" style="padding:0 0 14px">
         <span class="banner"></span>
         <div style="padding:12px 16px 0">
-          <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
-          <p class="meta"><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a><span class="sep">·</span>Alzheimer's &amp; Dementia<span class="sep">·</span><span class="date">9 Jan 26</span></p>
+          <p class="title">InSleep46: Designing future dementia care through sleep data</p>
+          <p class="meta"><span class="pub">Helix Centre</span><span class="sep">·</span>Public report<span class="sep">·</span><span class="date">7 Jan 26</span><br><a href="#">Dementia</a><span class="crumb">›</span><a href="#">InSleep46</a></p>
         </div>
       </div>
     </div>
@@ -299,22 +314,17 @@
   <!-- ============ 5 ============ -->
   <section class="option">
     <span class="option__label">Option 5</span>
-    <h2>Title and date, filters as chips</h2>
-    <p class="option__meta">No photo, no authors. Title, then publisher and date on one line, with theme and project as tappable chips — bigger touch targets than inline links.</p>
+    <h2>Filters as tappable chips</h2>
+    <p class="option__meta">No photo, no authors. Title, then publisher and date, with theme and project as chips — far bigger touch targets than inline text links.</p>
     <div class="phone">
       <div class="row">
-        <p class="title">Feedback from wearable devices accelerates recovery after breast cancer surgery</p>
-        <p class="meta">European Journal of Surgical Oncology<span class="sep">·</span><span class="date">27 Mar 26</span></p>
-        <div class="chips"><a class="chip" href="#">Rehabilitation</a><a class="chip chip--project" href="#">OnTrack</a></div>
-      </div>
-      <div class="row">
         <p class="title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker: an InSleep46 study</p>
-        <p class="meta">Alzheimer's &amp; Dementia<span class="sep">·</span><span class="date">9 Jan 26</span></p>
+        <p class="meta"><span class="pub">Alzheimer's &amp; Dementia</span><span class="sep">·</span>Academic paper<span class="sep">·</span><span class="date">9 Jan 26</span></p>
         <div class="chips"><a class="chip" href="#">Dementia</a><a class="chip chip--project" href="#">InSleep46</a></div>
       </div>
       <div class="row">
         <p class="title">InSleep46: Designing future dementia care through sleep data</p>
-        <p class="meta">Helix Centre<span class="sep">·</span><span class="date">7 Jan 26</span></p>
+        <p class="meta"><span class="pub">Helix Centre</span><span class="sep">·</span>Public report<span class="sep">·</span><span class="date">7 Jan 26</span></p>
         <div class="chips"><a class="chip" href="#">Dementia</a><a class="chip chip--project" href="#">InSleep46</a></div>
       </div>
     </div>
@@ -324,12 +334,11 @@
 
 <div class="verdict">
   <h2>Things to weigh up</h2>
-  <p><b>Labels are what make the current version long.</b> "Publisher", "Theme &amp; project", "Published" are repeated on every row and take a column of width each time. On a phone the values mostly explain themselves — a date looks like a date — so Options 1, 2, 4 and 5 drop the labels entirely. Option 3 keeps them and is the tallest as a result.</p>
-  <p><b>Clamping the title to two lines saves less than it looks.</b> Only a few of your titles run past two lines, but those are the ones that run to four or five. It also means the full title is only visible on the detail page, which is a real cost for scanning.</p>
-  <p><b>The 64px thumbnail isn't doing much work on a phone.</b> At that size a photo of a doorway or a bedside sensor reads as a grey smudge. Either make it bigger so it earns its space (Option 4), shrink it and put it beside the text (Option 2), or drop it (1 and 5).</p>
-  <p><b>Authors are the other big consumer.</b> Two lines of names on every row, which few readers scan on a phone. Options 2, 4 and 5 drop or demote them.</p>
-  <p><b>Touch targets:</b> inline text links like "Dementia › InSleep46" are small and sit close together. Option 5's chips are the only version comfortably tappable, which matters if filtering is something you want people doing on a phone.</p>
-  <p><b>If you want a recommendation:</b> Option 2. It's close to the shortest, keeps the imagery that makes the page feel like Helix rather than a bibliography, and keeps the publisher visible. Option 1 is the one to pick if brevity beats everything.</p>
+  <p><b>With the title untouchable, the labels are the biggest saving available.</b> "Published" and "Theme &amp; project" are repeated on every row and take a 104px column each time, pushing the values into a narrow strip that then wraps. On a phone the values largely explain themselves — a date looks like a date, a journal looks like a journal — which is why four of these drop the labels. Option 3 keeps them and stays the tallest.</p>
+  <p><b>Authors are the next biggest.</b> Two lines of names on every row, on a screen where almost nobody reads them. Cutting to one line, or dropping them, saves about as much as removing the photo.</p>
+  <p><b>The 64px photo doesn't earn its space.</b> A doorway or a bedside sensor at that size is a grey smudge. Either make it big enough to read (Option 4) or small and out of the way beside the text (Option 2).</p>
+  <p><b>Touch targets.</b> "Dementia › InSleep46" as inline links sits two small targets right next to each other, easy to mis-tap. Option 5's chips are the only comfortably tappable version, which matters if you want filtering used on a phone.</p>
+  <p><b>If you want a recommendation:</b> Option 2. It's near the shortest, keeps the imagery that makes the page feel like Helix rather than a reference list, and keeps publisher and date visible. Option 1 is the pick if brevity beats everything; Option 3 if you'd rather change as little as possible and just fix the alignment.</p>
 </div>
 
 </body>
