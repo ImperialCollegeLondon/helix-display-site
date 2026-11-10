@@ -1053,6 +1053,21 @@ a.filter-pill:focus {
     display: none;
   }
 
+  /* The highlight belongs to the whole card here, not to the cells. The card's
+     padding sits on the row, so tinting the cells left the padding white and
+     made it look as though only the text had been selected. :active covers the
+     press itself, since a tap doesn't leave a hover behind. */
+  .table-row-link:hover td,
+  .table-row-link:focus td {
+    background: transparent;
+  }
+
+  .table-row-link:hover,
+  .table-row-link:focus,
+  .table-row-link:active {
+    background: rgba(82, 187, 181, 0.12);
+  }
+
   .m3-table td.cell-thumb {
     display: flex;
     align-items: stretch;
