@@ -272,6 +272,27 @@ body.table-embed,
   box-shadow: none;
 }
 
+/* The intro above the search box. Sets out what the summaries are and that the
+   table can be filtered — neither of which the rows say for themselves. */
+.table-intro {
+  padding: 20px 20px 4px;
+}
+
+.table-intro p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+.table-intro p + p {
+  margin-top: 9px;
+}
+
+.table-intro b {
+  color: var(--helix-navy);
+}
+
 .table-card__header {
   display: flex;
   align-items: end;
@@ -995,6 +1016,15 @@ a.filter-pill:focus {
 
   .instructions-block {
     padding: 14px;
+  }
+
+  .table-intro {
+    padding: 15px 16px 2px;
+  }
+
+  .table-intro p {
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
   .table-card__header {
