@@ -185,8 +185,9 @@ function renderEntry(entry) {
     authors.hidden = !text;
   }
   // What it is and where it was published, directly under the authors: small
-  // and bold, with the journal linked when a link was given. Either part can
-  // be missing, and the line disappears if both are.
+  // and bold. Plain text, not a link — the link people want from here is the
+  // work itself, which has its own row lower down. Either part can be missing,
+  // and the line disappears if both are.
   const publisherLine = document.getElementById("entry-publisher");
 
   if (publisherLine) {
@@ -194,7 +195,6 @@ function renderEntry(entry) {
 
     const type = (entry.source_type || "").trim();
     const publisher = (entry.publisher || "").trim();
-    const journalHref = publicUrl(entry.journal_link);
 
     if (type) {
       publisherLine.appendChild(document.createTextNode(type));
@@ -209,11 +209,7 @@ function renderEntry(entry) {
         publisherLine.appendChild(separator);
       }
 
-      if (journalHref) {
-        renderAnchor(publisherLine, journalHref, publisher, { external: true });
-      } else {
-        publisherLine.appendChild(document.createTextNode(publisher));
-      }
+      publisherLine.appendChild(document.createTextNode(publisher));
     }
 
     publisherLine.hidden = !(type || publisher);

@@ -94,28 +94,19 @@ function publicUrl(value) {
 // authors under a title. Either part may be missing: a blog post often has no
 // publisher, and the type is only absent on very old entries.
 //
-// The name links out to the journal when one was given; the type never does.
+// Neither part is a link. The only link worth following from here is the work
+// itself, on its detail page; sending people to a journal homepage was noise.
 function publisherCell(item) {
   const publisher = (item.publisher || "").trim();
   const type = (item.source_type || "").trim();
-  const journal = (item.journal_link || "").trim();
 
   if (!publisher && !type) {
     return "-";
   }
 
-  let name = "";
-
-  const journalHref = publicUrl(journal);
-
-  if (publisher && journalHref) {
-    // The whole row opens the summary, so this link has to stop the click
-    // from reaching the row — see the handler below.
-    name = `<a class="pub-name pub-link" href="${escapeHtml(journalHref)}" target="_blank" rel="noopener noreferrer">${escapeHtml(publisher)}</a>`;
-  } else if (publisher) {
-    name = `<span class="pub-name">${escapeHtml(publisher)}</span>`;
-  }
-
+  const name = publisher
+    ? `<span class="pub-name">${escapeHtml(publisher)}</span>`
+    : "";
   const kind = type
     ? `<span class="pub-type">${escapeHtml(type)}</span>`
     : "";
@@ -239,21 +230,6 @@ function renderTable(allRows) {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         navigateToEntry(row.getAttribute("data-id"), row.getAttribute("data-ref"));
-      }
-    });
-  });
-
-  // The journal link sits inside a clickable row, so a click on it must not
-  // also open the summary. Keyboard users tab to it directly and Enter should
-  // follow the link rather than bubble up to the row.
-  document.querySelectorAll(".pub-link").forEach(link => {
-    link.addEventListener("click", event => {
-      event.stopPropagation();
-    });
-
-    link.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.stopPropagation();
       }
     });
   });

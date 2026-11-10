@@ -428,24 +428,6 @@ body.table-embed,
   display: block;
 }
 
-/* Magenta and underlined, matching the theme and project links. */
-a.pub-name {
-  color: var(--helix-pink);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-}
-
-a.pub-name:hover,
-a.pub-name:focus {
-  color: var(--helix-navy);
-}
-
-a.pub-name:focus-visible {
-  outline: 2px solid rgba(43, 58, 99, 0.45);
-  outline-offset: 2px;
-}
-
 .pub-type {
   display: block;
   margin-top: 3px;
@@ -683,16 +665,6 @@ a.pub-name:focus-visible {
 
 .entry-publisher[hidden] {
   display: none;
-}
-
-.entry-publisher a {
-  color: var(--helix-pink);
-  font-weight: 700;
-}
-
-.entry-publisher a:hover,
-.entry-publisher a:focus {
-  color: var(--helix-navy);
 }
 
 .entry-meta {
