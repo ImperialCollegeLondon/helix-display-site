@@ -147,7 +147,9 @@ function themeProjectCell(item) {
   // trails the theme on the first line, pointing down into the project. It is
   // decoration, not content: a screen reader should hear the two filters, not
   // a punctuation mark between them.
-  const chevron = '<span class="crumb" aria-hidden="true">\u203a</span>';
+  // A non-breaking space binds the chevron to the last word of the theme, so
+  // it can never be left alone on a line of its own when the theme wraps.
+  const chevron = '<span class="crumb" aria-hidden="true">\u00a0\u203a</span>';
 
   return parts
     .map((pill, index) => index === 0 && parts.length > 1
@@ -185,38 +187,48 @@ function authorsText(item) {
   return Array.isArray(item.helix_authors) ? item.helix_authors.join(", ") : "";
 }
 
-// Roughly two lines' worth of characters in the table's author column. Used as
-// a budget rather than a hard cut — see below.
-const AUTHORS_BUDGET = 90;
+// How many lines of names the table shows before trimming.
+const AUTHORS_LINES = 2;
 
-// A long author list has to be shortened somewhere, and cutting on width
-// alone lands mid-name ("Nur Amalina Che Bak…"), which reads as a mistake and
-// can misname someone. So the list is trimmed between names instead: whole
-// names are added while they fit the budget, and the rest become an ellipsis.
-// At least one name is always kept, however long it is.
-function authorsSummary(item) {
-  const text = authorsText(item).trim();
+// A long author list has to be shortened somewhere, and cutting on width alone
+// lands mid-name ("Nur Amalina Che Bak…"), which reads as a mistake and can
+// misname someone. Cutting on a character count instead is safe but wasteful:
+// it has to assume the narrowest case, so most lists stop well short of the
+// space available.
+//
+// So the full list is rendered and then measured: whole names are dropped from
+// the end, one at a time, until it fits two lines. The result fills the space
+// and only ever breaks between names. At least one name is always kept.
+function fitAuthors(element) {
+  const full = element.dataset.authors || "";
+  const names = full.split(",").map(name => name.trim()).filter(Boolean);
 
-  if (text.length <= AUTHORS_BUDGET) {
-    return text;
+  element.textContent = full;
+
+  if (names.length < 2) {
+    return;
   }
 
-  const names = text.split(",").map(name => name.trim()).filter(Boolean);
-  const kept = [];
-  let used = 0;
+  const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
 
-  for (const name of names) {
-    const extra = kept.length ? name.length + 2 : name.length;
+  if (!lineHeight) {
+    return;
+  }
 
-    if (kept.length && used + extra > AUTHORS_BUDGET) {
-      break;
+  // A pixel of tolerance: browsers round line boxes slightly differently.
+  const limit = lineHeight * AUTHORS_LINES + 1;
+
+  for (let count = names.length; count > 1; count -= 1) {
+    if (element.scrollHeight <= limit) {
+      return;
     }
 
-    kept.push(name);
-    used += extra;
+    element.textContent = `${names.slice(0, count - 1).join(", ")}…`;
   }
+}
 
-  return kept.length < names.length ? `${kept.join(", ")}…` : kept.join(", ");
+function fitAllAuthors() {
+  document.querySelectorAll(".cell-authors").forEach(fitAuthors);
 }
 
 function navigateToEntry(id, ref) {
@@ -259,7 +271,7 @@ function renderTable(allRows) {
       <td data-label="Title">
         <span class="cell-title">${escapeHtml(item.title || "Untitled")}</span>
         ${authorsText(item)
-          ? `<span class="cell-authors">${escapeHtml(authorsSummary(item))}</span>`
+          ? `<span class="cell-authors" data-authors="${escapeHtml(authorsText(item))}">${escapeHtml(authorsText(item))}</span>`
           : ""}
       </td>
       <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
@@ -297,6 +309,10 @@ function renderTable(allRows) {
       }
     });
   });
+
+  // Measured after the rows are in the document, so the real column width is
+  // known. Re-run on resize, since the width changes with it.
+  fitAllAuthors();
 
   renderPager(allRows.length, pageCount);
   scheduleEmbedResize();
@@ -524,6 +540,15 @@ async function loadSubmissions() {
     renderTable(getFilteredRows());
 
     document.getElementById("search-input")?.addEventListener("input", handleSearch);
+
+    let refitTimer = 0;
+    window.addEventListener("resize", () => {
+      window.clearTimeout(refitTimer);
+      refitTimer = window.setTimeout(() => {
+        fitAllAuthors();
+        scheduleEmbedResize();
+      }, 150);
+    });
   } catch (error) {
     console.error(error);
 

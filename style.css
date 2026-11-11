@@ -450,23 +450,24 @@ body.table-embed,
    after the others have taken what they want, which is never enough. */
 .m3-table th:nth-child(2),
 .m3-table td[data-label="Title"] {
-  width: 50%;
+  width: 47%;
 }
 
+/* Wide enough that "Imperial College NHS Trust Improvement Work" — the longest
+   theme — wraps to two lines rather than four. */
 .m3-table th:nth-child(3),
 .m3-table td[data-label="Theme & project"] {
-  width: 17%;
+  width: 21%;
 }
 
 .m3-table th:nth-child(4),
 .m3-table td[data-label="Published"] {
-  width: 23%;
+  width: 22%;
 }
 
 /* The chevron trailing a theme, pointing down to its project on the next
    line. Light grey so it doesn't compete with the two links it joins. */
 .crumb {
-  padding: 0 0 0 4px;
   color: var(--helix-gray);
 }
 
@@ -505,9 +506,9 @@ body.table-embed,
 
 /* Author lists can be long. Show at most two lines and let the browser add
    an ellipsis, so a paper with thirty authors doesn't dominate the row. */
-/* The list is shortened in script.js, between names rather than mid-word, so
-   there's no line clamp here — a clamp would put the ellipsis back in the
-   middle of someone's name. */
+/* The list is shortened in script.js by measuring: whole names are dropped
+   until it fits two lines. No line clamp here — a clamp cuts on width, which
+   puts the ellipsis back in the middle of someone's name. */
 .cell-authors {
   display: block;
   margin-top: 4px;
