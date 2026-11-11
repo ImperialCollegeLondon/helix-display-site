@@ -18,6 +18,16 @@
         </div>
 
         <div class="table-card__header">
+          <div class="table-organise">
+            <label for="organise-select">Organise by</label>
+            <select id="organise-select" class="m3-select">
+              <option value="date" selected>Date published</option>
+              <option value="theme">Theme</option>
+              <option value="project">Project</option>
+              <option value="type">Type of publication</option>
+            </select>
+          </div>
+
           <div class="table-actions">
             <label class="visually-hidden" for="search-input">Search summaries by title, author, project, theme or keyword</label>
             <input id="search-input" class="m3-input" type="search" placeholder="Search summaries" autocomplete="off" />

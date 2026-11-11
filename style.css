@@ -315,6 +315,55 @@ body.table-embed,
   margin-left: auto;
 }
 
+/* The "Organise by" control. Left of the search box, which sits right. */
+.table-organise {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.table-organise label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.m3-select {
+  min-height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+.m3-select:focus {
+  outline: 3px solid rgba(82, 187, 181, 0.28);
+  border-color: var(--helix-teal);
+}
+
+/* Group headings. Quieter than the column headings above them — they label a
+   run of rows, they aren't a second header row. */
+.group-heading th {
+  padding: 12px 20px;
+  background: var(--surface-soft);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--row-divider);
+  color: var(--helix-navy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.m3-table tbody tr.group-heading:first-child th {
+  border-top: 0;
+}
+
 /* Long placeholders should trail off cleanly rather than clip mid-word. */
 .m3-input::placeholder {
   text-overflow: ellipsis;
@@ -1135,6 +1184,26 @@ a.filter-pill:focus {
   .table-row-link:focus,
   .table-row-link:active {
     background: rgba(82, 187, 181, 0.12);
+  }
+
+  /* The card rows are a grid; a heading row isn't, so it opts out. */
+  .m3-table tr.group-heading {
+    display: block;
+    padding: 0;
+  }
+
+  .m3-table tr.group-heading th {
+    display: block;
+    padding: 10px 16px;
+  }
+
+  .table-organise {
+    width: 100%;
+  }
+
+  .table-organise .m3-select {
+    flex: 1;
+    min-width: 0;
   }
 
   .m3-table td.cell-thumb {

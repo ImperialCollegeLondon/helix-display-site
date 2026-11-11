@@ -5,7 +5,9 @@
 
   // The filters the table understands, in a fixed order so the same view
   // always produces the same shareable link.
-  const FILTER_KEYS = ["theme", "project", "type", "keyword"];
+  // "organise" isn't a filter, but it is part of the view worth sharing, so it
+  // travels in the hash alongside them.
+  const FILTER_KEYS = ["theme", "project", "type", "keyword", "organise"];
 
   function filterParams(params) {
     const filters = new URLSearchParams();

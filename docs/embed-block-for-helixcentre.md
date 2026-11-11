@@ -45,7 +45,7 @@ The changed lines are marked `CHANGED` / `NEW`.
 
     // Deep links: #001 (short reference), #entry=<response id>, and any
     // combination of #theme= #project= #type= #keyword=, which open the filtered table.
-    var filterKeys = ["theme", "project", "type", "keyword"];      // NEW
+    var filterKeys = ["theme", "project", "type", "keyword", "organise"];  // NEW
 
     function filterParams(params) {                                // NEW
       var filters = new URLSearchParams();                         // NEW

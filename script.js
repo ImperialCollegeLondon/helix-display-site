@@ -16,6 +16,70 @@ const FILTER_LABELS = {
   type: "Type"
 };
 
+// How the table is arranged. "date" is the default and leaves the table
+// exactly as it was before grouping existed: newest first, no headings.
+let groupBy = "date";
+
+const GROUP_LABELS = {
+  theme: "Theme",
+  project: "Project",
+  type: "Type of publication"
+};
+
+// Entries that don't belong to a group still have to go somewhere.
+const UNGROUPED = "Other";
+
+function groupValue(item) {
+  if (groupBy === "theme") {
+    return isRealTheme(item.theme) ? item.theme.trim() : UNGROUPED;
+  }
+
+  if (groupBy === "project") {
+    return isRealProject(item.subproject) ? item.subproject.trim() : UNGROUPED;
+  }
+
+  if (groupBy === "type") {
+    return (item.source_type || "").trim() || UNGROUPED;
+  }
+
+  return "";
+}
+
+// Groups run newest-first by their most recent entry, so the top of the page
+// is still the most recent work — the same impression the date order gives.
+// "Other" always sits last, whatever its dates. Within a group, newest first.
+function arrangeRows(rows) {
+  if (groupBy === "date") {
+    return rows;
+  }
+
+  const newest = new Map();
+
+  rows.forEach(item => {
+    const key = groupValue(item);
+    const date = item.publication_date_iso || item.recorded_date || "";
+
+    if (!newest.has(key) || date > newest.get(key)) {
+      newest.set(key, date);
+    }
+  });
+
+  return [...rows].sort((a, b) => {
+    const aKey = groupValue(a);
+    const bKey = groupValue(b);
+
+    if (aKey !== bKey) {
+      if (aKey === UNGROUPED) return 1;
+      if (bKey === UNGROUPED) return -1;
+      return newest.get(bKey).localeCompare(newest.get(aKey));
+    }
+
+    const aDate = a.publication_date_iso || a.recorded_date || "";
+    const bDate = b.publication_date_iso || b.recorded_date || "";
+    return bDate.localeCompare(aDate);
+  });
+}
+
 // Longer lists are split into pages so the embed doesn't grow indefinitely.
 const PAGE_SIZE = 15;
 let currentPage = 1;
@@ -255,13 +319,31 @@ function renderTable(allRows) {
     return;
   }
 
+  allRows = arrangeRows(allRows);
+
   const pageCount = Math.max(1, Math.ceil(allRows.length / PAGE_SIZE));
   currentPage = Math.min(Math.max(currentPage, 1), pageCount);
 
   const start = (currentPage - 1) * PAGE_SIZE;
   const rows = allRows.slice(start, start + PAGE_SIZE);
 
-  tbody.innerHTML = rows.map(item => `
+  // A heading is drawn whenever the group changes, and also on the first row
+  // of a page — so a group running across a page break is still labelled.
+  let lastGroup = null;
+
+  tbody.innerHTML = rows.map(item => {
+    let heading = "";
+
+    if (groupBy !== "date") {
+      const key = groupValue(item);
+
+      if (key !== lastGroup) {
+        heading = `<tr class="group-heading"><th colspan="4" scope="colgroup">${escapeHtml(key)}</th></tr>`;
+        lastGroup = key;
+      }
+    }
+
+    return heading + `
     <tr class="table-row-link" data-id="${escapeHtml(item.response_id)}" data-ref="${escapeHtml(item.ref || "")}" tabindex="0" role="link" aria-label="Open ${escapeHtml(item.title || "Untitled")}">
       <td data-label="Image" class="cell-thumb">
         ${item.thumbnail_path
@@ -277,7 +359,8 @@ function renderTable(allRows) {
       <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
       <td data-label="Published">${publishedCell(item)}</td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
 
   document.querySelectorAll(".table-row-link").forEach(row => {
     row.addEventListener("click", () => {
@@ -536,10 +619,38 @@ async function loadSubmissions() {
       activeFilters[key] = params.get(key) || null;
     });
 
+    const organise = document.getElementById("organise-select");
+    const requested = params.get("organise");
+
+    if (organise && requested && requested in GROUP_LABELS) {
+      groupBy = requested;
+      organise.value = requested;
+    }
+
     renderFilterBar();
     renderTable(getFilteredRows());
 
     document.getElementById("search-input")?.addEventListener("input", handleSearch);
+
+    if (organise) {
+
+      organise.addEventListener("change", () => {
+        groupBy = organise.value;
+        currentPage = 1;
+
+        const url = new URL(window.location.href);
+
+        if (groupBy === "date") {
+          url.searchParams.delete("organise");
+        } else {
+          url.searchParams.set("organise", groupBy);
+        }
+
+        window.history.replaceState({}, "", url);
+        window.HelixEmbed?.notifyNavigation?.();
+        renderTable(getFilteredRows());
+      });
+    }
 
     let refitTimer = 0;
     window.addEventListener("resize", () => {

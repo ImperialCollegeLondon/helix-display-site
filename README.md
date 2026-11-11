@@ -55,7 +55,7 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
 
     // Deep links: #001 (short reference), #entry=<response id>, and any
     // combination of #theme= #project= #type= #keyword=, which open the filtered table.
-    var filterKeys = ["theme", "project", "type", "keyword"];
+    var filterKeys = ["theme", "project", "type", "keyword", "organise"];
 
     function filterParams(params) {
       var filters = new URLSearchParams();
