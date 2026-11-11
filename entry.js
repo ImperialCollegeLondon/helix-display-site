@@ -296,12 +296,16 @@ function renderEntry(entry) {
       });
     }
 
-    // Optional, and checked the same way as the paper link: anything that
-    // isn't a plain http(s) address is ignored rather than made clickable.
+    // A video or other extra, listed separately from the work itself. It is
+    // never used as the "View full publication" link, even when no link to the
+    // work was given: a video about a paper is not the paper, and sending
+    // someone to it under that label would misrepresent what they're opening.
+    // Checked the same way as the paper link — anything that isn't a plain
+    // http(s) address is ignored rather than made clickable.
     const videoHref = publicUrl(entry.video_link);
 
     if (videoHref) {
-      addDetailRow(details, "Video", dd => {
+      addDetailRow(details, "Supplementary material", dd => {
         renderAnchor(dd, videoHref, entry.video_link, { external: true });
       });
     }
