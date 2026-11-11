@@ -275,18 +275,23 @@ body.table-embed,
 /* The intro above the search box. Sets out what the summaries are and that the
    table can be filtered — neither of which the rows say for themselves. */
 .table-intro {
-  padding: 20px 20px 20px;
+  padding: 20px 20px 24px;
 }
 
+/* Matches the body copy on helixcentre.com: navy rather than grey, a size up
+   from the table text, and capped in width. Long measures are hard to read —
+   the rest of the site keeps its paragraphs to a column rather than running
+   them the full width of the page. */
 .table-intro p {
+  max-width: 62ch;
   margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.97rem;
-  line-height: 1.65;
+  color: var(--text-primary);
+  font-size: 1.08rem;
+  line-height: 1.6;
 }
 
 .table-intro p + p {
-  margin-top: 9px;
+  margin-top: 16px;
 }
 
 .table-intro b {
@@ -1114,8 +1119,12 @@ a.filter-pill:focus {
   }
 
   .table-intro p {
-    font-size: 0.92rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .table-intro p + p {
+    margin-top: 12px;
   }
 
   .table-card__header {
