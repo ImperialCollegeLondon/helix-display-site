@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Organising the table — options</title>
+<style>
+  :root {
+    --helix-navy: #2b3a63;
+    --helix-teal: #52bbb5;
+    --helix-pink: #d0006f;
+    --helix-gray: #bbbcbc;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f5;
+    --surface-grey: #ececec;
+    --surface-soft: #fafafa;
+    --row-divider: #e6e6e6;
+    --border: #dddddd;
+    --border-strong: #b9b9b9;
+    --text-primary: var(--helix-navy);
+    --text-secondary: #555555;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px 16px 60px;
+    background: #f2f2f4;
+    color: var(--text-primary);
+    font-family: "Circular", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .page-note, .block, .verdict { max-width: 900px; margin-left: auto; margin-right: auto; }
+
+  .page-note {
+    margin-bottom: 26px;
+    padding: 13px 15px;
+    border-left: 4px solid var(--helix-teal);
+    background: #fff;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .page-note strong { color: var(--helix-navy); }
+
+  .block { margin-bottom: 30px; }
+
+  .block__label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--helix-pink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .block h2.block__title { margin: 0 0 4px; font-size: 1.02rem; line-height: 1.3; }
+
+  .block__meta {
+    margin: 0 0 10px;
+    color: var(--text-secondary);
+    font-size: 0.83rem;
+    line-height: 1.55;
+  }
+
+  .frame { background: var(--surface); border: 1px solid var(--border); }
+
+  .controls {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field { display: grid; gap: 5px; }
+  .field > span { color: var(--text-secondary); font-size: 0.78rem; font-weight: 700; }
+
+  select, .m3-input {
+    min-height: 40px;
+    padding: 0 11px;
+    border: 1px solid var(--border-strong);
+    border-radius: 0;
+    background: var(--surface);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 0.9rem;
+  }
+
+  .m3-input { min-width: 240px; }
+  .grow { margin-left: auto; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: var(--surface-grey); }
+  th, td { padding: 12px 14px; text-align: left; vertical-align: top; font-size: 0.9rem; }
+  th { color: var(--helix-navy); font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid var(--border); }
+  td { border-bottom: 1px solid var(--row-divider); line-height: 1.45; }
+  .thumb { display: block; width: 50px; height: 50px; background: var(--surface-alt); }
+  .cell-title { display: block; }
+  .pill { color: var(--helix-pink); text-decoration: underline; text-underline-offset: 0.16em; }
+  .crumb { color: var(--helix-gray); padding-left: 4px; }
+  .pub-name { display: block; }
+  .pub-type { display: block; margin-top: 3px; color: var(--text-secondary); font-size: 0.83rem; }
+  .date { white-space: nowrap; }
+
+  /* group headings */
+  .group th {
+    background: var(--surface-soft);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--row-divider);
+    color: var(--helix-navy);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* sortable headers */
+  th.sortable { cursor: pointer; }
+  th.sortable::after { content: " ⇅"; color: var(--helix-gray); font-weight: 400; }
+  th.sorted::after { content: " ↓"; color: var(--helix-pink); }
+
+  .verdict { padding: 16px 18px; background: #fff; border: 1px solid var(--border); }
+  .verdict h2 { margin: 0 0 9px; font-size: 1rem; }
+  .verdict p { margin: 0 0 9px; font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict b { color: var(--helix-navy); }
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  <strong>Three ways to let people organise the table.</strong>
+  All three use your real entries. Worth separating two different needs as you
+  look: <em>sorting</em> changes the order, <em>grouping</em> puts rows under
+  headings, and <em>filtering</em> (which the table already does) hides rows.
+  They solve different problems and can coexist.
+</div>
+
+<!-- ============ 1 ============ -->
+<section class="block">
+  <span class="block__label">Option 1</span>
+  <h2 class="block__title">"Organise by" — groups the rows under headings</h2>
+  <p class="block__meta">Closest to what you described. Choosing a theme regroups the whole table, newest first within each heading. Default stays "Date".</p>
+  <div class="frame">
+    <div class="controls">
+      <label class="field"><span>Organise by</span>
+        <select><option>Date published</option><option selected>Theme</option><option>Project</option><option>Type of publication</option></select>
+      </label>
+      <div class="grow"><input class="m3-input" type="search" placeholder="Search summaries" /></div>
+    </div>
+    <table>
+      <thead><tr><th></th><th>Title</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr class="group"><th colspan="4">Dementia</th></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker</span></td><td><a class="pill" href="#">InSleep46</a></td><td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span><span class="pub-type date">9 Jan 26</span></td></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span></td><td><a class="pill" href="#">InSleep46</a></td><td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span><span class="pub-type date">7 Jan 26</span></td></tr>
+        <tr class="group"><th colspan="4">Rehabilitation</th></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span></td><td><a class="pill" href="#">OnTrack</a></td><td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type">Academic paper</span><span class="pub-type date">27 Mar 26</span></td></tr>
+        <tr class="group"><th colspan="4">Healthy Ageing</th></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches</span></td><td><a class="pill" href="#">Head to Head</a></td><td><span class="pub-name">ACM UbiComp</span><span class="pub-type">Academic paper</span><span class="pub-type date">13 Oct 26</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="block">
+  <span class="block__label">Option 2</span>
+  <h2 class="block__title">Sortable column headings</h2>
+  <p class="block__meta">Click a heading to sort by it. Familiar from any spreadsheet, and adds nothing above the table.</p>
+  <div class="frame">
+    <div class="controls">
+      <div class="grow"><input class="m3-input" type="search" placeholder="Search summaries" /></div>
+    </div>
+    <table>
+      <thead><tr><th></th><th class="sortable">Title</th><th class="sortable sorted">Theme &amp; project</th><th class="sortable">Published</th></tr></thead>
+      <tbody>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker</span></td><td><a class="pill" href="#">Dementia</a><span class="crumb">›</span><br><a class="pill" href="#">InSleep46</a></td><td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span><span class="pub-type date">9 Jan 26</span></td></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">InSleep46: Designing future dementia care through sleep data</span></td><td><a class="pill" href="#">Dementia</a><span class="crumb">›</span><br><a class="pill" href="#">InSleep46</a></td><td><span class="pub-name">Helix Centre</span><span class="pub-type">Public report</span><span class="pub-type date">7 Jan 26</span></td></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Head-to-Head: A Comparative Validation of Ubiquitous Gait Sensing Approaches</span></td><td><a class="pill" href="#">Healthy Ageing</a><span class="crumb">›</span><br><a class="pill" href="#">Head to Head</a></td><td><span class="pub-name">ACM UbiComp</span><span class="pub-type">Academic paper</span><span class="pub-type date">13 Oct 26</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="block">
+  <span class="block__label">Option 3</span>
+  <h2 class="block__title">Dropdown filters above the table</h2>
+  <p class="block__meta">Not sorting but filtering — the difference being that the dropdowns <em>show people what the options are</em>. Clicking in the table only works if you can already see the value you want.</p>
+  <div class="frame">
+    <div class="controls">
+      <label class="field"><span>Theme</span>
+        <select><option>All themes</option><option>Dementia</option><option>Healthy Ageing</option><option>Rehabilitation</option><option>End of Life Care</option><option>Imperial College NHS Trust Improvement Work</option><option>PPIE</option></select>
+      </label>
+      <label class="field"><span>Project</span>
+        <select><option>All projects</option><option>InSleep46</option><option>Minder</option><option>OnTrack</option><option>Healthy Habits App</option><option>Head to Head</option><option>Waiting Well</option></select>
+      </label>
+      <label class="field"><span>Type</span>
+        <select><option>All types</option><option>Academic paper</option><option>Public report</option><option>Blog post</option><option>White paper</option><option>Conference poster</option></select>
+      </label>
+      <div class="grow"><input class="m3-input" type="search" placeholder="Search" /></div>
+    </div>
+    <table>
+      <thead><tr><th></th><th>Title</th><th>Theme &amp; project</th><th>Published</th></tr></thead>
+      <tbody>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Feedback from wearable devices accelerates recovery after breast cancer surgery</span></td><td><a class="pill" href="#">Rehabilitation</a><span class="crumb">›</span><br><a class="pill" href="#">OnTrack</a></td><td><span class="pub-name">European Journal of Surgical Oncology</span><span class="pub-type">Academic paper</span><span class="pub-type date">27 Mar 26</span></td></tr>
+        <tr><td><span class="thumb"></span></td><td><span class="cell-title">Remote detection of Alzheimer's disease pathology using a digital sleep and circadian biomarker</span></td><td><a class="pill" href="#">Dementia</a><span class="crumb">›</span><br><a class="pill" href="#">InSleep46</a></td><td><span class="pub-name">Alzheimer's &amp; Dementia</span><span class="pub-type">Academic paper</span><span class="pub-type date">9 Jan 26</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="verdict">
+  <h2>Things to weigh up</h2>
+  <p><b>Sorting and filtering solve different problems.</b> Filtering answers "show me the dementia work". Sorting answers "show me everything, arranged sensibly". Right now the table can only filter, and only if you spot a value in a row and click it.</p>
+  <p><b>Grouping (Option 1) suits a list this size.</b> With 13 entries, grouping by theme shows the whole collection at a glance — four or five headings, two or three rows each. That reads like a portfolio. It gets unwieldy past about fifty entries, when the headings scroll off and you'd want filtering instead.</p>
+  <p><b>Sortable headers (Option 2) are the cheapest to add</b> and the most familiar, but sorting alphabetically by theme is a strange thing to want. It mostly helps for Title and Published, and Published is already the default order.</p>
+  <p><b>Dropdowns (Option 3) fix a real discoverability gap.</b> Nobody can filter by "White paper" unless an entry on screen happens to be one. A dropdown lists every option whether or not it's visible. The cost is three controls above the table on every visit, on a page you've been working to shorten.</p>
+  <p><b>"Past and present work" isn't in the data.</b> Nothing records whether a project is ongoing or finished. There's an optional "if the work spans a period" field, but it's free text and mostly empty. If that grouping matters, it needs a new question on the form — worth deciding before building anything, since it changes what the control offers.</p>
+  <p><b>If you want a recommendation:</b> Option 1, with the dropdown defaulting to "Date published" so the page looks as it does now until someone chooses otherwise. It matches what you described, suits the size of the collection, and adds one control rather than three. Option 3 is the better answer later, once there are enough entries that people need to narrow rather than browse.</p>
+</div>
+
+</body>
+</html>
