@@ -275,7 +275,7 @@ body.table-embed,
 /* The intro above the search box. Sets out what the summaries are and that the
    table can be filtered — neither of which the rows say for themselves. */
 .table-intro {
-  padding: 20px 20px 4px;
+  padding: 20px 20px 20px;
 }
 
 .table-intro p {
@@ -1110,7 +1110,7 @@ a.filter-pill:focus {
   }
 
   .table-intro {
-    padding: 15px 16px 2px;
+    padding: 15px 16px 14px;
   }
 
   .table-intro p {
