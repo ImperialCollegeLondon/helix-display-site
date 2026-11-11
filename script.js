@@ -183,8 +183,15 @@ function publishedCell(item) {
   return name + kind + when;
 }
 
-function filterPill(type, value) {
-  return `<button type="button" class="filter-pill filter-pill--${type}" data-filter="${type}" data-value="${escapeHtml(value)}">${escapeHtml(value)}</button>`;
+// The label sits in its own span so the underline can be put on the label
+// alone, leaving room for a trailing chevron inside the button that isn't
+// underlined. Putting the chevron inside matters: as a separate element after
+// the button it could be pushed onto a line of its own, and a non-breaking
+// space couldn't prevent that, because the break was happening at the element
+// boundary rather than at a space.
+function filterPill(type, value, trailing = "") {
+  return `<button type="button" class="filter-pill filter-pill--${type}" data-filter="${type}" data-value="${escapeHtml(value)}">` +
+    `<span class="filter-pill__label">${escapeHtml(value)}</span>${trailing}</button>`;
 }
 
 // Theme and project in one column, read as a breadcrumb: a project sits inside
@@ -194,12 +201,21 @@ function filterPill(type, value) {
 // chevron, and a dash if there's neither.
 function themeProjectCell(item) {
   const parts = [];
+  const hasTheme = isRealTheme(item.theme);
+  const hasProject = isRealProject(item.subproject);
 
-  if (isRealTheme(item.theme)) {
-    parts.push(filterPill("theme", item.theme));
+  // The chevron trails the theme, pointing down into the project on the line
+  // below. Bound to the theme's last word by a non-breaking space, and only
+  // drawn when there is a project for it to point at.
+  const chevron = hasTheme && hasProject
+    ? '<span class="crumb" aria-hidden="true">\u00a0\u203a</span>'
+    : "";
+
+  if (hasTheme) {
+    parts.push(filterPill("theme", item.theme, chevron));
   }
 
-  if (isRealProject(item.subproject)) {
+  if (hasProject) {
     parts.push(filterPill("project", item.subproject));
   }
 
@@ -207,18 +223,8 @@ function themeProjectCell(item) {
     return "-";
   }
 
-  // Each on its own line, both starting at the same left edge. The chevron
-  // trails the theme on the first line, pointing down into the project. It is
-  // decoration, not content: a screen reader should hear the two filters, not
-  // a punctuation mark between them.
-  // A non-breaking space binds the chevron to the last word of the theme, so
-  // it can never be left alone on a line of its own when the theme wraps.
-  const chevron = '<span class="crumb" aria-hidden="true">\u00a0\u203a</span>';
-
   return parts
-    .map((pill, index) => index === 0 && parts.length > 1
-      ? `<span class="tp-part">${pill}${chevron}</span>`
-      : `<span class="tp-part">${pill}</span>`)
+    .map(pill => `<span class="tp-part">${pill}</span>`)
     .join("");
 }
 

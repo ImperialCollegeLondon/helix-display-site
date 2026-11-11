@@ -448,10 +448,16 @@ body.table-embed,
   font-size: 0.95rem;
   line-height: 1.45;
   text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The underline is on the label, not the button, so a trailing chevron inside
+   the button isn't underlined with it. */
+.filter-pill__label {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  cursor: pointer;
 }
 
 .filter-pill:hover,
