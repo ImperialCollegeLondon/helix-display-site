@@ -302,11 +302,12 @@ function renderEntry(entry) {
     // someone to it under that label would misrepresent what they're opening.
     // Checked the same way as the paper link — anything that isn't a plain
     // http(s) address is ignored rather than made clickable.
-    const videoHref = publicUrl(entry.video_link);
+    // Older data called this video_link, before the question was broadened.
+    const supplementaryHref = publicUrl(entry.supplementary_link || entry.video_link);
 
-    if (videoHref) {
+    if (supplementaryHref) {
       addDetailRow(details, "Supplementary material", dd => {
-        renderAnchor(dd, videoHref, entry.video_link, { external: true });
+        renderAnchor(dd, supplementaryHref, supplementaryHref, { external: true });
       });
     }
 

@@ -45,7 +45,6 @@ FIELD_LABEL_PATTERNS = {
     "authors": "author list",
     "acknowledgements": "acknowledgements",
     "link": "insert a link to the full paper",
-    "video_link": "if there is a video",
     "publisher": "who is publishing this piece of work",
     "diagram_caption": "if you uploaded a diagram",
     # The corresponding team member's name and email are handled separately in
@@ -55,7 +54,7 @@ FIELD_LABEL_PATTERNS = {
 # Newer questions, with no QID fallback. Listed so the run log can say when
 # one stops being found, instead of the field quietly going blank.
 OPTIONAL_FIELDS = [
-    "publisher", "video_link",
+    "publisher", "supplementary_link",
     "diagram_id", "diagram_caption", "date_range_note", "subproject",
 ]
 
@@ -270,6 +269,15 @@ def resolve_columns(header_row, label_row):
                 columns["diagram_name"] = field
             elif field.endswith("_Type"):
                 columns["diagram_type"] = field
+            continue
+
+        # Supplementary material: a video, a prototype, a set of images. The
+        # question has been worded "If there is a video…" and "If there is any
+        # supplementary material (for example a video, prototype, library of
+        # images, etc.)…", so it is matched on the phrase that identifies it
+        # rather than on how the sentence opens.
+        if "supplementary material" in norm or norm.startswith("if there is a video"):
+            columns.setdefault("supplementary_link", field)
             continue
 
         # Name and email are two rows of a single question, so both columns
@@ -546,7 +554,7 @@ def convert_row(row, columns, multi_maps):
     lay_summary = col("lay_summary")
     acknowledgements = col("acknowledgements")
     link = col("link")
-    video_link = col("video_link")
+    supplementary_link = col("supplementary_link")
     publisher = col("publisher")
     corresponding_team_member = col("corresponding_team_member")
     contact_email = col("contact_email")
@@ -618,7 +626,7 @@ def convert_row(row, columns, multi_maps):
         "contact_email": contact_email,
         "acknowledgements": acknowledgements,
         "link": link,
-        "video_link": video_link,
+        "supplementary_link": supplementary_link,
         "publisher": publisher,
         "keywords": keywords,
         "short_description": short_description,

@@ -95,7 +95,7 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 | "Keywords (select up to 5)" | Keyword chips |
 | "If available, please insert a link…" | Full paper / work |
 | "Who is publishing this piece of work?…" | Publisher column in the table, and "Published in" on the detail page |
-| "If there is a video to accompany this work…" (optional) | "Supplementary material" link at the bottom of the detail page. Never used as the **View full publication** link, even when no link to the work was given |
+| "If there is any supplementary material…" (optional) | "Supplementary material" link at the bottom of the detail page. Matched on the phrase "supplementary material" wherever it falls in the question. Never used as the **View full publication** link, even when no link to the work was given |
 | "Corresponding team member for publication / project" (one question, Name and Email rows) | Contact details |
 | "Please upload a photo…" | Header image |
 | "If a diagram is absolutely necessary…" (optional) | Diagram shown under the summary |
