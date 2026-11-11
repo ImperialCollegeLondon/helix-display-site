@@ -887,13 +887,13 @@ a.filter-pill:focus {
   display: none;
 }
 
-/* Navy and a size up from the body text around them. These label the few
-   facts readers come back for — contact, funding, who led the work — and in
-   grey at 0.84rem they read as fine print. Deliberately still smaller than
-   "Summary", which heads a section people actually read. */
+/* A size up from where they were, with more space above, but still grey:
+   these label the few facts readers come back for — contact, funding, who led
+   the work — and grey keeps them as labels rather than headings competing with
+   "Summary" above. */
 .entry-details dt {
   margin-top: 18px;
-  color: var(--helix-navy);
+  color: var(--text-secondary);
   font-size: 0.95rem;
   font-weight: 700;
 }
