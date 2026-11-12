@@ -279,7 +279,14 @@ function fitAuthors(element) {
     return;
   }
 
-  const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+  const styles = getComputedStyle(element);
+  let lineHeight = parseFloat(styles.lineHeight);
+
+  // "normal" doesn't parse to a number. Estimate from the font size rather
+  // than giving up, which would leave the list untrimmed.
+  if (!lineHeight) {
+    lineHeight = parseFloat(styles.fontSize) * 1.4;
+  }
 
   if (!lineHeight) {
     return;
@@ -299,6 +306,45 @@ function fitAuthors(element) {
 
 function fitAllAuthors() {
   document.querySelectorAll(".cell-authors").forEach(fitAuthors);
+}
+
+// The fit depends on the width of the column and on the font actually in use,
+// and both arrive late: the table is measured before Circular has finished
+// loading, and the embed can be resized by the parent page without the window
+// itself changing size. Either leaves lists sitting on three lines. So the
+// measurement is repeated once the font is ready, and whenever the table's
+// own width changes.
+function watchAuthorFit() {
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      fitAllAuthors();
+      scheduleEmbedResize();
+    });
+  }
+
+  const table = document.querySelector(".table-wrap");
+
+  if (!table || !("ResizeObserver" in window)) {
+    return;
+  }
+
+  let lastWidth = Math.round(table.getBoundingClientRect().width);
+
+  const observer = new ResizeObserver(() => {
+    const width = Math.round(table.getBoundingClientRect().width);
+
+    // Height changes constantly as rows are trimmed; only width matters here,
+    // and ignoring height keeps this from feeding itself.
+    if (width === lastWidth) {
+      return;
+    }
+
+    lastWidth = width;
+    fitAllAuthors();
+    scheduleEmbedResize();
+  });
+
+  observer.observe(table);
 }
 
 function navigateToEntry(id, ref) {
@@ -658,14 +704,7 @@ async function loadSubmissions() {
       });
     }
 
-    let refitTimer = 0;
-    window.addEventListener("resize", () => {
-      window.clearTimeout(refitTimer);
-      refitTimer = window.setTimeout(() => {
-        fitAllAuthors();
-        scheduleEmbedResize();
-      }, 150);
-    });
+    watchAuthorFit();
   } catch (error) {
     console.error(error);
 
