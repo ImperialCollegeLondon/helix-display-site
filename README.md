@@ -87,6 +87,14 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
       return filters ? base + "index.html?" + filters : base + "index.html";
     }
 
+    // Going back should land at the top of the list, not at whatever scroll
+    // position the page happened to be at. The browser restores that position
+    // itself after popstate, overriding anything we do, so restoration is
+    // turned off and this block handles it instead.
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
     // The Back button. Inside an iframe the browser's own history is
     // unreliable — on some mobile browsers, going back from a summary leaves
     // the site entirely instead of returning to the list. So this page keeps
@@ -96,6 +104,8 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
         { type: "helix-display-site:show", path: srcForHash(window.location.hash.slice(1)) },
         allowedOrigin
       );
+
+      iframe.scrollIntoView({ block: "start" });
     });
 
     window.addEventListener("message", function (event) {
