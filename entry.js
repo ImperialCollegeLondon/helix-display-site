@@ -92,6 +92,33 @@ async function loadEntry() {
   }
 }
 
+// The link back to the table restores the view the reader came from — same
+// filters, same arrangement, same search, same page. A plain "index.html"
+// would drop all of it and land them on the unfiltered first page.
+const VIEW_KEYS = ["theme", "project", "type", "keyword", "organise", "q", "page"];
+
+function restoreBackLink() {
+  const link = document.querySelector(".back-to-all-link");
+
+  if (!link) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const view = new URLSearchParams();
+
+  VIEW_KEYS.forEach(key => {
+    const value = params.get(key);
+
+    if (value) {
+      view.set(key, value);
+    }
+  });
+
+  const query = view.toString();
+  link.href = query ? `index.html?${query}` : "index.html";
+}
+
 function renderNotFound(message) {
   setText("entry-title", "Entry unavailable");
   setText("entry-meta", message);
@@ -364,4 +391,5 @@ function renderEntry(entry) {
   scheduleEmbedResize();
 }
 
+restoreBackLink();
 loadEntry();

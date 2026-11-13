@@ -75,6 +75,29 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
       if (filters) iframe.src = base + "index.html?" + filters;
     }
 
+    // Which page of the embed a given hash means.
+    function srcForHash(hash) {
+      if (/^\d+$/.test(hash)) {
+        return base + "entry.html?ref=" + encodeURIComponent(hash);
+      }
+      if (hash.indexOf("entry=") === 0) {
+        return base + "entry.html?id=" + encodeURIComponent(decodeURIComponent(hash.slice(6)));
+      }
+      var filters = hash ? filterParams(new URLSearchParams(hash)) : "";
+      return filters ? base + "index.html?" + filters : base + "index.html";
+    }
+
+    // The Back button. Inside an iframe the browser's own history is
+    // unreliable — on some mobile browsers, going back from a summary leaves
+    // the site entirely instead of returning to the list. So this page keeps
+    // its own entry per view and tells the frame what to show.
+    window.addEventListener("popstate", function () {
+      iframe.contentWindow.postMessage(
+        { type: "helix-display-site:show", path: srcForHash(window.location.hash.slice(1)) },
+        allowedOrigin
+      );
+    });
+
     window.addEventListener("message", function (event) {
       if (event.origin !== allowedOrigin) return;
       var data = event.data || {};
@@ -95,7 +118,18 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
         } else if (data.keyword) {
           newHash = "keyword=" + encodeURIComponent(data.keyword);
         }
-        history.replaceState(null, "", newHash ? "#" + newHash : window.location.pathname + window.location.search);
+
+        var url = newHash ? "#" + newHash : window.location.pathname + window.location.search;
+        var changed = ("#" + window.location.hash.slice(1)) !== ("#" + newHash);
+
+        // A new view gets its own history entry so Back returns to the list;
+        // adding or removing a filter just updates the current one, or the
+        // history would fill with near-identical entries.
+        if (data.history === "push" && changed) {
+          history.pushState(null, "", url);
+        } else {
+          history.replaceState(null, "", url);
+        }
 
         if (data.scrollToTop) {
           iframe.scrollIntoView({ block: "start", behavior: "smooth" });

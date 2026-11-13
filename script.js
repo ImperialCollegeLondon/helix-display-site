@@ -347,10 +347,47 @@ function watchAuthorFit() {
   observer.observe(table);
 }
 
+// Everything that describes "the list as the reader left it". Carried into the
+// entry URL so the link back can restore it: without this, returning from a
+// summary always landed on the unfiltered first page.
+const VIEW_KEYS = ["theme", "project", "type", "keyword", "organise", "q", "page"];
+
+function currentView() {
+  const view = new URLSearchParams();
+
+  Object.keys(activeFilters).forEach(key => {
+    if (activeFilters[key]) {
+      view.set(key, activeFilters[key]);
+    }
+  });
+
+  if (groupBy !== "date") {
+    view.set("organise", groupBy);
+  }
+
+  const query = document.getElementById("search-input")?.value.trim();
+
+  if (query) {
+    view.set("q", query);
+  }
+
+  if (currentPage > 1) {
+    view.set("page", String(currentPage));
+  }
+
+  return view;
+}
+
 function navigateToEntry(id, ref) {
-  window.location.href = ref
-    ? `entry.html?ref=${encodeURIComponent(ref)}`
-    : `entry.html?id=${encodeURIComponent(id)}`;
+  const params = currentView();
+
+  if (ref) {
+    params.set("ref", ref);
+  } else {
+    params.set("id", id);
+  }
+
+  window.location.href = `entry.html?${params.toString()}`;
 }
 
 function renderTable(allRows) {
@@ -670,6 +707,19 @@ async function loadSubmissions() {
     Object.keys(activeFilters).forEach(key => {
       activeFilters[key] = params.get(key) || null;
     });
+
+    const search = document.getElementById("search-input");
+    const query = params.get("q");
+
+    if (search && query) {
+      search.value = query;
+    }
+
+    const page = Number.parseInt(params.get("page") || "", 10);
+
+    if (Number.isFinite(page) && page > 1) {
+      currentPage = page;
+    }
 
     const organise = document.getElementById("organise-select");
     const requested = params.get("organise");

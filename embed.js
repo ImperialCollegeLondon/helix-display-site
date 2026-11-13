@@ -145,7 +145,11 @@
       page: "index",
       scrollToTop: settings.scrollToTop === undefined
         ? cameFromInsideFrame
-        : settings.scrollToTop
+        : settings.scrollToTop,
+      // Moving between the list and a summary is a page change, and should be
+      // something the browser's Back button can undo. Adding or removing a
+      // filter isn't — it would fill the history with near-identical entries.
+      history: settings.history || "push"
     };
 
     if (path === "entry.html" && (params.get("ref") || params.get("id"))) {
@@ -182,7 +186,7 @@
     scheduleResize,
     // Called by the table after a filter is added or removed, so the parent
     // page's address bar keeps matching what is on screen.
-    notifyNavigation: () => postNavigation({ scrollToTop: false })
+    notifyNavigation: () => postNavigation({ scrollToTop: false, history: "replace" })
   };
 
   window.addEventListener("load", scheduleResize);
@@ -190,8 +194,24 @@
   window.addEventListener("resize", scheduleResize);
 
   window.addEventListener("message", event => {
-    if (event.data && event.data.type === "helix-display-site:measure") {
+    const data = event.data || {};
+
+    if (data.type === "helix-display-site:measure") {
       scheduleResize();
+    }
+
+    // The parent page handles the Back button, because inside an iframe the
+    // browser's own history is unreliable — on some mobile browsers going back
+    // from a summary leaves the site altogether rather than returning to the
+    // list. So the parent tells this frame which view to show, and the frame
+    // navigates to it without adding another history entry of its own.
+    if (data.type === "helix-display-site:show" && typeof data.path === "string") {
+      const target = new URL(data.path, window.location.href);
+
+      if (target.origin === window.location.origin &&
+          target.href !== window.location.href) {
+        window.location.replace(target.href);
+      }
     }
   });
 
