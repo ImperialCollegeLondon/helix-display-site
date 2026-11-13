@@ -522,7 +522,7 @@ body.table-embed,
 }
 
 .m3-table th:nth-child(4),
-.m3-table td[data-label="Published"] {
+.m3-table td[data-label="Publication details"] {
   width: 22%;
 }
 
@@ -532,13 +532,25 @@ body.table-embed,
   color: var(--helix-gray);
 }
 
-/* Publisher column: the journal or publisher leads, with the kind of output
-   beneath it in the same quieter style as the authors under a title. */
-.pub-name {
+/* Publication details: what it is, where it was published, then when. The
+   type and the journal read as equals — both are facts about the work — so
+   they share the table's text size. */
+.pub-line {
   display: block;
 }
 
-.pub-type {
+.pub-line + .pub-line {
+  margin-top: 3px;
+}
+
+.pub-line .filter-pill {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* The date is the one part set smaller and quieter: it is scanned past rather
+   than read, and anchors the column without competing with the rest. */
+.pub-date {
   display: block;
   margin-top: 3px;
   color: var(--text-secondary);
@@ -546,18 +558,9 @@ body.table-embed,
   line-height: 1.4;
 }
 
-/* The type is a filter too, but a coarse one — there are only a handful of
-   values — so it stays at the quieter size of the line it sits on. */
-.pub-type .filter-pill {
-  font-size: inherit;
-  line-height: inherit;
-}
-
-/* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. The
-   header is kept on one line too, otherwise it sets a narrower column than the
-   dates below it need. */
-.cell-date,
-.m3-table th:last-child {
+/* "9 Jan 26" reads as one unit, so it shouldn't break across two lines. */
+.pub-date,
+.cell-date {
   white-space: nowrap;
 }
 
@@ -1227,23 +1230,22 @@ a.filter-pill:focus {
   /* Widths are a desktop-table idea; the cards are full width. */
   .m3-table td[data-label="Title"],
   .m3-table td[data-label="Theme & project"],
-  .m3-table td[data-label="Published"] {
+  .m3-table td[data-label="Publication details"] {
     width: auto;
   }
 
   /* The two meta lines. */
   .m3-table td[data-label="Theme & project"],
-  .m3-table td[data-label="Published"] {
+  .m3-table td[data-label="Publication details"] {
     margin-top: 6px;
     font-size: 0.85rem;
     line-height: 1.5;
   }
 
-  /* Publisher, type and date each keep their own line here too, as they do in
+  /* Type, journal and date each keep their own line here too, as they do in
      the desktop column — no separators needed when the line breaks do the
      work. */
-  .m3-table td[data-label="Published"] .pub-name,
-  .m3-table td[data-label="Published"] .pub-type {
+  .m3-table td[data-label="Publication details"] .pub-line {
     font-size: inherit;
   }
 

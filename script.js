@@ -165,22 +165,23 @@ function publishedCell(item) {
     return "-";
   }
 
-  const name = publisher
-    ? `<span class="pub-name">${escapeHtml(publisher)}</span>`
+  // Each part on its own line: what it is, where it was published, then when.
+  // No separators — the line breaks do that work, and a dot left at the end of
+  // a wrapped line reads as a typo. The date is the only part set smaller: it
+  // is the one people scan past rather than read.
+  const kind = type
+    ? `<span class="pub-line">${filterPill("type", type)}</span>`
     : "";
 
-  // Each part gets its own line: publisher, then the kind of output, then the
-  // date. No separators — the line breaks do that work, and a dot at the end
-  // of a wrapped line reads as a typo.
-  const kind = type
-    ? `<span class="pub-type">${filterPill("type", type)}</span>`
+  const name = publisher
+    ? `<span class="pub-line">${escapeHtml(publisher)}</span>`
     : "";
 
   const when = date
-    ? `<span class="pub-type cell-date">${escapeHtml(date)}</span>`
+    ? `<span class="pub-date">${escapeHtml(date)}</span>`
     : "";
 
-  return name + kind + when;
+  return kind + name + when;
 }
 
 // The label sits in its own span so the underline can be put on the label
@@ -446,7 +447,7 @@ function renderTable(allRows) {
           : ""}
       </td>
       <td data-label="Theme &amp; project">${themeProjectCell(item)}</td>
-      <td data-label="Published">${publishedCell(item)}</td>
+      <td data-label="Publication details">${publishedCell(item)}</td>
     </tr>
   `;
   }).join("");
