@@ -211,10 +211,11 @@ function renderEntry(entry) {
     authors.textContent = text;
     authors.hidden = !text;
   }
-  // What it is and where it was published, directly under the authors: small
-  // and bold. Plain text, not a link — the link people want from here is the
-  // work itself, which has its own row lower down. Either part can be missing,
-  // and the line disappears if both are.
+  // Where it was published, then what kind of thing it is — each on its own
+  // line, directly under the authors. Small and bold. Plain text, not a link:
+  // the link people want from here is the work itself, which has its own
+  // button above and row below. Either line can be missing, and the block
+  // disappears if both are.
   const publisherLine = document.getElementById("entry-publisher");
 
   if (publisherLine) {
@@ -223,20 +224,18 @@ function renderEntry(entry) {
     const type = (entry.source_type || "").trim();
     const publisher = (entry.publisher || "").trim();
 
-    if (type) {
-      publisherLine.appendChild(document.createTextNode(type));
+    if (publisher) {
+      const name = document.createElement("span");
+      name.className = "entry-publisher__name";
+      name.textContent = publisher;
+      publisherLine.appendChild(name);
     }
 
-    if (publisher) {
-      if (type) {
-        const separator = document.createElement("span");
-        separator.className = "entry-meta__separator";
-        separator.setAttribute("aria-hidden", "true");
-        separator.textContent = " · ";
-        publisherLine.appendChild(separator);
-      }
-
-      publisherLine.appendChild(document.createTextNode(publisher));
+    if (type) {
+      const kind = document.createElement("span");
+      kind.className = "entry-publisher__type";
+      kind.textContent = type;
+      publisherLine.appendChild(kind);
     }
 
     publisherLine.hidden = !(type || publisher);

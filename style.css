@@ -778,14 +778,21 @@ body.table-embed,
   display: none;
 }
 
-/* What it is and where it was published, under the authors. Small but bold,
-   so it reads as a label for the work rather than more author text. */
+/* Where it was published and what kind of thing it is, under the authors.
+   Small but bold, so it reads as a label for the work rather than more author
+   text. Each on its own line — the journal name is often long enough that
+   sharing a line with the type pushed one of them onto a second line anyway. */
 .entry-publisher {
   margin: 0 0 10px;
   color: var(--helix-navy);
   font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.5;
+}
+
+.entry-publisher__name,
+.entry-publisher__type {
+  display: block;
 }
 
 .entry-publisher[hidden] {
