@@ -428,5 +428,38 @@
     "diagram_path": "",
     "diagram_caption": "",
     "ref": "017"
+  },
+  {
+    "response_id": "R_8bUysBeTwRBhr9n",
+    "recorded_date": "2026-11-13 11:57:39",
+    "title": "Protocol for a feasibility study of OnTrack: a digital system for upper limb rehabilitation after stroke",
+    "source_type": "Academic paper",
+    "theme": "Rehabilitation",
+    "subproject": "OnTrack",
+    "led_or_contributed": "Led by Helix",
+    "authors": "Gianpaolo Fusari, Ella Gibbs, Lily Hoskin, Daniel Dickens, Melanie Leis, Elizabeth Taylor, Fiona Jones, Ara Darzi",
+    "helix_authors": [],
+    "project_date": "27 February 2020",
+    "publication_date_iso": "2020-02-27",
+    "date_range_note": "",
+    "corresponding_team_member": "Gianpaolo Fusari",
+    "contact_email": "g.fusari@imperial.ac.uk",
+    "acknowledgements": "The authors would like to acknowledge the contributions of\nthe members of the PPI group; Jennifer Crow and Sarah Daniels for their input on\nrecruitment and sample size calculations; and Gaby Judah for her help in defining\nsome aspects of the intervention.",
+    "link": "https://bmjopen.bmj.com/content/10/3/e034936",
+    "supplementary_link": "",
+    "publisher": "BMJ Open",
+    "keywords": [
+      "Feasibility study",
+      "Stroke rehabilitation",
+      "Wearables",
+      "Community-based care"
+    ],
+    "short_description": "This paper describes the protocol for a feasibility study of OnTrack, a digital system that uses a smartwatch and coaching to help people use their weaker arm more after a stroke, with the aim of informing a future larger trial.",
+    "lay_summary": "Arm weakness affects around 450,000 stroke survivors in the UK and is a major cause of lost independence. Recovery depends on repeatedly using the affected arm, but research shows that people often struggle to know what to do, how much to do, and whether they are making progress. Many feel unsupported after leaving hospital.\n\nOnTrack was developed with input from more than 100 stroke survivors, carers and therapists. It combines a smartwatch app that tracks arm movement in real time with regular coaching sessions to build self-management skills. The idea is to help people see their own activity, stay motivated, and gradually do more with their weaker arm during everyday life, not just in therapy sessions.\n\nThis paper sets out the protocol for a feasibility study to test whether OnTrack could be evaluated in a full randomised controlled trial. A minimum of 12 participants will be recruited from stroke units at an NHS hospital in London. Each person will use OnTrack for 12 weeks, wearing a smartwatch on their affected arm during waking hours. The watch displays how many minutes of arm movement they have completed each day, and sends motivational messages. Every two weeks, a researcher meets with the participant (in person or remotely) to review progress and provide coaching on topics such as problem solving, goal setting and reflection.\n\nParticipants will complete assessments at the start, halfway through and at the end of the study. These cover arm function, arm impairment, pain, cognition, quality of life and how confident people feel managing their own health. An independent team will run a process evaluation alongside the trial, observing sessions and interviewing participants to understand how the intervention works in practice and what could be improved.\n\nThe study is not designed to prove whether OnTrack improves arm recovery. It is a feasibility study, so the main questions are practical: can enough people be recruited, do they stick with the intervention, is the technology usable, and are the study procedures acceptable to patients and therapists? The answers will shape the design of a larger trial. Because this is a single-arm study at one site, it will not tell us anything about randomisation or how results might vary elsewhere.",
+    "image_path": "images/R_8bUysBeTwRBhr9n.jpg",
+    "thumbnail_path": "images/R_8bUysBeTwRBhr9n-thumb.jpg",
+    "diagram_path": "",
+    "diagram_caption": "",
+    "ref": "018"
   }
 ]
