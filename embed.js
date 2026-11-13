@@ -180,10 +180,54 @@
     window.parent.postMessage(message, "*");
   }
 
+  // Inside the frame, navigation must not create history entries of its own:
+  // the parent page keeps one entry per view, and a second entry from here
+  // means the reader has to press Back twice to get out of a summary.
+  // Standalone (not embedded) the browser's own history is the only one there
+  // is, so it is left alone.
+  function goTo(href) {
+    if (isEmbedded()) {
+      window.location.replace(href);
+    } else {
+      window.location.href = href;
+    }
+  }
+
+  // Links inside the frame — the back link, keyword chips, theme and project
+  // links on a summary — are caught here so they behave the same way. Links
+  // that open elsewhere (the publication, supplementary material) are left
+  // alone: they carry target="_blank" and never touch this frame's history.
+  document.addEventListener("click", event => {
+    if (!isEmbedded() || event.defaultPrevented || event.button !== 0) {
+      return;
+    }
+
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest?.("a[href]");
+
+    if (!link || link.target || link.hasAttribute("download")) {
+      return;
+    }
+
+    const url = new URL(link.href, window.location.href);
+
+    if (url.origin !== window.location.origin || url.href === window.location.href) {
+      return;
+    }
+
+    event.preventDefault();
+    goTo(url.href);
+  });
+
   window.HelixEmbed = {
     messageType,
     navigateMessageType,
     scheduleResize,
+    isEmbedded,
+    goTo,
     // Called by the table after a filter is added or removed, so the parent
     // page's address bar keeps matching what is on screen.
     notifyNavigation: () => postNavigation({ scrollToTop: false, history: "replace" })

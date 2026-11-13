@@ -388,7 +388,14 @@ function navigateToEntry(id, ref) {
     params.set("id", id);
   }
 
-  window.location.href = `entry.html?${params.toString()}`;
+  const href = `entry.html?${params.toString()}`;
+
+  // Replaces rather than pushes when embedded — see goTo in embed.js.
+  if (window.HelixEmbed?.goTo) {
+    window.HelixEmbed.goTo(href);
+  } else {
+    window.location.href = href;
+  }
 }
 
 function renderTable(allRows) {

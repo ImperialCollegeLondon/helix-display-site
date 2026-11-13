@@ -77,7 +77,7 @@ Every filtered view is a filtered version of the **normal table**, with removabl
 
 `#001` style references are permanent — see "Short references" below.
 
-**Returning to the list keeps the view.** Opening a summary carries the filters, arrangement, search text and page number into its URL, and the "All publication summaries" link rebuilds them — so a reader who filtered to Dementia, read something and came back is still looking at Dementia. The browser's Back button does the same, but only where the embed block on helixcentre.com has been updated: inside an iframe, browsers don't reliably record navigation, so the parent page has to keep the history itself. Until that block is updated, Back from a summary can leave the site entirely.
+**Returning to the list keeps the view.** Opening a summary carries the filters, arrangement, search text and page number into its URL, and the "All publication summaries" link rebuilds them — so a reader who filtered to Dementia, read something and came back is still looking at Dementia. The browser's Back button does the same. That takes both halves working together: the embed block on helixcentre.com keeps one history entry per view, and this site navigates with `replace` rather than `push` while embedded, so it doesn't add a second entry of its own — two entries per view meant Back had to be pressed twice to leave a summary. Opened directly rather than embedded, the site navigates normally and the browser's own history applies.
 
 ---
 
