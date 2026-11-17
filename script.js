@@ -10,6 +10,7 @@ const activeFilters = {
   theme: [],
   project: [],
   family: [],
+  discipline: [],
   type: [],
   keyword: []
 };
@@ -18,6 +19,7 @@ const FILTER_LABELS = {
   theme: "Theme",
   project: "Project",
   family: "Project family",
+  discipline: "Discipline",
   type: "Type of publication",
   keyword: "Keyword"
 };
@@ -28,13 +30,16 @@ const FILTER_VALUES = {
   theme: item => (isRealTheme(item.theme) ? [item.theme.trim()] : []),
   project: item => (isRealProject(item.subproject) ? [item.subproject.trim()] : []),
   family: item => (item.project_family || "").trim() ? [item.project_family.trim()] : [],
+  // A list whether the question was a tick-list or a single choice — the
+  // build script evens that out.
+  discipline: item => (Array.isArray(item.disciplines) ? item.disciplines : []),
   type: item => ((item.source_type || "").trim() ? [item.source_type.trim()] : []),
   keyword: item => (Array.isArray(item.keywords) ? item.keywords : [])
 };
 
 // The filters menu offers these, in this order. "family" is deliberately not
 // shown anywhere else on the page — it exists only as a way of narrowing.
-const MENU_FILTERS = ["theme", "project", "family", "type"];
+const MENU_FILTERS = ["theme", "project", "family", "discipline", "type"];
 
 function hasFilters() {
   return Object.values(activeFilters).some(values => values.length);

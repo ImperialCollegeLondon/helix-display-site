@@ -62,6 +62,10 @@ OPTIONAL_FIELDS = [
 MULTI_SELECT_PATTERNS = {
     "keywords": "keywords",
     "helix_authors": "helix authors",
+    # Disciplines are resolved by their own rule in resolve_columns, which
+    # copes with the question being either a tick-list or a single choice.
+    # Listed here so the map exists and the run log reports what it found.
+    "disciplines": "disciplines",
 }
 
 # Fallbacks if a label can't be matched (QIDs seen in the live Helix survey)
@@ -269,6 +273,20 @@ def resolve_columns(header_row, label_row):
                 columns["diagram_name"] = field
             elif field.endswith("_Type"):
                 columns["diagram_type"] = field
+            continue
+
+        # Discipline. This may be a tick-list ("Discipline - Design", one
+        # column per choice) or a single choice (one column), and the question
+        # could be worded "Discipline", "Disciplines" or "Which disciplines
+        # were involved?". Both shapes are handled here rather than assuming
+        # one: a tick-list column carries its choice after " - ".
+        if "discipline" in norm:
+            if " - " in label:
+                choice_label = label.rsplit(" - ", 1)[-1].strip()
+                if choice_label:
+                    multi_maps["disciplines"][field] = choice_label
+            else:
+                columns.setdefault("discipline", field)
             continue
 
         # The project family — a grouping above individual projects. Matched
@@ -565,6 +583,14 @@ def convert_row(row, columns, multi_maps):
     link = col("link")
     supplementary_link = col("supplementary_link")
     project_family = col("project_family")
+
+    # Either shape of the discipline question ends up as a list, so the site
+    # only ever has one thing to read.
+    disciplines = extract_multi_select(row, multi_maps.get("disciplines", {}))
+    single_discipline = col("discipline")
+
+    if not disciplines and single_discipline:
+        disciplines = [single_discipline]
     publisher = col("publisher")
     corresponding_team_member = col("corresponding_team_member")
     contact_email = col("contact_email")
@@ -638,6 +664,7 @@ def convert_row(row, columns, multi_maps):
         "link": link,
         "supplementary_link": supplementary_link,
         "project_family": project_family,
+        "disciplines": disciplines,
         "publisher": publisher,
         "keywords": keywords,
         "short_description": short_description,
