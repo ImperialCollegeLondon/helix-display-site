@@ -867,6 +867,13 @@ async function loadSubmissions() {
       currentPage = page;
     }
 
+    renderFilterBar();
+    renderFilterMenu();
+    setUpFilterMenu();
+    renderTable(getFilteredRows());
+
+    document.getElementById("search-input")?.addEventListener("input", handleSearch);
+
     watchAuthorFit();
   } catch (error) {
     console.error(error);
