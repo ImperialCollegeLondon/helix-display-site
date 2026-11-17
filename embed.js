@@ -5,9 +5,7 @@
 
   // The filters the table understands, in a fixed order so the same view
   // always produces the same shareable link.
-  // "organise" isn't a filter, but it is part of the view worth sharing, so it
-  // travels in the hash alongside them.
-  const FILTER_KEYS = ["theme", "project", "family", "discipline", "type", "keyword", "organise"];
+  const FILTER_KEYS = ["theme", "project", "family", "discipline", "type", "keyword"];
 
   // getAll, not get: a filter can hold several values, carried as repeated
   // parameters (theme=Dementia&theme=Rehabilitation).

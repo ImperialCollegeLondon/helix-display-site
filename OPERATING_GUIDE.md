@@ -41,10 +41,6 @@ As a safety net the build refuses to publish an *empty* table over a non-empty o
 
 ## What readers see
 
-**An "Organise by" control** sits above the table. It defaults to **Date published**, which leaves the table exactly as it was before: newest first, no headings. Choosing Theme, Project or Type of publication regroups the rows under headings instead. Groups run newest-first by their most recent entry, so the top of the page is still the most recent work; "Other" — entries with no theme, no project or no type — always sits last. A heading repeats at the top of a page when a group runs across a page break.
-
-The choice is in the URL as `?organise=theme`, and travels through the embed as `#organise=theme`, so a grouped view can be shared.
-
 **An intro** sits above the search box, saying what the summaries are and that the table can be filtered — neither of which the rows say for themselves. The wording is plain text in `index.html` (`.table-intro`), so it can be edited without touching any logic.
 
 **The table** lists a square thumbnail, then Title (with the authors beneath, trimmed to roughly two lines), Theme & project, and Publication details, newest publication first. The Publication details column carries the kind of output, the journal or publisher, and the date, each on its own line — the first two at the table's text size, the date smaller and grey. Theme and project share one column, each on its own line and both flush left, with a chevron trailing the theme and pointing down to the project ("Dementia ›" / "Minder"). The chevron lives inside the theme's own button, bound to its last word — as a separate element after the button it got pushed onto a line of its own whenever a long theme wrapped, and a non-breaking space couldn't prevent that because the break fell at the element boundary rather than at a space. It is only drawn when there is a project for it to point at. Both halves are still separate clickable filters; if only one of the two applies, only that one is shown, and the column shows a dash if neither does. Any of the three parts can be missing and the rest closes up; the column shows a dash only if all three are.

@@ -55,7 +55,7 @@ The block below goes on the `helixcentre.com` publications page. Replace the who
 
     // Deep links: #001 (short reference), #entry=<response id>, and any
     // combination of #theme= #project= #type= #keyword=, which open the filtered table.
-    var filterKeys = ["theme", "project", "family", "discipline", "type", "keyword", "organise"];
+    var filterKeys = ["theme", "project", "family", "discipline", "type", "keyword"];
 
     // getAll, not get: a filter can hold several values, carried as repeated
     // parameters (theme=Dementia&theme=Rehabilitation).

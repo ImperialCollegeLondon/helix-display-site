@@ -95,7 +95,7 @@ async function loadEntry() {
 // The link back to the table restores the view the reader came from — same
 // filters, same arrangement, same search, same page. A plain "index.html"
 // would drop all of it and land them on the unfiltered first page.
-const VIEW_KEYS = ["theme", "project", "type", "keyword", "organise", "q", "page"];
+const VIEW_KEYS = ["theme", "project", "family", "discipline", "type", "keyword", "q", "page"];
 
 function restoreBackLink() {
   const link = document.querySelector(".back-to-all-link");
