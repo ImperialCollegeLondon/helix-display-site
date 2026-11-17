@@ -16,11 +16,11 @@ const activeFilters = {
 };
 
 const FILTER_LABELS = {
+  family: "Family",
   theme: "Theme",
   project: "Project",
-  family: "Project family",
   discipline: "Discipline",
-  type: "Type of publication",
+  type: "Type of Publication",
   keyword: "Keyword"
 };
 
@@ -39,7 +39,7 @@ const FILTER_VALUES = {
 
 // The filters menu offers these, in this order. "family" is deliberately not
 // shown anywhere else on the page — it exists only as a way of narrowing.
-const MENU_FILTERS = ["theme", "project", "family", "discipline", "type"];
+const MENU_FILTERS = ["family", "theme", "project", "discipline", "type"];
 
 function hasFilters() {
   return Object.values(activeFilters).some(values => values.length);
@@ -674,9 +674,13 @@ function countsFor(key) {
   // Options with nothing behind them are left out entirely — the menu only
   // offers what exists. A value already ticked stays, even at zero, or it
   // would vanish from under the reader.
+  //
+  // Sorted alphabetically rather than by count: a reader looking for a
+  // particular theme wants to know where to find it, and an order that
+  // shuffles as filters are ticked makes that impossible.
   return [...counts.entries()]
     .filter(([value, n]) => n > 0 || activeFilters[key].includes(value))
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    .sort((a, b) => a[0].localeCompare(b[0], "en", { sensitivity: "base" }));
 }
 
 function renderFilterMenu() {
