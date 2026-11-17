@@ -18,6 +18,12 @@
         </div>
 
         <div class="table-card__header">
+          <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">
+            Filters
+            <span id="filters-count" class="filters-toggle__count" hidden>0</span>
+            <span class="filters-toggle__chevron" aria-hidden="true"></span>
+          </button>
+
           <div class="table-organise">
             <label for="organise-select">Organise by</label>
             <select id="organise-select" class="m3-select">
@@ -31,6 +37,15 @@
           <div class="table-actions">
             <label class="visually-hidden" for="search-input">Search summaries by title, author, project, theme or keyword</label>
             <input id="search-input" class="m3-input" type="search" placeholder="Search summaries" autocomplete="off" />
+          </div>
+        </div>
+
+        <div id="filters-panel" class="filters-panel" role="region" aria-label="Filters" hidden>
+          <div id="filter-groups" class="filters-panel__groups"></div>
+          <div class="filters-panel__footer">
+            <span id="filter-summary" class="filters-panel__summary"></span>
+            <button id="filters-clear" class="filters-panel__clear" type="button">Clear all</button>
+            <button id="filters-done" class="filters-panel__done" type="button">Done</button>
           </div>
         </div>
 

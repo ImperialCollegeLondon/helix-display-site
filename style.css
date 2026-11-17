@@ -321,6 +321,163 @@ body.table-embed,
   margin-left: auto;
 }
 
+/* The Filters button, and the panel it opens. The panel pushes the table down
+   rather than floating over it: inside an iframe a floating panel would be cut
+   off at the frame's edge. */
+.filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 15px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--helix-navy);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filters-toggle:hover {
+  border-color: var(--helix-navy);
+}
+
+.filters-toggle[aria-expanded="true"] {
+  border-color: var(--helix-navy);
+}
+
+.filters-toggle:focus-visible {
+  outline: 3px solid rgba(82, 187, 181, 0.35);
+  outline-offset: 2px;
+}
+
+.filters-toggle__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 6px;
+  background: var(--helix-navy);
+  color: var(--surface);
+  font-size: 0.76rem;
+}
+
+.filters-toggle__count[hidden] {
+  display: none;
+}
+
+/* A chevron drawn from a border, so there's no glyph to go missing. */
+.filters-toggle__chevron {
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-right: 2px solid var(--helix-gray);
+  border-bottom: 2px solid var(--helix-gray);
+  transform: rotate(45deg);
+}
+
+.filters-toggle[aria-expanded="true"] .filters-toggle__chevron {
+  margin-top: 2px;
+  transform: rotate(225deg);
+}
+
+.filters-panel {
+  padding: 20px 20px 16px;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.filters-panel[hidden] {
+  display: none;
+}
+
+.filters-panel__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 26px;
+}
+
+.filter-group h3 {
+  margin: 0 0 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--border);
+  color: var(--helix-navy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.filter-option {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 5px 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.filter-option input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--helix-navy);
+  cursor: pointer;
+}
+
+.filter-option__count {
+  margin-left: auto;
+  color: var(--helix-gray);
+  font-size: 0.84rem;
+}
+
+.filters-panel__footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.filters-panel__summary {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.filters-panel__clear,
+.filter-bar__clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--helix-pink);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.filters-panel__done {
+  margin-left: auto;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--helix-navy);
+  border-radius: var(--radius);
+  background: var(--helix-navy);
+  color: var(--surface);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* The "Organise by" control. Left of the search box, which sits right. */
 .table-organise {
   display: flex;
@@ -643,6 +800,20 @@ body.table-embed,
 .filter-chip--project {
   background: #ffe8b3;
   color: var(--helix-navy);
+}
+
+.filter-chip--family {
+  background: rgba(155, 34, 66, 0.12);
+  color: var(--helix-navy);
+}
+
+.filter-chip--family .filter-chip__remove {
+  background: rgba(43, 58, 99, 0.14);
+  color: var(--helix-navy);
+}
+
+.filter-chip--family .filter-chip__remove:hover {
+  background: rgba(43, 58, 99, 0.24);
 }
 
 /* The active-type chip, in the same light family as the other two. */
@@ -1209,6 +1380,20 @@ a.filter-pill:focus {
   .m3-table tr.group-heading th {
     display: block;
     padding: 10px 16px;
+  }
+
+  .filters-toggle {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .filters-panel {
+    padding: 16px;
+  }
+
+  .filters-panel__groups {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .table-organise {

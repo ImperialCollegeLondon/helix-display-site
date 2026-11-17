@@ -37,12 +37,16 @@ Everything else — the resize behaviour, the `#001` short-reference links, the 
 
     // Deep links: #001 (short reference), #entry=<response id>, and any
     // combination of #theme= #project= #type= #keyword=, which open the filtered table.
-    var filterKeys = ["theme", "project", "type", "keyword", "organise"];
+    var filterKeys = ["theme", "project", "family", "type", "keyword", "organise"];
 
+    // getAll, not get: a filter can hold several values, carried as repeated
+    // parameters (theme=Dementia&theme=Rehabilitation).
     function filterParams(params) {
       var filters = new URLSearchParams();
       filterKeys.forEach(function (key) {
-        if (params.get(key)) filters.set(key, params.get(key));
+        params.getAll(key).filter(Boolean).forEach(function (value) {
+          filters.append(key, value);
+        });
       });
       return filters.toString();
     }

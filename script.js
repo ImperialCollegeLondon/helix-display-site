@@ -2,19 +2,43 @@ let allSubmissions = [];
 
 // Active table filters. Each maps to a URL parameter of the same name so a
 // filtered view can be linked to directly.
+// Each filter holds a set of chosen values, not one value: the filters menu
+// lets several be ticked at once. Within a filter the values are "any of"
+// (Dementia or Rehabilitation); between filters they combine (Dementia AND a
+// blog post).
 const activeFilters = {
-  keyword: null,
-  theme: null,
-  project: null,
-  type: null
+  theme: [],
+  project: [],
+  family: [],
+  type: [],
+  keyword: []
 };
 
 const FILTER_LABELS = {
-  keyword: "Keyword",
   theme: "Theme",
   project: "Project",
-  type: "Type"
+  family: "Project family",
+  type: "Type of publication",
+  keyword: "Keyword"
 };
+
+// What each filter reads off an entry. Keywords are a list on the entry, so
+// that one matches if any keyword matches.
+const FILTER_VALUES = {
+  theme: item => (isRealTheme(item.theme) ? [item.theme.trim()] : []),
+  project: item => (isRealProject(item.subproject) ? [item.subproject.trim()] : []),
+  family: item => (item.project_family || "").trim() ? [item.project_family.trim()] : [],
+  type: item => ((item.source_type || "").trim() ? [item.source_type.trim()] : []),
+  keyword: item => (Array.isArray(item.keywords) ? item.keywords : [])
+};
+
+// The filters menu offers these, in this order. "family" is deliberately not
+// shown anywhere else on the page — it exists only as a way of narrowing.
+const MENU_FILTERS = ["theme", "project", "family", "type"];
+
+function hasFilters() {
+  return Object.values(activeFilters).some(values => values.length);
+}
 
 // How the table is arranged. "date" is the default and leaves the table
 // exactly as it was before grouping existed: newest first, no headings.
@@ -479,7 +503,7 @@ function renderTable(allRows) {
       event.stopPropagation();
       const type = pill.getAttribute("data-filter");
       const value = pill.getAttribute("data-value");
-      setFilter(type, activeFilters[type] === value ? null : value);
+      setFilter(type, activeFilters[type].includes(value) ? null : value);
     });
 
     pill.addEventListener("keydown", event => {
@@ -571,23 +595,15 @@ function renderPager(totalRows, pageCount) {
 function getFilteredRows() {
   let rows = allSubmissions;
 
-  if (activeFilters.keyword) {
-    rows = rows.filter(item =>
-      Array.isArray(item.keywords) && item.keywords.includes(activeFilters.keyword)
-    );
-  }
+  Object.keys(activeFilters).forEach(key => {
+    const chosen = activeFilters[key];
 
-  if (activeFilters.theme) {
-    rows = rows.filter(item => item.theme === activeFilters.theme);
-  }
-
-  if (activeFilters.project) {
-    rows = rows.filter(item => item.subproject === activeFilters.project);
-  }
-
-  if (activeFilters.type) {
-    rows = rows.filter(item => item.source_type === activeFilters.type);
-  }
+    if (chosen.length) {
+      rows = rows.filter(item =>
+        FILTER_VALUES[key](item).some(value => chosen.includes(value))
+      );
+    }
+  });
 
   const query = document.getElementById("search-input")?.value.trim().toLowerCase();
 
@@ -617,6 +633,189 @@ function getFilteredRows() {
   return rows;
 }
 
+// ---------------------------------------------------------------------------
+// The filters menu
+// ---------------------------------------------------------------------------
+
+// Counts are taken against everything *except* the filter being counted, so a
+// number never contradicts what ticking it would give you: with Dementia
+// ticked, the theme counts still show what each other theme would return.
+function countsFor(key) {
+  const others = Object.keys(activeFilters).filter(name => name !== key);
+
+  const rows = allSubmissions.filter(item =>
+    others.every(name => {
+      const chosen = activeFilters[name];
+      return !chosen.length || FILTER_VALUES[name](item).some(value => chosen.includes(value));
+    })
+  );
+
+  const counts = new Map();
+
+  allSubmissions.forEach(item => {
+    FILTER_VALUES[key](item).forEach(value => {
+      if (!counts.has(value)) {
+        counts.set(value, 0);
+      }
+    });
+  });
+
+  rows.forEach(item => {
+    FILTER_VALUES[key](item).forEach(value => {
+      counts.set(value, counts.get(value) + 1);
+    });
+  });
+
+  // Options with nothing behind them are left out entirely — the menu only
+  // offers what exists. A value already ticked stays, even at zero, or it
+  // would vanish from under the reader.
+  return [...counts.entries()]
+    .filter(([value, n]) => n > 0 || activeFilters[key].includes(value))
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+
+function renderFilterMenu() {
+  const groups = document.getElementById("filter-groups");
+
+  if (!groups) {
+    return;
+  }
+
+  groups.replaceChildren();
+
+  MENU_FILTERS.forEach(key => {
+    const options = countsFor(key);
+
+    if (!options.length) {
+      return;
+    }
+
+    const group = document.createElement("div");
+    group.className = "filter-group";
+
+    const heading = document.createElement("h3");
+    heading.id = `filter-group-${key}`;
+    heading.textContent = FILTER_LABELS[key];
+    group.appendChild(heading);
+
+    const list = document.createElement("div");
+    list.setAttribute("role", "group");
+    list.setAttribute("aria-labelledby", heading.id);
+
+    options.forEach(([value, count]) => {
+      const option = document.createElement("label");
+      option.className = "filter-option";
+
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.value = value;
+      box.dataset.filter = key;
+      box.checked = activeFilters[key].includes(value);
+
+      const text = document.createElement("span");
+      text.textContent = value;
+
+      const number = document.createElement("span");
+      number.className = "filter-option__count";
+      number.textContent = count;
+
+      option.append(box, text, number);
+      list.appendChild(option);
+    });
+
+    group.appendChild(list);
+    groups.appendChild(group);
+  });
+
+  const summary = document.getElementById("filter-summary");
+
+  if (summary) {
+    const shown = getFilteredRows().length;
+    summary.textContent = hasFilters()
+      ? `${shown} of ${allSubmissions.length} shown`
+      : `Showing all ${allSubmissions.length} summaries`;
+  }
+
+  const count = document.getElementById("filters-count");
+
+  if (count) {
+    const total = Object.values(activeFilters).reduce((n, values) => n + values.length, 0);
+    count.textContent = total;
+    count.hidden = total === 0;
+  }
+}
+
+function applyFilterChange() {
+  writeFiltersToUrl();
+  window.HelixEmbed?.notifyNavigation?.();
+  currentPage = 1;
+  renderFilterBar();
+  renderFilterMenu();
+  renderTable(getFilteredRows());
+}
+
+function toggleFilterValue(key, value, on) {
+  const chosen = activeFilters[key];
+
+  if (on && !chosen.includes(value)) {
+    chosen.push(value);
+  } else if (!on) {
+    activeFilters[key] = chosen.filter(item => item !== value);
+  }
+
+  applyFilterChange();
+}
+
+function removeFilterValue(key, value) {
+  activeFilters[key] = activeFilters[key].filter(item => item !== value);
+  applyFilterChange();
+}
+
+function clearFilters() {
+  Object.keys(activeFilters).forEach(key => {
+    activeFilters[key] = [];
+  });
+  applyFilterChange();
+}
+
+function setUpFilterMenu() {
+  const toggle = document.getElementById("filters-toggle");
+  const panel = document.getElementById("filters-panel");
+
+  if (!toggle || !panel) {
+    return;
+  }
+
+  function setOpen(open) {
+    panel.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    scheduleEmbedResize();
+  }
+
+  toggle.addEventListener("click", () => setOpen(panel.hidden));
+  document.getElementById("filters-done")?.addEventListener("click", () => {
+    setOpen(false);
+    toggle.focus();
+  });
+  document.getElementById("filters-clear")?.addEventListener("click", clearFilters);
+
+  panel.addEventListener("change", event => {
+    const box = event.target.closest("input[type=checkbox]");
+
+    if (box) {
+      toggleFilterValue(box.dataset.filter, box.value, box.checked);
+    }
+  });
+
+  // Escape closes it, the way any menu should.
+  panel.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+}
+
 function handleSearch() {
   // Any change to what's being shown starts again at page one.
   currentPage = 1;
@@ -630,9 +829,7 @@ function renderFilterBar() {
     return;
   }
 
-  const active = Object.keys(activeFilters).filter(key => activeFilters[key]);
-
-  if (!active.length) {
+  if (!hasFilters()) {
     filterBar.hidden = true;
     filterBar.replaceChildren();
     return;
@@ -640,47 +837,69 @@ function renderFilterBar() {
 
   filterBar.replaceChildren();
 
-  active.forEach(key => {
-    const label = document.createElement("span");
-    label.className = "filter-bar__label";
-    label.textContent = FILTER_LABELS[key];
+  Object.keys(activeFilters).forEach(key => {
+    activeFilters[key].forEach(value => {
+      const chip = document.createElement("span");
+      chip.className = `filter-chip filter-chip--${key}`;
 
-    const chip = document.createElement("span");
-    chip.className = `filter-chip filter-chip--${key}`;
+      const text = document.createElement("span");
+      text.textContent = value;
 
-    const text = document.createElement("span");
-    text.textContent = activeFilters[key];
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "filter-chip__remove";
+      remove.setAttribute("aria-label", `Remove ${value} filter`);
+      remove.textContent = "×";
+      remove.addEventListener("click", () => removeFilterValue(key, value));
 
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "filter-chip__remove";
-    remove.setAttribute("aria-label", `Clear ${FILTER_LABELS[key].toLowerCase()} filter`);
-    remove.textContent = "×";
-    remove.addEventListener("click", () => setFilter(key, null));
-
-    chip.append(text, remove);
-    filterBar.append(label, chip);
+      chip.append(text, remove);
+      filterBar.append(chip);
+    });
   });
+
+  const clear = document.createElement("button");
+  clear.type = "button";
+  clear.className = "filter-bar__clear";
+  clear.textContent = "Clear all";
+  clear.addEventListener("click", clearFilters);
+  filterBar.append(clear);
 
   filterBar.hidden = false;
 }
 
+// Several values for one filter travel as repeated parameters —
+// ?theme=Dementia&theme=Rehabilitation — which needs no escaping rules of its
+// own and reads plainly. A single-value link from before still works: it is
+// just a list of one.
+function writeFiltersToUrl() {
+  const url = new URL(window.location.href);
+
+  Object.keys(activeFilters).forEach(key => {
+    url.searchParams.delete(key);
+    activeFilters[key].forEach(value => url.searchParams.append(key, value));
+  });
+
+  window.history.replaceState({}, "", url);
+}
+
+function readFiltersFromUrl(params) {
+  Object.keys(activeFilters).forEach(key => {
+    activeFilters[key] = params.getAll(key).filter(Boolean);
+  });
+}
+
+// Clicking a value in the table *replaces* that filter rather than adding to
+// it: in the table the gesture reads as "show me this one", and adding would
+// quietly broaden the list instead of narrowing it. The menu is where a
+// combination gets built up.
 function setFilter(type, value) {
   if (!(type in activeFilters)) {
     return;
   }
 
-  activeFilters[type] = value || null;
+  activeFilters[type] = value ? [value] : [];
 
-  const url = new URL(window.location.href);
-
-  if (activeFilters[type]) {
-    url.searchParams.set(type, activeFilters[type]);
-  } else {
-    url.searchParams.delete(type);
-  }
-
-  window.history.replaceState({}, "", url);
+  writeFiltersToUrl();
 
   // Tell the parent page so its address bar matches what's on screen and the
   // filtered view can be copied and shared. Not a page change, so no scroll.
@@ -688,6 +907,7 @@ function setFilter(type, value) {
 
   currentPage = 1;
   renderFilterBar();
+  renderFilterMenu();
   renderTable(getFilteredRows());
 }
 
@@ -712,9 +932,7 @@ async function loadSubmissions() {
     });
 
     const params = new URLSearchParams(window.location.search);
-    Object.keys(activeFilters).forEach(key => {
-      activeFilters[key] = params.get(key) || null;
-    });
+    readFiltersFromUrl(params);
 
     const search = document.getElementById("search-input");
     const query = params.get("q");
@@ -738,6 +956,8 @@ async function loadSubmissions() {
     }
 
     renderFilterBar();
+    renderFilterMenu();
+    setUpFilterMenu();
     renderTable(getFilteredRows());
 
     document.getElementById("search-input")?.addEventListener("input", handleSearch);

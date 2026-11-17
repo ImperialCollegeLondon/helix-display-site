@@ -54,7 +54,7 @@ FIELD_LABEL_PATTERNS = {
 # Newer questions, with no QID fallback. Listed so the run log can say when
 # one stops being found, instead of the field quietly going blank.
 OPTIONAL_FIELDS = [
-    "publisher", "supplementary_link",
+    "publisher", "supplementary_link", "project_family",
     "diagram_id", "diagram_caption", "date_range_note", "subproject",
 ]
 
@@ -269,6 +269,15 @@ def resolve_columns(header_row, label_row):
                 columns["diagram_name"] = field
             elif field.endswith("_Type"):
                 columns["diagram_type"] = field
+            continue
+
+        # The project family — a grouping above individual projects. Matched
+        # on "family" wherever it falls, since the question could reasonably be
+        # worded "Project family", "Which project family…" or "Which family
+        # does this work belong to". No other question in the survey uses the
+        # word.
+        if "family" in norm:
+            columns.setdefault("project_family", field)
             continue
 
         # Supplementary material: a video, a prototype, a set of images. The
@@ -555,6 +564,7 @@ def convert_row(row, columns, multi_maps):
     acknowledgements = col("acknowledgements")
     link = col("link")
     supplementary_link = col("supplementary_link")
+    project_family = col("project_family")
     publisher = col("publisher")
     corresponding_team_member = col("corresponding_team_member")
     contact_email = col("contact_email")
@@ -627,6 +637,7 @@ def convert_row(row, columns, multi_maps):
         "acknowledgements": acknowledgements,
         "link": link,
         "supplementary_link": supplementary_link,
+        "project_family": project_family,
         "publisher": publisher,
         "keywords": keywords,
         "short_description": short_description,

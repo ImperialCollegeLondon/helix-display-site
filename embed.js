@@ -7,15 +7,14 @@
   // always produces the same shareable link.
   // "organise" isn't a filter, but it is part of the view worth sharing, so it
   // travels in the hash alongside them.
-  const FILTER_KEYS = ["theme", "project", "type", "keyword", "organise"];
+  const FILTER_KEYS = ["theme", "project", "family", "type", "keyword", "organise"];
 
+  // getAll, not get: a filter can hold several values, carried as repeated
+  // parameters (theme=Dementia&theme=Rehabilitation).
   function filterParams(params) {
     const filters = new URLSearchParams();
     FILTER_KEYS.forEach(key => {
-      const value = params.get(key);
-      if (value) {
-        filters.set(key, value);
-      }
+      params.getAll(key).filter(Boolean).forEach(value => filters.append(key, value));
     });
     return filters.toString();
   }
