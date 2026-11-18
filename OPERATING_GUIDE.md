@@ -83,7 +83,11 @@ Every filtered view is a filtered version of the **normal table**, with removabl
 
 ## Fields from Qualtrics
 
-Columns are matched by **question wording**, not by QID, so renumbering questions does not break the site. A field is matched first to a question that *begins* with its wording, and only then to one that mentions it midway — that stops the acknowledgements question, which refers to the "author list", from claiming the author field. Current questions and where they appear:
+Columns are matched by **question wording**, not by QID, so renumbering questions does not break the site. Each field is found by a short distinctive phrase from its question, and most fields accept several — so rewording the rest of the sentence is safe. A question that *begins* with a field's phrase wins it; otherwise the phrase may sit anywhere. That ordering is what stops the acknowledgements question, which mentions the "author list", from claiming the author field.
+
+The phrases live in `FIELD_LABEL_PATTERNS` at the top of `scripts/build_site_data.py`. **If a reworded question stops matching, add another phrase rather than narrowing the existing one** — five separate rewordings silently emptied a field back when these were exact matches on the opening words.
+
+Current questions and where they appear:
 
 | Question (starts with) | Shown as |
 | --- | --- |
@@ -117,7 +121,7 @@ The check is in `HIDDEN_SOURCE_TYPES` in `scripts/build_site_data.py`; add a typ
 
 **Editing the survey is safe.** Because the export uses `useLabels`, adding/renaming/reordering options for themes, projects, authors or keywords flows through automatically. There is nothing to change in the code.
 
-**Rewording a question needs a check.** The wording patterns live in `FIELD_LABEL_PATTERNS` at the top of `scripts/build_site_data.py`. A small edit ("Which of our themes…" → "Which theme…") could stop a column being found: the workflow log prints `Resolved columns:` and a `WARNING: could not resolve columns for:` line if anything is missing. Update the pattern to match the new wording.
+**Rewording a question is usually safe now,** but worth a glance at the run log afterwards: it prints `Resolved columns:` and warns about anything it couldn't find. The phrases each field looks for are: theme → "theme", project → "subproject", family → "family", discipline → "discipline", title → "publication title", summary → "lay summary", lede → "sentence summary", authors → "author list", acknowledgements → "acknowledgement", date → "date of publication", period → "period of time", link → "link to the full paper", publisher → "who is publishing", supplementary → "supplementary material", caption → "caption". Keep one of those in the question and the rest can say anything.
 
 ---
 

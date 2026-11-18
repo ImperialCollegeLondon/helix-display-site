@@ -30,23 +30,32 @@ SOURCE_TYPE_MAP = {
 
 # Columns are resolved from the CSV label row (question text), so this works
 # whatever the export tags are. Substring match against the normalised label.
+# Each field is found by distinctive wording from its question, and a field can
+# be written several ways, so rewording the rest of the sentence is safe. The
+# order matters: the first field whose wording appears wins the column, and a
+# column is only claimed once. Acknowledgements comes first because its
+# question mentions the "author list", which would otherwise take the authors
+# column.
+#
+# Every one of these started life as an exact match on the opening words, and
+# five separate rewordings in the survey silently emptied a field before this
+# was generalised. Prefer adding another phrase here to tightening one.
 FIELD_LABEL_PATTERNS = {
-    "title": "publication title",
-    "project_date": "date of publication",
-    "date_range_note": "if the work spans a period",
-    "short_description": "1-2 sentence summary",
-    "lay_summary": "paste your lay summary",
-    "theme": "which of our themes",
-    "subproject": "which particular subproject",
-    # Matched on the tail of the question so it works whether the survey says
-    # "Led by Helix" or "Lead by Helix" — the earlier pattern assumed "lead"
-    # and silently stopped matching when the survey was corrected to "Led".
-    "led_or_contributed": "helix or helix contributed",
-    "authors": "author list",
-    "acknowledgements": "acknowledgements",
-    "link": "insert a link to the full paper",
-    "publisher": "who is publishing this piece of work",
-    "diagram_caption": "if you uploaded a diagram",
+    "acknowledgements": ["acknowledgement"],
+    "title": ["publication title"],
+    "short_description": ["1-2 sentence", "1 2 sentence", "sentence summary"],
+    "lay_summary": ["lay summary"],
+    "theme": ["theme"],
+    "subproject": ["subproject"],
+    "project_date": ["date of publication", "date this work relates"],
+    "date_range_note": ["spans a period", "span a period", "period of time"],
+    # Works whether the survey says "Led by Helix" or "Lead by Helix" — an
+    # earlier pattern assumed "lead" and stopped matching when it was fixed.
+    "led_or_contributed": ["helix or helix contributed", "led by helix", "lead by helix"],
+    "authors": ["author list", "authors"],
+    "link": ["link to the full paper", "read more about this work"],
+    "publisher": ["who is publishing", "name of journal"],
+    "diagram_caption": ["uploaded a diagram", "caption"],
     # The corresponding team member's name and email are handled separately in
     # resolve_columns — they are two rows of one question and share its wording.
 }
@@ -327,13 +336,13 @@ def resolve_columns(header_row, label_row):
                 columns.setdefault("source_type", field)
             continue
 
-        # Prefer a question that *starts* with the pattern. One question can
-        # mention another's wording — the acknowledgements question refers to
-        # the "author list" — and without this the wrong column would win
-        # whenever the questions were reordered.
+        # Prefer a question that *starts* with one of the field's phrases. One
+        # question can mention another's wording — the acknowledgements
+        # question refers to the "author list" — so an opening match is taken
+        # as the stronger signal, and anything else waits for the second pass.
         exact = next(
-            (key for key, pattern in FIELD_LABEL_PATTERNS.items()
-             if key not in columns and norm.startswith(pattern)),
+            (key for key, phrases in FIELD_LABEL_PATTERNS.items()
+             if key not in columns and any(norm.startswith(p) for p in phrases)),
             None
         )
 
@@ -342,10 +351,10 @@ def resolve_columns(header_row, label_row):
         else:
             deferred.append((field, norm))
 
-    # Second pass: anything still unmatched may appear mid-question.
+    # Second pass: the wording may sit anywhere in the question.
     for field, norm in deferred:
-        for key, pattern in FIELD_LABEL_PATTERNS.items():
-            if key not in columns and pattern in norm:
+        for key, phrases in FIELD_LABEL_PATTERNS.items():
+            if key not in columns and any(p in norm for p in phrases):
                 columns[key] = field
                 break
 
