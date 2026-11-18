@@ -111,7 +111,7 @@ Columns are matched by **question wording**, not by QID, so renumbering question
 
 Only responses marked finished, with a title or summary, are shown.
 
-**Preprints are hidden.** A submission whose type is "Preprint" is left out of the site entirely — it isn't listed, isn't searchable and has no detail page. The response stays in Qualtrics untouched, so when the work is published, changing the type brings it onto the site at the next run with nothing to re-enter. The run log names each one it hides.
+**Preprints are hidden.** A submission whose type *starts with* "Preprint" is left out of the site entirely — matched on the opening words rather than the whole label, so the option can carry an explanation after it ("Pre-print (will be hidden until…)") without the hiding quietly stopping — it isn't listed, isn't searchable and has no detail page. The response stays in Qualtrics untouched, so when the work is published, changing the type brings it onto the site at the next run with nothing to re-enter. The run log names each one it hides.
 
 The check is in `HIDDEN_SOURCE_TYPES` in `scripts/build_site_data.py`; add a type there to hide it too. No images are downloaded for a hidden entry, but it **does keep its short reference** while it is off the site, and comes back with the same number when it is published — see below.
 

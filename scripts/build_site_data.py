@@ -417,8 +417,16 @@ HIDDEN_SOURCE_TYPES = {"preprint"}
 
 
 def is_hidden_type(value):
+    """True for a kind of output that isn't published on the site.
+
+    Matched on how the type *starts*, not on the whole string: the option has
+    been labelled "Preprint", "Pre-print" and "Pre-print (will be hidden until
+    entry is edited to include full publication)", and an exact match silently
+    stopped hiding anything the moment the explanation was added to the label.
+    Hyphens and spacing are ignored too.
+    """
     normalised = " ".join((value or "").strip().lower().replace("-", "").split())
-    return normalised in HIDDEN_SOURCE_TYPES
+    return any(normalised.startswith(hidden) for hidden in HIDDEN_SOURCE_TYPES)
 
 
 def get_real_rows(rows, columns):
