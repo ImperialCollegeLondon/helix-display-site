@@ -14,11 +14,14 @@
       <section class="table-card" aria-label="Publication summaries">
         <div class="table-intro">
           <p>Below you can explore plain English summaries of our published work. Click into any entry for the summary, or to read the full publication.</p>
-          <p>Search by title, author or keyword, or click any <b>theme</b>, <b>project</b> or <b>type of publication</b> to filter the list. There is also a filtering menu to help you view specific areas of our work. You can share a filtered view, or specific summary by copying the link.</p>
         </div>
 
         <div class="table-card__header">
-          <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">
+          <!-- TEMPORARILY HIDDEN. Delete the `hidden` attribute here and on
+               #filters-panel below to bring the filters menu back; nothing
+               else needs changing. The menu still builds itself and the
+               filters still work from links and from clicks in the table. -->
+          <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel" hidden>
             Filters
             <span id="filters-count" class="filters-toggle__count" hidden>0</span>
             <span class="filters-toggle__chevron" aria-hidden="true"></span>
@@ -30,6 +33,9 @@
           </div>
         </div>
 
+        <!-- TEMPORARILY HIDDEN — see the note on #filters-toggle above. This
+             one carries `hidden` in normal use too; the script removes it when
+             the button is pressed, so it also needs the button back. -->
         <div id="filters-panel" class="filters-panel" role="region" aria-label="Filters" hidden>
           <div id="filter-groups" class="filters-panel__groups"></div>
           <div class="filters-panel__footer">

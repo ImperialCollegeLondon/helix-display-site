@@ -324,6 +324,12 @@ body.table-embed,
 /* The Filters button, and the panel it opens. The panel pushes the table down
    rather than floating over it: inside an iframe a floating panel would be cut
    off at the frame's edge. */
+/* While the button carries `hidden` (see index.html) this keeps it out of the
+   layout — `display: inline-flex` would otherwise override `hidden`. */
+.filters-toggle[hidden] {
+  display: none;
+}
+
 .filters-toggle {
   display: inline-flex;
   align-items: center;
